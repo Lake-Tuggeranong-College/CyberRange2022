@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block meta %} <meta http-equiv="refresh" content="30">  {% endblock %}
+
+{% block title %}{{ Title }}{% endblock %}
+
+{% block header %}
+  <h1 style="padding-left: 600px; font-size: 60px">{{ Title }}</h1>
+{% endblock %}
+
+
+{% block content %}
+
+  {{ data }}
+
+{% endblock %}

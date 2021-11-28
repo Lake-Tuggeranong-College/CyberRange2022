@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %} {{ pagetitle }}   {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.passcode.label }}<br>
+            {{ form.passcode(size=32) }}<br>
+            {% for error in form.passcode.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p style="padding-top: 15px">{{ form.submit() }}</p>
+    </form>
+{% endblock %}

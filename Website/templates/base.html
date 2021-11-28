@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block meta %} {% endblock %}
+
+    <!-- Dynamic HTML title -->
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Bootstrap CSS & JS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+    <link rel="author" href="humans.txt">
+    <script src="/static/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="/static/js/popper.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!--
+
+    <script src="/static/js/jquery-3.3.1.slim.min.js"
+                integrity="sha256-w/K14c9es++XoHzIMaMmA0G6Ea9ndjvAXvPp5V26jB8="
+                crossorigin="anonymous"></script>
+        <script src="/static/js/popper.min.js"
+                integrity="sha256-vbLp3u9orh8SYzY/enuuWKkTzBss7i480sRrzRgev3U="
+                crossorigin="anonymous"></script>
+
+    /bootstrap.min.js
+     integrity="sha256-O82ALp93hJ58HpPIcnn7uwTUWUnSvnmwNWbOrN4psVg="
+                crossorigin="anonymous"
+    -->
+    <script>
+        function timedRefresh() {
+            setTimeout('location.reload()', 5000);
+        }
+    </script>
+
+    <style>
+        h1 {
+            padding-bottom: 40px;
+            color: white;
+        }
+
+        p {
+            font-size: 18px;
+            color: white;
+        }
+
+        .font-color {
+            color: white;
+            font-size: 18px;
+            padding-top: 10px;
+        }
+
+        .user-size {
+            color: white;
+            font-size: 36px;
+            padding-top: 10px;
+            padding-left: 60px;
+        }
+    </style>
+</head>
+
+<body style="background-color: #282b30">
+<nav class="navbar navbar-expand-lg navbar-dark"
+     style="background-image: linear-gradient(to right, #272727, #154259); padding-left: 150px"><a class="navbar-brand"
+                                                                                                   href="/"><img
+        src="/static/Where's_Wally.png" width="103" height="103" alt="Blackout Logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" style="padding-left: 20px"><a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            {% if user.is_anonymous %}
+
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Registration</a></li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="/user">User Details</a></li>
+                <li class="nav-item"><a class="nav-link" href="/claimcharacter">Claim a Character</a></li>
+                {% if user.is_admin() %}
+                    <li class="nav-item"><a class="nav-link" href="/reset">Reset Characters</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/registercharacter">Register New Character</a></li>
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown"
+                                                     id="Preview" href="#" role="button" aria-haspopup="true"
+                                                     aria-expanded="false"> Admin Reports </a>
+                        <div class="dropdown-menu" aria-labelledby="Preview"><a class="dropdown-item"
+                                                                                href="/report/listallusers">List All
+                            Users</a> <a class="dropdown-item" href="/report/stocklevels">All User Details</a> <a
+                                class="dropdown-item" href="/report/u_ranked">User Ranks</a> <a
+                                class="dropdown-item" href="/report/dashboard">Subsystem Dashboard</a></div>
+                    </li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<h1 style="border-top: #224a61 6px solid"></h1>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+                <li><span style="color: red;">{{ message }}</span></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+<!-- Dynamic content -->
+<section class="content" style="padding-left: 150px; padding-bottom: 40px">
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+    {% block content %}{% endblock %}
+</section>
+<footer style="padding-top: 20px; background-color: #353b44; border-top: 6px solid #224a61;">
+    <h2 style="padding-bottom: 15px; text-align: center; font-size: 18px; color: white"> © LTC Web Design 2020 </h2>
+    <a href="/humans.txt"><img src="/static/humans.png" alt="HumansTXT Logo"></a>
+</footer>
+</body>
+</html>

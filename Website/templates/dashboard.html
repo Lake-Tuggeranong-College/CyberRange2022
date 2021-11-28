@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ Title }}{% endblock %}
+
+{% block header %}
+  <h1>{{ Title }}</h1>
+{% endblock %}
+
+{% block content %}
+        {% if subsystems[0][2]== None %}
+            <img src="../static/red/Rtrain.png">
+        {% else %}
+            <img src="../static/green/Gtrain.png">
+        {% endif %}
+
+        {% if subsystems[1][2] == None %}
+            <img src="../static/red/Rpolice.png">
+        {% else %}
+            <img src="../static/green/Gpolice.png">
+        {% endif %}
+
+        {% if subsystems[2][2]== None %}
+            <img src="../static/red/Rcar.png">
+        {% else %}
+            <img src="../static/green/Gcar.png">
+        {% endif %}
+
+        {% if subsystems[3][2] == None %}
+            <img src="../static/red/Rtrafficlights.png">
+        {% else %}
+            <img src="../static/green/Gtrafficlights.png">
+        {% endif %}
+
+        {% if subsystems[4][2] == None %}
+            <img src="../static/red/Rstreetlight.png">
+        {% else %}
+            <img src="../static/green/Gstreetlight.png">
+        {% endif %}
+
+        {% if subsystems[5][2] == None %}
+            <img src="../static/red/Rplane.png">
+        {% else %}
+            <img src="../static/green/Gplane.png">
+        {% endif %}
+
+        {% if subsystems[6][2] == None %}
+            <img src="../static/red/Rhouse.png">
+        {% else %}
+            <img src="../static/green/Ghouse.png">
+        {% endif %}
+
+        {% if subsystems[7][2] == None %}
+            <img src="../static/red/Rwebcam.png">
+        {% else %}
+            <img src="../static/green/Gwebcam.png">
+        {% endif %}
+
+        {% if subsystems[8][2] == None %}
+            <img src="../static/red/Rtower.png">
+        {% else %}
+            <img src="../static/green/Gtower.png">
+        {% endif %}
+
+        {% if subsystems[9][2] == None %}
+            <img src="../static/red/Rmissile.png">
+        {% else %}
+            <img src="../static/green/Gmissile.png">
+        {% endif %}
+
+        {% if subsystems[10][2] == None %}
+            <img src="../static/red/Rwindmill.png" width="120" height="120">
+        {% else %}
+            <img src="../static/green/Gwindmill.png" width="120" height="120">
+        {% endif %}
+{% endblock %}

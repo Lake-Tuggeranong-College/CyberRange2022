@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+<!-- This creates the heading of the page and makes it the same as the title -->
+{% block header %}
+{#    <h2 style="text-align: left; padding-left: 280px; padding-bottom: 90px;"><img src="../static/blackout-banner.jpg"#}
+{#                                                                                  height="250" width="1050"#}
+{#                                                                                  alt="Blackout Banner"></h2>#}
+{% endblock %}
+
+
+<!-- This replaces the content block in base.html -->
+{% block content %}
+    <div class="row cell1">
+        <div class="col-sm-6">
+            <h1>{% block title %} {{ pagetitle }} {% endblock %}</h1>
+            {% if current_user.is_anonymous %}
+            {% else %}
+                <p> Logged in as: {{ user.username }}</p>
+            {% endif %}
+            <p>Welcome to Operation Blackout's subsystem claiming website.</p>
+            {% if current_user.is_anonymous %}
+                <p>Please <a href="/register">register</a> or <a href="/login">login</a> to view the rest of the
+                    website.</p>
+            {% else %}
+                <p>If you have a passcode to claim a subsystem, go to the <a href="/claimsubsystem">claim a
+                    subsystem</a> page.</p>
+            {% endif %}
+        </div>
+        <div class="col-sm-6">
+            <img src="../static/lego_city.jpg" width="496.9" height="320" alt="Lego City">
+        </div>
+    </div>
+
+{% endblock %}

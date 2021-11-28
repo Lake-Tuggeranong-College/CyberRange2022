@@ -1,0 +1,19 @@
+/*TEAM*/
+
+    Dylan Bock - base website & programmer;
+
+    Omar Kennedy - task organiser & idea guy;
+
+    Ryan Nguyen - undisputed grandmaster of programming;
+
+    Samuel Sheridan - website tester;
+
+    Ryan Cather - star trek die hard fan;
+
+
+/*SITE*/
+
+    Last update: 08/11/2019;
+    DOCTYPE: HTML5;
+    Components: Python 3.7;
+    IDE: Pycharm Professional;

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+<!-- This creates the heading of the page and makes it the same as the title -->
+{% block header %}
+    <h1>{% block title %} {{ title }}   {% endblock %}</h1>
+{% endblock %}
+
+
+<!-- This replaces the content block in base.html -->
+{% block content %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(size=32) }}<br>
+            {% for error in form.title.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.description.label }}<br>
+            {{ form.description(size=64) }}<br>
+            {% for error in form.description.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.score.label }}<br>
+            {{ form.score(size=32) }}<br>
+            {% for error in form.score.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+            <p>
+            {{ form.code.label }}<br>
+            {{ form.code(size=16) }}<br>
+            {% for error in form.code.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p style="padding-top: 15px">{{ form.submit() }}</p>
+    </form>
+{% endblock %}
