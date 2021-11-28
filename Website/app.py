@@ -16,6 +16,12 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
 
+from bp_missile_launcher import missile_launcher_blueprint
+from bp_game_management import game_management_blueprint
+
+app.register_blueprint(missile_launcher_blueprint)
+app.register_blueprint(game_management_blueprint)
+
 from flask_login import current_user, login_user
 from models import User, CTFSubSystems, Order
 from forms import LoginForm, RegistrationForm, CTFSubsystemForm, ClaimSubsystemForm, EditUserForm, ResetPasswordForm, \
