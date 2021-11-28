@@ -3,9 +3,7 @@ from flask import render_template, redirect, flash, request, Markup
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_login import LoginManager
-from flask_login import logout_user
-from flask_login import login_required
+from flask_login import LoginManager, logout_user, login_required
 from sqlalchemy import text
 from werkzeug.security import check_password_hash
 
