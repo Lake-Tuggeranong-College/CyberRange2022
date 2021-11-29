@@ -14,7 +14,7 @@ The contents of this file are the user names and passwords to the Wifi access po
 
 The template is:
 
-<code>
+```
 const char* host = "";
 const char* ssid = "";             // Wifi Network Name
 const char* password = "";         // Wifi Password
@@ -22,4 +22,4 @@ const char* password = "";         // Wifi Password
 
 const char* http_username = "";     // Username and password for user access
 const char* http_password = "";     // to site
-</code>
+```
