@@ -5,6 +5,8 @@ from flask_login import LoginManager, logout_user, login_required
 from forms import LoginForm, RegistrationForm, CTFSubsystemForm, ClaimSubsystemForm, EditUserForm, ResetPasswordForm, \
     ClaimForm, ResetSubsystemsForm
 from models import User, CTFSubSystems, Order
+from sqlalchemy import text
+from app import db
 
 game_management_blueprint = Blueprint('game_management_blueprint', __name__)
 
@@ -16,16 +18,16 @@ def game_main_page():
 
 
 @game_management_blueprint.route('/login', methods=['GET', 'POST'])
-def login():
+def user_login():
     if current_user.is_authenticated:
         return redirect(url_for('main_page'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            return redirect(url_for('login'))
+            return redirect(url_for('game_management_blueprint.user_login'))
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('main_page'))
+        return redirect(url_for('game_management_blueprint.game_main_page'))
     return render_template('login.html', title='Sign In', form=form, user=current_user)
 
 
@@ -57,7 +59,7 @@ def register():
 
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('login'))
+        return redirect(url_for('user_login'))
     return render_template('register.html', title='Register', form=form, user=current_user)
 
 
@@ -73,7 +75,7 @@ def registerCTFSubsystem():
         db.session.add(newSubSystem)
         db.session.commit()
         flash('Congratulations, you have registered a new character!')
-        return redirect(url_for('login'))
+        return redirect(url_for('user_login'))
     return render_template('registersubsystem.html', title='Register Character', form=form, user=current_user)
 
 
