@@ -8,7 +8,7 @@ After duplicating this sketch, create a folder in the repository for your compon
 
 ## Note
 
-After opening this project in the Arduino IDE, you will need to add a new file into the project called sensitiveInformation.h (case sensitive).
+After opening this project in the Arduino IDE, you will need to add a new file into the project called `sensitiveInformation.h` (case sensitive).
 
 The contents of this file are the user names and passwords to the Wifi access point, and for the user to access the site running on the Arduino.
 
