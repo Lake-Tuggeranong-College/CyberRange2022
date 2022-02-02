@@ -4,4 +4,6 @@
 
  This will be used with the Year 12 Robotics class to syncronise their projects into a central location.
 
- Students will fork the repository and create pull requests to include their changes.
+ Dumb people will fork the repository and create pull requests to include their changes.
+
+If you're using light mode Github you will be shamed.
