@@ -116,3 +116,4 @@ dmypy.json
 *.iml
 *.xml
 ArduinoMaster/master/sensitiveInformation.h
+Parliament-House/Parliament-House/sensitiveInformation.h
