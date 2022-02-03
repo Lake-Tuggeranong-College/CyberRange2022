@@ -117,3 +117,6 @@ dmypy.json
 *.xml
 ArduinoMaster/master/sensitiveInformation.h
 Parliament-House/Parliament-House/sensitiveInformation.h
+TelstraTower/TelstraTower/sensitiveInformation.h
+Traffic_Lights/Traffic_Lights/sensitiveInformation.h
+trainrc/trainrc/sensitiveInformation.h
