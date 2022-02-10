@@ -14,7 +14,7 @@
   Written by Limor Fried/Ladyada for Adafruit Industries.
   MIT license, all text above must be included in any redistribution
  ****************************************************/
-
+// taking  over new author 
 #include "sensitiveInformation.h"
 
 #define FORMAT_SPIFFS_IF_FAILED true
