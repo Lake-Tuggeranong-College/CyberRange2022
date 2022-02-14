@@ -1,4 +1,4 @@
-#include <Adafruit_MCPSRAM.h>
+
 #include <Adafruit_ThinkInk.h>
 #include <Adafruit_EPD.h>
 
@@ -104,9 +104,7 @@ void setup() {
   display.clearBuffer();
 
   logEvent("System Initialisation...");
-}LED
-LED flashes
-Void Telstra tower
+}
 //Telstra Tower LED flashes constanly 
 
 void loop() {
