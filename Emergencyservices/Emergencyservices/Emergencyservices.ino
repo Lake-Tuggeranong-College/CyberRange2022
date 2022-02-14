@@ -103,7 +103,13 @@ void setup() {
 }
 
 void loop() {
+
+  emergency services() }
   delay(LOOPDELAY);
+}
+
+void emergency services() {
+  //emergency services will randomly mnake static noises 
 }
 
 void logEvent(String dataToLog) {

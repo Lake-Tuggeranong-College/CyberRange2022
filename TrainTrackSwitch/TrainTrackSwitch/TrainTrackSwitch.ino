@@ -106,6 +106,16 @@ void loop() {
   delay(LOOPDELAY);
 }
 
+void trackSwitch (bool mainTrack){
+  if (mainTrack) {
+    // servo goes to the left // use value 0 
+  }
+  else {
+    // servo goes to the right // use value 180 
+  }
+}
+
+
 void logEvent(String dataToLog) {
   /*
      Log entries to a file stored in SPIFFS partition on the ESP32.
