@@ -14,6 +14,7 @@
 #define RED_LIGHT 2
 
 // Traffic light definitions
+const int ledPin = 13; // the number of the red LED pin
 
 void setup() {
   // Traffic light serial setup
@@ -22,9 +23,9 @@ Serial.begin(9600);
   pinMode(LIGHT_1_YELLOW, OUTPUT);
   pinMode(LIGHT_1_GREEN, OUTPUT);
 
-  digitalWrite(LIGHT_1_GREEN, HIGH);
+  digitalWrite(LIGHT_1_GREEN, LOW);
   digitalWrite(LIGHT_1_YELLOW, LOW);
-  digitalWrite(LIGHT_1_RED, LOW);  
+  digitalWrite(LIGHT_1_RED, HIGH);  
 }
 
 void loop() {
