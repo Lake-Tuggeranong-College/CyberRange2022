@@ -19,6 +19,7 @@ const int ledPin = 13; // the number of the red LED pin
 void setup() {
   // Traffic light serial setup
 Serial.begin(9600);
+// initializes the traffic lights as the outputs
   pinMode(LIGHT_1_RED, OUTPUT);
   pinMode(LIGHT_1_YELLOW, OUTPUT);
   pinMode(LIGHT_1_GREEN, OUTPUT);
