@@ -26,9 +26,9 @@ Serial.begin(9600);
   pinMode(LIGHT_1_YELLOW, OUTPUT);
   pinMode(LIGHT_1_GREEN, OUTPUT);
 
-  digitalWrite(LIGHT_1_GREEN, HIGH);
-  digitalWrite(LIGHT_1_YELLOW, HIGH);
-  digitalWrite(LIGHT_1_RED, HIGH);  
+  digitalWrite(LIGHT_1_GREEN, LOW);
+  digitalWrite(LIGHT_1_YELLOW, LOW);
+  digitalWrite(LIGHT_1_RED, LOW);  
 }
 
 void loop() {
