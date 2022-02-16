@@ -9,9 +9,9 @@
 #define LIGHT_1_GREEN 4
 
 // Light definitions
-#define GREEN_LIGHT 0
-#define YELLOW_LIGHT 1
-#define RED_LIGHT 2
+//#define GREEN_LIGHT 0
+//#define YELLOW_LIGHT 1
+//#define RED_LIGHT 2
 
 // Constants used here to set pin numbers:
 const int Light_1_RED = 13; // the number of the red LED pin
