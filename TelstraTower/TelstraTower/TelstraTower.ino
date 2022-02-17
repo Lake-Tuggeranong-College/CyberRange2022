@@ -1,3 +1,7 @@
+
+#include <Adafruit_ThinkInk.h>
+#include <Adafruit_EPD.h>
+
 /*
    Code explanation goes here....
 
@@ -101,6 +105,7 @@ void setup() {
 
   logEvent("System Initialisation...");
 }
+//Telstra Tower LED flashes constanly 
 
 void loop() {
   delay(LOOPDELAY);
