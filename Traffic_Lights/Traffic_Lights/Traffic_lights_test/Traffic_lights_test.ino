@@ -14,9 +14,9 @@
 #define RED_LIGHT 2
 
 // Constants used here to set pin numbers:
-const int Light_1_RED = 13; // the number of the red LED pin
-const int Light_1_YELLOW = 14; // the number of the Yellow LED pin
-const int Light_1_GREEN = 15; // the number of the green LED pin
+const int Light_1_RED = 11; // the number of the red LED pin
+const int Light_1_YELLOW = 12; // the number of the Yellow LED pin
+const int Light_1_GREEN = 13; // the number of the green LED pin
 
 void setup() {
   // Traffic light serial setup
