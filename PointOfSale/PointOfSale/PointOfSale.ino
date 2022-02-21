@@ -80,7 +80,7 @@ void setup() {
 
 
   routesConfiguration(); // Reads routes from routesManagement
-  
+
   server.begin();
 
 
@@ -111,7 +111,7 @@ void loop() {
 void windmill() {
   // windmill turns until hacked.
 
-  
+
 }
 
 void logEvent(String dataToLog) {
