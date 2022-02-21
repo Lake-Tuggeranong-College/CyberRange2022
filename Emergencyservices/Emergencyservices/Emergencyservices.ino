@@ -104,11 +104,11 @@ void setup() {
 
 void loop() {
 
-  emergency services();
+  emergencyservices();
   delay(LOOPDELAY);
 }
 
-void emergency services() {
+void emergencyservices() {
   //emergency services will randomly mnake static noises 
 }
 

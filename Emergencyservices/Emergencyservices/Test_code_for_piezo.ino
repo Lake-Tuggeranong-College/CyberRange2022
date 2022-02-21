@@ -2,7 +2,7 @@ int speakerPin = 8; // control horn pin
 int potPin = 4; // control pin adjustable resistor
 int value = 0;
 
-void setup() {
+void setup();
 pinMode(speakerPin, OUTPUT);
 }
 
