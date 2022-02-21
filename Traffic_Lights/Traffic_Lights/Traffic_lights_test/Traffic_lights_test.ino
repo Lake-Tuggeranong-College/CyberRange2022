@@ -8,15 +8,10 @@
 #define LIGHT_1_YELLOW 3
 #define LIGHT_1_GREEN 4
 
-// Light definitions
-#define GREEN_LIGHT 0
-#define YELLOW_LIGHT 1
-#define RED_LIGHT 2
-
 // Constants used here to set pin numbers:
-const int Light_1_RED = 11; // the number of the red LED pin
-const int Light_1_YELLOW = 12; // the number of the Yellow LED pin
-const int Light_1_GREEN = 13; // the number of the green LED pin
+const int Light_1_RED = A1; // the number of the red LED pin
+const int Light_1_YELLOW = A2; // the number of the Yellow LED pin
+const int Light_1_GREEN = A3; // the number of the green LED pin
 
 void setup() {
   // Traffic light serial setup
@@ -29,22 +24,22 @@ Serial.begin(9600);
   digitalWrite(LIGHT_1_GREEN, HIGH);
   digitalWrite(LIGHT_1_YELLOW, HIGH);
   digitalWrite(LIGHT_1_RED, HIGH);  
+
+  delay(5000);
 }
 
 void loop() {
   // Traffic Light cycle
   digitalWrite(LIGHT_1_RED, HIGH);   // turn the red LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
-  digitalWrite(LIGHT_1_RED, LOW);    // turn the red LED off by making the voltage LOW
-  delay(1000);
-  
-  digitalWrite(LIGHT_1_YELLOW, HIGH);   // turn the yellow LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
-  digitalWrite(LIGHT_1_YELLOW, LOW);    // turn the yellow LED off by making the voltage LOW
-  delay(1000);
-
-  digitalWrite(LIGHT_1_GREEN, HIGH);   // turn the green LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
-  digitalWrite(LIGHT_1_GREEN, LOW);    // turn the green LED off by making the voltage LOW
-  delay(1000);
+  digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
+  digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
+  delay(10000);
+  digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
+  digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
+  digitalWrite(LIGHT_1_GREEN, HIGH);   // turn the red LED on (HIGH is the voltage level)
+  delay(10000);
+  digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
+  digitalWrite(LIGHT_1_YELLOW, HIGH);   // turn the red LED on (HIGH is the voltage level)
+  digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
+  delay(3000);
 }
