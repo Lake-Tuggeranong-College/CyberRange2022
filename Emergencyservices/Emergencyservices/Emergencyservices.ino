@@ -52,7 +52,7 @@ char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursd
 
 const int LOOPDELAY = 25;
 
-void setup() {
+void setup();
   Serial.begin(9600);
   while (!Serial) {
     delay(10);
