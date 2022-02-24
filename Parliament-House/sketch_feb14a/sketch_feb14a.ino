@@ -60,10 +60,7 @@ int CheckJoystick()
 void checkVote() {
   int joyStick = CheckJoystick();
 
-  int numAlpha = 0;
-  int numBravo = 0;
-  int numCharlie = 0;
-  int numDelta = 0;
+
   String alpha = "A";
   String bravo = "B";
   String charlie = "C";
@@ -91,10 +88,3 @@ void checkVote() {
       break;
   }
 }
-
-/*void voteToString () {
-   alpha = String(numAlpha);
-   bravo = String(numBravo);
-   charlie = String(numCharlie);
-   delta = String(numDelta);
-  }*/
