@@ -104,7 +104,6 @@ void setup() {
 }
 
 void loop() {
-
   emergencyservices();
   delay(LOOPDELAY);
 }

@@ -7,6 +7,7 @@ from forms import LoginForm, RegistrationForm, CTFSubsystemForm, ClaimSubsystemF
 from models import User, CTFSubSystems, Order
 from sqlalchemy import text
 from app import db
+from werkzeug.security import check_password_hash, generate_password_hash
 
 game_management_blueprint = Blueprint('game_management_blueprint', __name__)
 
