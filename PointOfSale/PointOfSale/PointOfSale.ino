@@ -104,10 +104,15 @@ void setup() {
 
 void loop() {
 
-  emergency services();
+  windmill();
   delay(LOOPDELAY);
 }
 
+void windmill() {
+  // windmill turns until hacked.
+
+
+}
 
 void logEvent(String dataToLog) {
   /*
