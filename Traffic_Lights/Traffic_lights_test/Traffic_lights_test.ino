@@ -1,4 +1,4 @@
-// Traffic lights timer definitions
+// Traffic lights timer definition
 // #define RED_SET_TIME 5000
 // #define YELLOW_SET_TIME 2000
 // #define GREEN_SET_TIME 5000
