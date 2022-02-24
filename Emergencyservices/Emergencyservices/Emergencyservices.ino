@@ -79,6 +79,7 @@ void setup() {
 
 
 
+
   routesConfiguration(); // Reads routes from routesManagement
 
   server.begin();
@@ -103,11 +104,13 @@ void setup() {
 }
 
 void loop() {
-
-  emergency services();
+  emergencyservices();
   delay(LOOPDELAY);
 }
 
+void emergencyservices() {
+  //emergency services will randomly mnake static noises
+}
 
 void logEvent(String dataToLog) {
   /*
