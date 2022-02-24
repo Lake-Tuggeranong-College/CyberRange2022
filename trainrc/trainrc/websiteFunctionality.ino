@@ -53,4 +53,6 @@ String processor(const String& var) {
 
   // Default "catch" which will return nothing in case the HTML has no variable to replace.
   return String();
+#include <WiFi.h>
+  
 }
