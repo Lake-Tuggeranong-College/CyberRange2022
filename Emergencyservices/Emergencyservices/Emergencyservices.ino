@@ -52,7 +52,7 @@ char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursd
 
 const int LOOPDELAY = 25;
 
-void setup();
+void setup() {
   Serial.begin(9600);
   while (!Serial) {
     delay(10);
@@ -76,12 +76,12 @@ void setup();
   Serial.print("Connected to the Internet");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
-  
+
 
 
 
   routesConfiguration(); // Reads routes from routesManagement
-  
+
   server.begin();
 
 
@@ -110,7 +110,7 @@ void loop() {
 }
 
 void emergencyservices() {
-  //emergency services will randomly mnake static noises 
+  //emergency services will randomly mnake static noises
 }
 
 void logEvent(String dataToLog) {
