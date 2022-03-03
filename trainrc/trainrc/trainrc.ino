@@ -77,14 +77,14 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
   routesConfiguration(); // Reads routes from routesManagement
-  
+
   server.begin();
 
 
