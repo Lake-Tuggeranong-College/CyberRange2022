@@ -27,13 +27,13 @@ char* textstring = "work this time";
 void setup() {
   tft.initR(INITR_BLACKTAB);
   // put your setup code here, to run once:
-  tft.fillScreen(ST77XX_BLACK);
   tft.setRotation(1);
   Serial.begin(9600);
 }
 
 void loop() {
   checkVote();
+  updateVote();
 };
 
 void drawtext(String text, uint16_t colour, int xmod, int ymod) {
@@ -59,32 +59,38 @@ int CheckJoystick()
 
 void checkVote() {
   int joyStick = CheckJoystick();
-
-
-  String alpha = "A";
-  String bravo = "B";
-  String charlie = "C";
-  String delta = "D";
   switch (joyStick) {
+    case Neutral:
+      return;
+      break;
     case Up:
       numAlpha++;
-      alpha = String(numAlpha);
-      drawtext(alpha, ST77XX_WHITE, 0, 30);
       break;
     case Right:
       numBravo++;
-      bravo = String(numBravo);
-      drawtext(bravo, ST77XX_WHITE, 0, 60);
       break;
     case Down:
       numCharlie++;
-      charlie = String(numCharlie);
-      drawtext(charlie, ST77XX_WHITE, 30, 30);
       break;
     case Left:
       numDelta++;
-      delta = String(numDelta);
-      drawtext(delta, ST77XX_WHITE, 30, 60);
       break;
   }
+}
+
+void updateVote() {
+  String alpha = "0";
+  String bravo = "0";
+  String charlie = "0";
+  String delta = "0";
+  alpha = String(numAlpha);
+  bravo = String(numBravo);
+  charlie = String(numCharlie);
+  delta = String(numDelta);
+  tft.fillScreen(ST77XX_WHITE);
+  drawtext(delta, ST77XX_BLUE, 35, 60);
+  drawtext(charlie, 0xF81F, 35, 30);
+  drawtext(bravo, ST77XX_YELLOW, 5, 60);
+  drawtext(alpha, ST77XX_RED, 5, 30);
+  sleep(50);
 }
