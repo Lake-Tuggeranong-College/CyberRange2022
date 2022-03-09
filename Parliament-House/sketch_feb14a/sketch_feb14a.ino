@@ -87,10 +87,10 @@ void updateVote() {
   bravo = String(numBravo);
   charlie = String(numCharlie);
   delta = String(numDelta);
-  tft.fillScreen(ST77XX_WHITE);
-  drawtext(delta, ST77XX_BLUE, 35, 60);
-  drawtext(charlie, 0xF81F, 35, 30);
-  drawtext(bravo, ST77XX_YELLOW, 5, 60);
-  drawtext(alpha, ST77XX_RED, 5, 30);
+  tft.fillScreen(ST77XX_BLACK);
+  drawtext(delta, ST77XX_WHITE, 35, 60);
+  drawtext(charlie, ST77XX_WHITE, 35, 30);
+  drawtext(bravo, ST77XX_WHITE, 5, 60);
+  drawtext(alpha, ST77XX_WHITE, 5, 30);
   sleep(50);
 }
