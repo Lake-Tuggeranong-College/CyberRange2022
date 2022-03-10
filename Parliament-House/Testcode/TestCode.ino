@@ -26,7 +26,6 @@ char* textstring = "work this time";
 
 void setup() {
   tft.initR(INITR_BLACKTAB);
-  // put your setup code here, to run once:
   tft.setRotation(1);
   Serial.begin(9600);
 }
@@ -47,13 +46,14 @@ void drawtext(String text, uint16_t colour, int xmod, int ymod) {
 int CheckJoystick()
 {
   //I duno what pin should be used here
-  int joystickState = analogRead(1);
+  float joystickState = analogRead(A12);
 
   if (joystickState < 50) return Left;
   if (joystickState < 150) return Down;
   if (joystickState < 250) return Press;
   if (joystickState < 500) return Right;
   if (joystickState < 650) return Up;
+  Serial.println(joystickState);
   return Neutral;
 }
 
@@ -92,5 +92,5 @@ void updateVote() {
   drawtext(charlie, ST77XX_WHITE, 35, 30);
   drawtext(bravo, ST77XX_WHITE, 5, 60);
   drawtext(alpha, ST77XX_WHITE, 5, 30);
-  sleep(50);
+  sleep(20);
 }
