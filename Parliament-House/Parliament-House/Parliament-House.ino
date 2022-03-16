@@ -185,6 +185,16 @@ void checkVote() {
   }
 }
 
+/*
+        <a href="/VoteAlpha">Vote Alpha</a>
+        <a href="/VoteBravo">Vote Bravo</a>
+        <a href="/VoteCharlie">Vote Charlie</a>
+        <a href="/VoteDelta">Vote Delta</a>
+        <a href="/StopTheCount">Cease Voting</a>
+        <a href="/ContinueVoting">Continue Voting</a>
+        <a href="/Reset">Reset Votes</a>
+ */
+
 void updateVote() {
   String alpha = "0";
   String bravo = "0";
