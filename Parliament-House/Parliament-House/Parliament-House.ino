@@ -27,17 +27,33 @@
 
 AsyncWebServer server(80);
 
-// EINK Start - Remove if unnecessary
-#include "Adafruit_ThinkInk.h"
+#include <SPI.h>
 
-#define EPD_CS      15
-#define EPD_DC      33
-#define SRAM_CS     32
-#define EPD_RESET   -1 // can set to -1 and share with microcontroller Reset!
-#define EPD_BUSY    -1 // can set to -1 to not use a pin (will wait a fixed delay)
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7735.h>
+#include <Adafruit_ST7789.h>
 
+#define TFT_CS         14
+#define TFT_RST        15
+#define TFT_DC         32
+
+#define Neutral 0
+#define Press 1
+#define Up 2
+#define Down 3
+#define Right 4
+#define Left 5
+
+int numAlpha = 0;
+int numBravo = 0;
+int numCharlie = 0;
+int numDelta = 0;
+
+
+Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
+char* textstring = "work this time";
 // 2.13" Monochrome displays with 250x122 pixels and SSD1675 chipset
-ThinkInk_213_Mono_B72 display(EPD_DC, EPD_RESET, EPD_CS, SRAM_CS, EPD_BUSY);
+//ThinkInk_213_Mono_B72 display(EPD_DC, EPD_RESET, EPD_CS, SRAM_CS, EPD_BUSY);
 
 // EINK End
 
@@ -57,8 +73,10 @@ void setup() {
   while (!Serial) {
     delay(10);
   }
-  delay(1000);
-
+  
+  tft.initR(INITR_BLACKTAB);
+  tft.setRotation(1);
+  
   if (!SPIFFS.begin(FORMAT_SPIFFS_IF_FAILED)) {
     // Follow instructions in README and install
     // https://github.com/me-no-dev/arduino-esp32fs-plugin
@@ -94,11 +112,6 @@ void setup() {
   // The following line can be uncommented if the time needs to be reset.
   rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   rtc.start();
-
-  //EINK
-  display.begin(THINKINK_MONO);
-  display.clearBuffer();
-
   logEvent("System Initialisation...");
 }
 
@@ -129,27 +142,72 @@ void logEvent(String dataToLog) {
   Serial.println(logEntry);
 }
 
-void updateEPD() {
-  /*
-     "Draws" updates to the Eink (E Paper Display -EPD) display.
-     Configures all in memory and only writes to the display using 'display.display();'
-
-     Update this as necessary.
-  */
-
-  // Display IP Address
-  drawText(WiFi.localIP().toString(), EPD_BLACK, 1, 130, 80);
-
-
-  logEvent("Updating the EPD");
-  display.display();
-
+void drawtext(String text, uint16_t colour, int xmod, int ymod) {
+  tft.setCursor(xmod, ymod);
+  tft.setTextColor(colour);
+  tft.setTextWrap(true);
+  tft.setTextSize(2);
+  tft.print(text);
 }
 
-void drawText(String text, uint16_t color, int textSize, int x, int y) {
-  display.setCursor(x, y);
-  display.setTextColor(color);
-  display.setTextSize(textSize);
-  display.setTextWrap(true);
-  display.print(text);
+int CheckJoystick()
+{
+  //I duno what pin should be used here
+  float joystickState = analogRead(A12);
+
+  if (joystickState < 50) return Left;
+  if (joystickState < 150) return Down;
+  if (joystickState < 250) return Press;
+  if (joystickState < 500) return Right;
+  if (joystickState < 650) return Up;
+  Serial.println(joystickState);
+  return Neutral;
+}
+
+void checkVote() {
+  int joyStick = CheckJoystick();
+  switch (joyStick) {
+    case Neutral:
+      return;
+      break;
+    case Up:
+      numAlpha++;
+      break;
+    case Right:
+      numBravo++;
+      break;
+    case Down:
+      numCharlie++;
+      break;
+    case Left:
+      numDelta++;
+      break;
+  }
+}
+
+/*
+        <a href="/VoteAlpha">Vote Alpha</a>
+        <a href="/VoteBravo">Vote Bravo</a>
+        <a href="/VoteCharlie">Vote Charlie</a>
+        <a href="/VoteDelta">Vote Delta</a>
+        <a href="/StopTheCount">Cease Voting</a>
+        <a href="/ContinueVoting">Continue Voting</a>
+        <a href="/Reset">Reset Votes</a>
+ */
+
+void updateVote() {
+  String alpha = "0";
+  String bravo = "0";
+  String charlie = "0";
+  String delta = "0";
+  alpha = String(numAlpha);
+  bravo = String(numBravo);
+  charlie = String(numCharlie);
+  delta = String(numDelta);
+  tft.fillScreen(ST77XX_BLACK);
+  drawtext(delta, ST77XX_WHITE, 35, 60);
+  drawtext(charlie, ST77XX_WHITE, 35, 30);
+  drawtext(bravo, ST77XX_WHITE, 5, 60);
+  drawtext(alpha, ST77XX_WHITE, 5, 30);
+  sleep(20);
 }
