@@ -19,17 +19,10 @@
 
 #define FORMAT_SPIFFS_IF_FAILED true
 
-// #define RED_SET_TIME 5000
-// #define YELLOW_SET_TIME 2000
-// #define GREEN_SET_TIME 5000
-
-// #define LIGHT_1_RED 2
-// #define LIGHT_1_YELLOW 3
-// #define LIGHT_1_GREEN 4
-
-// #define GREEN_LIGHT 0
-// #define YELLOW_LIGHT 1
-// #define RED_LIGHT 2
+// Traffic lights colour definitions
+#define LIGHT_1_RED 13
+#define LIGHT_1_YELLOW 12
+#define LIGHT_1_GREEN 27
 
 // Wifi & Webserver
 #include "WiFi.h"
@@ -89,7 +82,20 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
+  // Traffic light serial setup
+{
+  Serial.begin(9600);
+  // initializes the traffic lights as the outputs
+  pinMode(LIGHT_1_RED, OUTPUT);
+  pinMode(LIGHT_1_YELLOW, OUTPUT);
+  pinMode(LIGHT_1_GREEN, OUTPUT);
 
+  digitalWrite(LIGHT_1_GREEN, HIGH);
+  digitalWrite(LIGHT_1_YELLOW, HIGH);
+  digitalWrite(LIGHT_1_RED, HIGH);
+
+  delay(5000);
+}
 
   routesConfiguration(); // Reads routes from routesManagement
   
@@ -120,7 +126,18 @@ void loop() {
 
 void lightSwitching(){
   // Lights switch until hacked
-
+digitalWrite(LIGHT_1_RED, HIGH);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
+   delay(10000);
+   digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_GREEN, HIGH);   // turn the red LED on (HIGH is the voltage level)
+   delay(10000);
+   digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_YELLOW, HIGH);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
+   delay(3000);
   
 }
 
