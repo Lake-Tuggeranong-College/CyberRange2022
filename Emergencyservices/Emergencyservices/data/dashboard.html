@@ -19,13 +19,25 @@
 
 <div class="grid-container">
     <div class="banner"> This is the control centre for the Emergency services department  </div>
-    <div><p>Date and Time </p>
-        <p>%DATETIME% *</p></div>
-    <div></div>
+    <div>
+        <form action="/Sirenon ">
+            <input type="submit" value="Turn Sirenon On" />
+            </form>
+            <form action="/Sirenoff">
+                <input type="submit" value="Turn Sirenoff Off" />
+                </form>
+
+
+    </div>
+    <div>
+
+
+
+    </div>
     <div>LogEvents<p><a href="/logOutput">Download</a></div>
     <div>
-        <p><a href="/LEDOn">Turn LED On</a></p>
-        <p><a href="/LEDOff">Turn LED Off</a></p>
+        <p>Date and Time </p>
+        <p>%DATETIME% *</p>
     </div>
 
 </div>
