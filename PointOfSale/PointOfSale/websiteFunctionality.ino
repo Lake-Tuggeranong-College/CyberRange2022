@@ -7,9 +7,39 @@ void routesConfiguration() {
 
   // Duplicated serving of index.html route, so the IP can be entered directly to browser.
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /");
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
+  server.on("/longBlackLarge", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /longBlackLarge");
+    request->send(SPIFFS, "/dashboard.html", "text/html");
+  });
+
+  server.on("/longBlackMedium", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /longBlackMedium");
+    request->send(SPIFFS, "/dashboard.html", "text/html");
+  });
+
+  server.on("/longBlackSmall", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /longBlackSmall");
+    request->send(SPIFFS, "/dashboard.html", "text/html");
+  });
+
+    server.on("/mochaLarge", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /mochaLarge");
+    request->send(SPIFFS, "/dashboard.html", "text/html");
+  });
+
+  server.on("/mochaMedium", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /mochaMedium");
+    request->send(SPIFFS, "/dashboard.html", "text/html");
+  });
+
+  server.on("/mochaSmall", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /mochaSmall");
+    request->send(SPIFFS, "/dashboard.html", "text/html");
+  });
 
   // Example of linking to an external file
   server.on("/arduino.css", HTTP_GET, [](AsyncWebServerRequest * request) {

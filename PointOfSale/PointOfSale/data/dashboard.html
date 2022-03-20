@@ -8,30 +8,50 @@
 </head>
 
 <body>
-<nav>
-    <ul>
-        <li><a href="index.html">Home</a></li>
-        <li class="active"><a href="/dashboard.html">Dashboard</a></li>
-    </ul>
-</nav>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li class="active"><a href="/dashboard.html">Dashboard</a></li>
+        </ul>
+    </nav>
 
-<h1>Point of Sale Terminal</h1>
+    <h1>Point of Sale Terminal</h1>
 
-<div class="grid-container">
-    <div class="banner">This is the Point of Sale Terminal for the local coffee house - GrindHouse. <br>
-    On this page you will be able to purchase different coffees.
+    <div class="grid-container">
+        <div class="banner">This is the Point of Sale Terminal for the local coffee house - GrindHouse. <br>
+            On this page you will be able to purchase different coffees.
+        </div>
+        <div>
+            <form action="/longBlackLarge">
+                <input type="submit" value="Large Long Black" />
+            </form>
+            <form action="/longBlackMedium">
+                <input type="submit" value="Medium Long Black" />
+            </form>
+            <form action="/longBlackSmall">
+                <input type="submit" value="Small Long Black" />
+            </form>
+        </div>
+        <div>
+            <form action="/mochaLarge">
+                <input type="submit" value="Large Long Black" />
+            </form>
+            <form action="/mochaMedium">
+                <input type="submit" value="Medium Long Black" />
+            </form>
+            <form action="/mochaSmall">
+                <input type="submit" value="Small Long Black" />
+            </form>
+        </div>
+        <div>LogEvents<p><a href="/logOutput">Download</a></div>
+        <div>
+            <p>Date and Time </p>
+            <p>%DATETIME% *</p>
+        </div>
+
     </div>
-    <div></div>
-    <div></div>
-    <div>LogEvents<p><a href="/logOutput">Download</a></div>
-    <div>
-        <p>Date and Time </p>
-        <p>%DATETIME% *</p>
-    </div>
 
-</div>
-
-<sup class="tinyText">* Example of HTML/Arduino Variable</sup>
+    <sup class="tinyText">* Example of HTML/Arduino Variable</sup>
 
 
 </body>
