@@ -19,18 +19,6 @@
 
 #define FORMAT_SPIFFS_IF_FAILED true
 
-// #define RED_SET_TIME 5000
-// #define YELLOW_SET_TIME 2000
-// #define GREEN_SET_TIME 5000
-
-// #define LIGHT_1_RED 2
-// #define LIGHT_1_YELLOW 3
-// #define LIGHT_1_GREEN 4
-
-// #define GREEN_LIGHT 0
-// #define YELLOW_LIGHT 1
-// #define RED_LIGHT 2
-
 // Wifi & Webserver
 #include "WiFi.h"
 #include "SPIFFS.h"
@@ -92,7 +80,7 @@ void setup() {
 
 
   routesConfiguration(); // Reads routes from routesManagement
-  
+
   server.begin();
 
 
@@ -115,13 +103,15 @@ void setup() {
 }
 
 void loop() {
+
+  windmill();
   delay(LOOPDELAY);
 }
 
-void lightSwitching(){
-  // Lights switch until hacked
+void windmill() {
+  // windmill turns until hacked.
 
-  
+
 }
 
 void logEvent(String dataToLog) {

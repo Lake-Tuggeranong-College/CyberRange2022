@@ -14,22 +14,10 @@
   Written by Limor Fried/Ladyada for Adafruit Industries.
   MIT license, all text above must be included in any redistribution
  ****************************************************/
-
+// taking  over new author 
 #include "sensitiveInformation.h"
 
 #define FORMAT_SPIFFS_IF_FAILED true
-
-// #define RED_SET_TIME 5000
-// #define YELLOW_SET_TIME 2000
-// #define GREEN_SET_TIME 5000
-
-// #define LIGHT_1_RED 2
-// #define LIGHT_1_YELLOW 3
-// #define LIGHT_1_GREEN 4
-
-// #define GREEN_LIGHT 0
-// #define YELLOW_LIGHT 1
-// #define RED_LIGHT 2
 
 // Wifi & Webserver
 #include "WiFi.h"
@@ -118,11 +106,15 @@ void loop() {
   delay(LOOPDELAY);
 }
 
-void lightSwitching(){
-  // Lights switch until hacked
-
-  
+void trackSwitch (bool mainTrack){
+  if (mainTrack) {
+    // servo goes to the left // use value 0 
+  }
+  else {
+    // servo goes to the right // use value 180 
+  }
 }
+
 
 void logEvent(String dataToLog) {
   /*
