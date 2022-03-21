@@ -82,10 +82,7 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  // Traffic light serial setup
-{
-  Serial.begin(9600);
-  // initializes the traffic lights as the outputs
+// initializes the traffic lights as the outputs
   pinMode(LIGHT_1_RED, OUTPUT);
   pinMode(LIGHT_1_YELLOW, OUTPUT);
   pinMode(LIGHT_1_GREEN, OUTPUT);
@@ -95,7 +92,6 @@ void setup() {
   digitalWrite(LIGHT_1_RED, HIGH);
 
   delay(5000);
-}
 
   routesConfiguration(); // Reads routes from routesManagement
   

@@ -34,6 +34,16 @@ void routesConfiguration() {
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
+  server.on("/trafficLightsOn", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /trafficLightsOn");
+    request->send(SPIFFS, "/dashboard.html", "text/html");
+  });
+
+    server.on("/trafficLightsOff", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /trafficLightsOff");
+    request->send(SPIFFS, "/dashboard.html", "text/html");
+  });
+
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
     Serial.println("output");
