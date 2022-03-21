@@ -30,10 +30,17 @@ void routesConfiguration() {
   server.on("/LEDOn", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    digitalWrite(LED_BUILTIN, HIGH);
+    Serial.println("LED on");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
-
+// Example of route with authentication, and use of processor
+  // Also demonstrates how to have arduino functionality included (turn LED on)
+  server.on("/LEDOff", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    Serial.println("LED off");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
     Serial.println("output");
