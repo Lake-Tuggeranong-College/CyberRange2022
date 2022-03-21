@@ -79,7 +79,6 @@ void setup() {
 
 
 
-
   routesConfiguration(); // Reads routes from routesManagement
 
   server.begin();
@@ -104,12 +103,15 @@ void setup() {
 }
 
 void loop() {
-  emergencyservices();
+
+  windmill();
   delay(LOOPDELAY);
 }
 
-void emergencyservices() {
-  //emergency services will randomly mnake static noises
+void windmill() {
+  // windmill turns until hacked.
+
+
 }
 
 void logEvent(String dataToLog) {
