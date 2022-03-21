@@ -17,15 +17,25 @@
 
 <h1>Telstra Tower</h1>
 
-<div class="grid-container">
-    <<form action="/LEDOn">
-        <input type="submit" value="Turn LED On" />
-        </form>
-        <form action= '/LED flash in different colours'
-            <input type='submit' value="LED flash in different colours"
-        <p><a href="/LEDOn">Turn LED On</a></p>
-</div>
 
+  
+
+<div class="grid-container">
+    <div class="banner">Title</div>
+    <div><form action="/LEDOn">
+        <input type="submit" value="Turn LED On" />
+        </form></div>
+    <div> <form action="/LEDOff">
+        <input type="submit" value="Turn LED Off" />
+        </form></div>
+    <div>LogEvents<p><a href="/logOutput">Download</a></div>
+    <div>
+        <p>Date and Time </p>
+        <p>%DATETIME% *</p>
+      
+    </div>
+
+</div>
 <sup class="tinyText">* Example of HTML/Arduino Variable</sup>
 
 
