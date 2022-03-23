@@ -49,6 +49,7 @@ int numBravo = 0;
 int numCharlie = 0;
 int numDelta = 0;
 
+bool stoppedVote = false;
 
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 char* textstring = "work this time";
@@ -73,10 +74,10 @@ void setup() {
   while (!Serial) {
     delay(10);
   }
-  
+
   tft.initR(INITR_BLACKTAB);
   tft.setRotation(1);
-  
+
   if (!SPIFFS.begin(FORMAT_SPIFFS_IF_FAILED)) {
     // Follow instructions in README and install
     // https://github.com/me-no-dev/arduino-esp32fs-plugin
@@ -97,9 +98,10 @@ void setup() {
 
 
 
-  routesConfiguration(); // Reads routes from routesManagement
+ routesConfiguration(); // Reads routes from routesManagement
 
   server.begin();
+
 
 
   // RTC
@@ -133,7 +135,7 @@ void logEvent(String dataToLog) {
   const char * logEntry = logTemp.c_str(); //convert the logtemp to a char * variable
 
   //Add the log entry to the end of logevents.csv
-  appendFile(SPIFFS, "/logEvents.csv", logEntry);
+//  appendFile(SPIFFS, "/logEvents.csv", logEntry);
 
   // Output the logEvents - FOR DEBUG ONLY. Comment out to avoid spamming the serial monitor.
   //  readFile(SPIFFS, "/logEvents.csv");
@@ -193,9 +195,10 @@ void checkVote() {
         <a href="/StopTheCount">Cease Voting</a>
         <a href="/ContinueVoting">Continue Voting</a>
         <a href="/Reset">Reset Votes</a>
- */
-
+*/
 void updateVote() {
+  if (stoppedVote)
+    return;
   String alpha = "0";
   String bravo = "0";
   String charlie = "0";
@@ -210,4 +213,23 @@ void updateVote() {
   drawtext(bravo, ST77XX_WHITE, 5, 60);
   drawtext(alpha, ST77XX_WHITE, 5, 30);
   sleep(20);
+}
+
+void stopTheCount() {
+  stoppedVote = true;
+  Serial.println("Voting stopped!");
+}
+
+void continueVoting() {
+  stoppedVote = false;
+  Serial.println("Voting resumed!");
+}
+
+void resetVotes() {
+  if (stoppedVote)
+    return;
+  numAlpha = 0;
+  numBravo = 0;
+  numCharlie = 0;
+  numDelta = 0;
 }
