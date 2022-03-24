@@ -18,42 +18,42 @@ void routesConfiguration() {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /longBlackLarge");
-    request->send(SPIFFS, "/dashboard.html", "text/html");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
   server.on("/longBlackMedium", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /longBlackMedium");
-    request->send(SPIFFS, "/dashboard.html", "text/html");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
   server.on("/longBlackSmall", HTTP_GET, [](AsyncWebServerRequest * request) {
    if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /longBlackSmall");
-    request->send(SPIFFS, "/dashboard.html", "text/html");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
   server.on("/mochaLarge", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /mochaLarge");
-    request->send(SPIFFS, "/dashboard.html", "text/html");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
   server.on("/mochaMedium", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /mochaMedium");
-    request->send(SPIFFS, "/dashboard.html", "text/html");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
   server.on("/mochaSmall", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /mochaSmall");
-    request->send(SPIFFS, "/dashboard.html", "text/html");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
   // Example of linking to an external file
@@ -89,6 +89,13 @@ void routesConfiguration() {
   });
 }
 
+String getDateTime() {
+  DateTime rightNow = rtc.now();
+  char csvReadableDate[25];
+  sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d",  rightNow.hour(), rightNow.minute(),rightNow.second(), rightNow.day(), rightNow.month(), rightNow.year());
+  return csvReadableDate;
+}
+
 String processor(const String& var) {
   /*
      Updates the HTML by replacing set variables with return value from here.
@@ -98,6 +105,10 @@ String processor(const String& var) {
       if (var=="VARIABLEVALUE") { return "5";}
   */
 
+  if (var == "DATETIME") {
+    String datetime = getDateTime();
+    return datetime;
+  }
 
   // Default "catch" which will return nothing in case the HTML has no variable to replace.
   return String();
