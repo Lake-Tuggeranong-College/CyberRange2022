@@ -32,7 +32,7 @@ void writeFile(fs::FS &fs, const char * path, const char * message) {
 }
 
 void appendFile(fs::FS &fs, const char * path, const char * message) {
-  Serial.printf("Appending to file: %s\r\n", path);
+//  Serial.printf("Appending to file: %s\r\n", path);
 
   File file = fs.open(path, FILE_APPEND);
   if (!file) {
@@ -40,7 +40,8 @@ void appendFile(fs::FS &fs, const char * path, const char * message) {
     return;
   }
   if (file.print(message)) {
-    Serial.println("- message appended");
+    delay(1);
+//    Serial.println("- message appended");
   } else {
     Serial.println("- append failed");
   }
