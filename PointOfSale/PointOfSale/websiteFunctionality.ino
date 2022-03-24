@@ -1,43 +1,58 @@
 void routesConfiguration() {
 
   // Example of a 'standard' route
+  // No Authentication
   server.on("/index.html", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /");
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
   // Duplicated serving of index.html route, so the IP can be entered directly to browser.
+  // No Authentication
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /");
+    logEvent("route: /");
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
   server.on("/longBlackLarge", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /longBlackLarge");
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /longBlackLarge");
     request->send(SPIFFS, "/dashboard.html", "text/html");
   });
 
   server.on("/longBlackMedium", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /longBlackMedium");
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /longBlackMedium");
     request->send(SPIFFS, "/dashboard.html", "text/html");
   });
 
   server.on("/longBlackSmall", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /longBlackSmall");
+   if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /longBlackSmall");
     request->send(SPIFFS, "/dashboard.html", "text/html");
   });
 
-    server.on("/mochaLarge", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /mochaLarge");
+  server.on("/mochaLarge", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /mochaLarge");
     request->send(SPIFFS, "/dashboard.html", "text/html");
   });
 
   server.on("/mochaMedium", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /mochaMedium");
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /mochaMedium");
     request->send(SPIFFS, "/dashboard.html", "text/html");
   });
 
   server.on("/mochaSmall", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /mochaSmall");
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /mochaSmall");
     request->send(SPIFFS, "/dashboard.html", "text/html");
   });
 
@@ -52,6 +67,7 @@ void routesConfiguration() {
   server.on("/dashboard.html", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
+    logEvent("Dashboard");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
@@ -66,7 +82,9 @@ void routesConfiguration() {
 
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("output");
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("Log Event Download");
     request->send(SPIFFS, "/logEvents.csv", "text/html", true);
   });
 }
