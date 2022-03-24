@@ -30,7 +30,7 @@ void routesConfiguration() {
   server.on("/LEDOn", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    Serial.println("LED on");
+    logEvent ("LED on");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 // Example of route with authentication, and use of processor
@@ -38,16 +38,21 @@ void routesConfiguration() {
   server.on("/LEDOff", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    Serial.println("LED off");
+    logEvent("LED off");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("output");
-    request->send(SPIFFS, "/logEvents.csv", "text/html", true);
+    logEvent ("output");
+    request->send(SPIFFS, "/dashboard.html", "text/html", true);
   });
 }
-
+String getDateTime() {
+  DateTime rightNow = rtc.now();
+  char csvReadableDate[25];
+  sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d", rightNow.hour(),rightNow.minute(),rightNow.second(),rightNow.day(),rightNow.month(), rightNow.year());
+  return csvReadableDate;
+}
 String processor(const String& var) {
   /*
      Updates the HTML by replacing set variables with return value from here.
@@ -57,7 +62,11 @@ String processor(const String& var) {
       if (var=="VARIABLEVALUE") { return "5";}
   */
 
-
+if (var == "DATETIME") {
+  String datetime = getDateTime();
+  return datetime;
+ 
+}
   // Default "catch" which will return nothing in case the HTML has no variable to replace.
   return String();
 }
