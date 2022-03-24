@@ -35,18 +35,24 @@ void routesConfiguration() {
   });
 
   server.on("/trafficLightsOn", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /trafficLightsOn");
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /trafficLightsOn");
     request->send(SPIFFS, "/dashboard.html", "text/html");
   });
 
     server.on("/trafficLightsOff", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /trafficLightsOff");
+      if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /trafficLightsOff");
     request->send(SPIFFS, "/dashboard.html", "text/html");
   });
 
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("output");
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("output");
     request->send(SPIFFS, "/logEvents.csv", "text/html", true);
   });
 }
