@@ -14,36 +14,41 @@ void routesConfiguration() {
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
+    // Example of a 'standard' route
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
+    request->send(SPIFFS, "/index.html", "text/html");
+  });
+
   // Duplicated serving of index.html route, so the IP can be entered directly to browser.
   server.on("/VoteAlpha", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    increaseAlpha(1);
-    request->send(SPIFFS, "/index.html", "text/html");
+    increaseAlpha();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
   server.on("/VoteBravo", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    increaseBravo(1);
-    request->send(SPIFFS, "/index.html", "text/html");
+    increaseBravo();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
   server.on("/VoteCharlie", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    increaseCharlie(1);
-    request->send(SPIFFS, "/index.html", "text/html");
+    increaseCharlie();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
   server.on("/VoteDelta", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    increaseDelta(1);
-    request->send(SPIFFS, "/index.html", "text/html");
+    increaseDelta();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
   server.on("/Reset", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     resetVotes();
-    request->send(SPIFFS, "/index.html", "text/html");
+    request->send(SPIFFS, "/index.html", "text/html", false, processor);
   });
   server.on("/StopTheCount", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
@@ -96,8 +101,11 @@ String processor(const String& var) {
      In this function, have:
       if (var=="VARIABLEVALUE") { return "5";}
   */
-
+  if (var == "DATETIME") {
+      String datetime = getTimeAsString() + " " + getDateAsString();
+      return datetime;
 
   // Default "catch" which will return nothing in case the HTML has no variable to replace.
   return String();
+}
 }

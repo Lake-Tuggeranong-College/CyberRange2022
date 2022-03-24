@@ -96,12 +96,9 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-
-
-  routesConfiguration(); // Reads routes from routesManagement
+  routesConfiguration();
 
   server.begin();
-
 
 
   // RTC
@@ -118,8 +115,8 @@ void setup() {
 }
 
 void loop() {
+  checkVote();
   updateVote();
-  delay(LOOPDELAY);
 }
 
 void logEvent(String dataToLog) {
@@ -165,6 +162,7 @@ int CheckJoystick()
   if (joystickState < 650) return Up;
   Serial.println(joystickState);
   return Neutral;
+  delay(LOOPDELAY);
 }
 
 void checkVote() {
@@ -174,35 +172,35 @@ void checkVote() {
       return;
       break;
     case Up:
-      increaseAlpha(1);
+      increaseAlpha();
       break;
     case Right:
-      increaseBravo(1);
+      increaseBravo();
       break;
     case Down:
-      increaseCharlie(1);
+      increaseCharlie();
       break;
     case Left:
-      increaseDelta(1);
+      increaseDelta();
       break;
   }
 }
 
-//functions to increase voting totals, other files don't seem to work with "numVote++" for whatever reason.
-void increaseAlpha(int amount) {
-  numAlpha + amount;
+//functions to increase voting totals, other files don't seem to work with "numVote++" alone for whatever reason. Needs to be in a proc.
+void increaseAlpha() {
+  numAlpha++;
 }
 
-void increaseBravo(int amount) {
-  numBravo + amount;
+void increaseBravo() {
+  numBravo++;
 }
 
-void increaseCharlie(int amount) {
-  numCharlie + amount;
+void increaseCharlie() {
+  numCharlie++;
 }
 
-void increaseDelta(int amount) {
-  numDelta + amount;
+void increaseDelta() {
+  numDelta++;
 }
 
 /*
@@ -215,7 +213,7 @@ void increaseDelta(int amount) {
         <a href="/Reset">Reset Votes</a>
 */
 void updateVote() {
-  if (stoppedVote == true) 
+  if (stoppedVote == true)
     return;
   String alpha = "0";
   String bravo = "0";
@@ -254,3 +252,23 @@ void resetVotes() {
   numCharlie = 0;
   numDelta = 0;
 }
+
+String getDateAsString() {
+    DateTime now = rtc.now();
+
+    // Converts the date into a human-readable format.
+    char humanReadableDate[20];
+    sprintf(humanReadableDate, "%02d/%02d/%02d", now.day(), now.month(), now.year());
+
+    return humanReadableDate;
+  }
+  
+ String getTimeAsString() {
+    DateTime now = rtc.now();
+
+    // Converts the time into a human-readable format.
+    char humanReadableTime[20];
+    sprintf(humanReadableTime, "%02d:%02d:%02d", now.hour(), now.minute(), now.second());
+
+    return humanReadableTime;
+  }
