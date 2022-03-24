@@ -60,7 +60,7 @@ void routesConfiguration() {
 String getDateTime(){
   DateTime rightNow = rtc.now();
   char csvReadableDate[25];
-  sprintf(csvReadableDate, "%02d,%02d,%02d,%02d,%02d,%02d,",  rightNow.year(), rightNow.month(), rightNow.day(), rightNow.hour(), rightNow.minute(), rightNow.second());
+  sprintf(csvReadableDate, "%02d:%02d:%02d: %02d/%02d/%02d",   rightNow.hour(), rightNow.minute(), rightNow.second(), rightNow.day(), rightNow.month(), rightNow.year());
   return csvReadableDate;
 }
 
