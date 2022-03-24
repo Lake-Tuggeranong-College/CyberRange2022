@@ -48,6 +48,14 @@ server.on("/Sirenoff", HTTP_GET, [](AsyncWebServerRequest * request) {
   });
 }
 
+
+String getDateTime() {
+   DateTime rightNow = rtc.now();
+  char csvReadableDate[25];
+  sprintf(csvReadableDate, "%02d:02d:%02d,%02d,%02d,%02d,",  rightNow.hour(), rightNow.minute(), rightNow.second(),rightNow.day(),rightNow.month(),rightNow.year());
+  return csvReadableDate;
+}
+
 String processor(const String& var) {
   /*
      Updates the HTML by replacing set variables with return value from here.
@@ -56,7 +64,11 @@ String processor(const String& var) {
      In this function, have:
       if (var=="VARIABLEVALUE") { return "5";}
   */
-
+  
+if(var == "DATETIME") {
+  String datetime= getDateTime();
+  return datetime;
+}
 
   // Default "catch" which will return nothing in case the HTML has no variable to replace.
   return String();
