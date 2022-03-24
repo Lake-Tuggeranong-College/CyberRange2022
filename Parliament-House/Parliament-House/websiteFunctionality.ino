@@ -16,31 +16,45 @@ void routesConfiguration() {
 
   // Duplicated serving of index.html route, so the IP can be entered directly to browser.
   server.on("/VoteAlpha", HTTP_GET, [](AsyncWebServerRequest * request) {
-    numAlpha++;
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    increaseAlpha(1);
     request->send(SPIFFS, "/index.html", "text/html");
   });
   server.on("/VoteBravo", HTTP_GET, [](AsyncWebServerRequest * request) {
-    numBravo++;
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    increaseBravo(1);
     request->send(SPIFFS, "/index.html", "text/html");
   });
   server.on("/VoteCharlie", HTTP_GET, [](AsyncWebServerRequest * request) {
-    numCharlie++;
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    increaseCharlie(1);
     request->send(SPIFFS, "/index.html", "text/html");
   });
   server.on("/VoteDelta", HTTP_GET, [](AsyncWebServerRequest * request) {
-    numDelta++;
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    increaseDelta(1);
     request->send(SPIFFS, "/index.html", "text/html");
   });
   server.on("/Reset", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
     resetVotes();
     request->send(SPIFFS, "/index.html", "text/html");
   });
   server.on("/StopTheCount", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
     stopTheCount();
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
   server.on("/ContinueVoting", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
     continueVoting();
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });

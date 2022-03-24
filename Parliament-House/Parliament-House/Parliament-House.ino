@@ -98,7 +98,7 @@ void setup() {
 
 
 
- routesConfiguration(); // Reads routes from routesManagement
+  routesConfiguration(); // Reads routes from routesManagement
 
   server.begin();
 
@@ -118,6 +118,7 @@ void setup() {
 }
 
 void loop() {
+  updateVote();
   delay(LOOPDELAY);
 }
 
@@ -135,7 +136,7 @@ void logEvent(String dataToLog) {
   const char * logEntry = logTemp.c_str(); //convert the logtemp to a char * variable
 
   //Add the log entry to the end of logevents.csv
-//  appendFile(SPIFFS, "/logEvents.csv", logEntry);
+  //  appendFile(SPIFFS, "/logEvents.csv", logEntry);
 
   // Output the logEvents - FOR DEBUG ONLY. Comment out to avoid spamming the serial monitor.
   //  readFile(SPIFFS, "/logEvents.csv");
@@ -173,18 +174,35 @@ void checkVote() {
       return;
       break;
     case Up:
-      numAlpha++;
+      increaseAlpha(1);
       break;
     case Right:
-      numBravo++;
+      increaseBravo(1);
       break;
     case Down:
-      numCharlie++;
+      increaseCharlie(1);
       break;
     case Left:
-      numDelta++;
+      increaseDelta(1);
       break;
   }
+}
+
+//functions to increase voting totals, other files don't seem to work with "numVote++" for whatever reason.
+void increaseAlpha(int amount) {
+  numAlpha + amount;
+}
+
+void increaseBravo(int amount) {
+  numBravo + amount;
+}
+
+void increaseCharlie(int amount) {
+  numCharlie + amount;
+}
+
+void increaseDelta(int amount) {
+  numDelta + amount;
 }
 
 /*
@@ -197,7 +215,7 @@ void checkVote() {
         <a href="/Reset">Reset Votes</a>
 */
 void updateVote() {
-  if (stoppedVote)
+  if (stoppedVote == true) 
     return;
   String alpha = "0";
   String bravo = "0";
@@ -217,17 +235,20 @@ void updateVote() {
 
 void stopTheCount() {
   stoppedVote = true;
+  logEvent("Voting was stopped");
   Serial.println("Voting stopped!");
 }
 
 void continueVoting() {
   stoppedVote = false;
+  logEvent("Voting was resumed");
   Serial.println("Voting resumed!");
 }
 
 void resetVotes() {
-  if (stoppedVote)
+  if (stoppedVote == true)
     return;
+  logEvent("Votes were reset");
   numAlpha = 0;
   numBravo = 0;
   numCharlie = 0;
