@@ -115,6 +115,7 @@ void setup() {
   display.clearBuffer();
 
   logEvent("System Initialisation...");
+  updateEPD();
 }
 
 void loop() {
