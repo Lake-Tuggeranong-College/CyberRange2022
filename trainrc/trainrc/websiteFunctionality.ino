@@ -2,18 +2,48 @@ void routesConfiguration() {
 
   // Example of a 'standard' route
   server.on("/index.html", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send(SPIFFS, "/index.html", "text/html");
+    request->send(SPIFFS, "/index.html", "text/html" ,false, processor);
   });
 
   // Duplicated serving of index.html route, so the IP can be entered directly to browser.
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send(SPIFFS, "/index.html", "text/html");
+    logEvent("route: /");
+    request->send(SPIFFS, "/index.html", "text/html" ,false, processor);
   });
 
+  server.on("/Trainspeed1", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /Trainspeed1");
+    request->send(SPIFFS, "/dashboard.html", "text/html" ,false, processor);
+  });
+
+  server.on("/TrainSpeed2", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /Trainspeed2");
+    request->send(SPIFFS, "/dashboard.html", "text/html" ,false, processor);
+  });
+
+  server.on("/TrainSpeed3", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /Trainspeed3");
+    request->send(SPIFFS, "/dashboard.html", "text/html" ,false, processor);
+  });
+
+    server.on("/Trainreverse1", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /Trainreverse1");
+    request->send(SPIFFS, "/dashboard.html", "text/html" ,false, processor);
+  });
+
+  server.on("/Trainreverse2", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /Trainreverse2");
+    request->send(SPIFFS, "/dashboard.html", "text/html" ,false, processor);
+  });
+
+  server.on("/Trainreverse3", HTTP_GET, [](AsyncWebServerRequest * request) {
+    Serial.println("route: /Trainreverse3");
+    request->send(SPIFFS, "/dashboard.html", "text/html" ,false, processor);
+  });
 
   // Example of linking to an external file
   server.on("/arduino.css", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send(SPIFFS, "/arduino.css", "text/css");
+    request->send(SPIFFS, "/arduino.css", "text/css" ,false, processor);
   });
 
 
@@ -27,10 +57,10 @@ void routesConfiguration() {
 
   // Example of route with authentication, and use of processor
   // Also demonstrates how to have arduino functionality included (turn LED on)
-  server.on("/trainspeed1", HTTP_GET, [](AsyncWebServerRequest * request) {
+  server.on("/LEDOn", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-     Serial.println("trainspeed1");
+    digitalWrite(LED_BUILTIN, HIGH);
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
@@ -38,8 +68,10 @@ void routesConfiguration() {
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
     Serial.println("output");
     request->send(SPIFFS, "/logEvents.csv", "text/html", true);
-  });
-}
+    ()
+  
+ 
+});
 
 String processor(const String& var) {
   /*
@@ -49,7 +81,11 @@ String processor(const String& var) {
      In this function, have:
       if (var=="VARIABLEVALUE") { return "5";}
   */
-
+if (var =="DATETIME") {
+  String datetime = getDateTime();
+  return datetime;
+  sprintf(csvReadableDate, "%02d,%02d,%02d,%02d,%02d,%02d,",  rightNow.hour(), rightNow.minute(), rightNow.second(), rightNow.day(), rightNow.year());
+}
 
   // Default "catch" which will return nothing in case the HTML has no variable to replace.
   return String();
