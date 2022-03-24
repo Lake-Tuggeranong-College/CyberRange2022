@@ -30,20 +30,20 @@ void routesConfiguration() {
   server.on("/Sirenon", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-   Serial.println("Sirenon");
+   logEvent("Sirenon");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
 server.on("/Sirenoff", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    Serial.println("Sirenoff");
+    logEvent("Sirenoff");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
   
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("output");
+    logEvent("output");
     request->send(SPIFFS, "/logEvents.csv", "text/html", true);
   });
 }
