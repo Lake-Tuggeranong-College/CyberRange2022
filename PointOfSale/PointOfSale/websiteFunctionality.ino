@@ -20,7 +20,7 @@ void routesConfiguration() {
     logEvent("route: /longBlackLarge");
 
     // order long black
-    
+    orderCoffee("Long Black", 3);
     
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
