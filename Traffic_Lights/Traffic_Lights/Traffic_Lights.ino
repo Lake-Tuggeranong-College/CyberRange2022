@@ -124,18 +124,18 @@ void loop() {
 
 void lightSwitching(){
   // Lights switch until hacked
-digitalWrite(LIGHT_1_RED, HIGH);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_RED, HIGH);   // turn the red LED on (HIGH is the voltage level)
    digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
    digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
-   delay(10000);
+   delay(1000);
    digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
    digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
    digitalWrite(LIGHT_1_GREEN, HIGH);   // turn the red LED on (HIGH is the voltage level)
-   delay(10000);
+   delay(1000);
    digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
    digitalWrite(LIGHT_1_YELLOW, HIGH);   // turn the red LED on (HIGH is the voltage level)
    digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
-   delay(3000);
+   delay(300);
   
 }
 

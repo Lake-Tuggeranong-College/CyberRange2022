@@ -38,6 +38,9 @@ void routesConfiguration() {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /trafficLightsOn");
+    // Turn on the traffic lights
+    lightSwitching();
+    
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
