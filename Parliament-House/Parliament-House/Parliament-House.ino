@@ -95,13 +95,9 @@ void setup() {
   Serial.print("Connected to the Internet");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
-
-
-
- routesConfiguration(); // Reads routes from routesManagement
+  routesConfiguration();
 
   server.begin();
-
 
 
   // RTC
@@ -118,7 +114,8 @@ void setup() {
 }
 
 void loop() {
-  delay(LOOPDELAY);
+  checkVote();
+  updateVote();
 }
 
 void logEvent(String dataToLog) {
@@ -135,7 +132,7 @@ void logEvent(String dataToLog) {
   const char * logEntry = logTemp.c_str(); //convert the logtemp to a char * variable
 
   //Add the log entry to the end of logevents.csv
-//  appendFile(SPIFFS, "/logEvents.csv", logEntry);
+  //  appendFile(SPIFFS, "/logEvents.csv", logEntry);
 
   // Output the logEvents - FOR DEBUG ONLY. Comment out to avoid spamming the serial monitor.
   //  readFile(SPIFFS, "/logEvents.csv");
@@ -164,6 +161,7 @@ int CheckJoystick()
   if (joystickState < 650) return Up;
   Serial.println(joystickState);
   return Neutral;
+  delay(LOOPDELAY);
 }
 
 void checkVote() {
@@ -173,18 +171,35 @@ void checkVote() {
       return;
       break;
     case Up:
-      numAlpha++;
+      increaseAlpha();
       break;
     case Right:
-      numBravo++;
+      increaseBravo();
       break;
     case Down:
-      numCharlie++;
+      increaseCharlie();
       break;
     case Left:
-      numDelta++;
+      increaseDelta();
       break;
   }
+}
+
+//functions to increase voting totals, other files don't seem to work with "numVote++" alone for whatever reason. Needs to be in a proc.
+void increaseAlpha() {
+  numAlpha++;
+}
+
+void increaseBravo() {
+  numBravo++;
+}
+
+void increaseCharlie() {
+  numCharlie++;
+}
+
+void increaseDelta() {
+  numDelta++;
 }
 
 /*
@@ -197,8 +212,9 @@ void checkVote() {
         <a href="/Reset">Reset Votes</a>
 */
 void updateVote() {
-  if (stoppedVote)
+  if (stoppedVote == true)
     return;
+  String deviceIP = String(WiFi.localIP());
   String alpha = "0";
   String bravo = "0";
   String charlie = "0";
@@ -212,24 +228,48 @@ void updateVote() {
   drawtext(charlie, ST77XX_WHITE, 35, 30);
   drawtext(bravo, ST77XX_WHITE, 5, 60);
   drawtext(alpha, ST77XX_WHITE, 5, 30);
+  drawtext(deviceIP, ST77XX_WHITE, 50, 80);
   sleep(20);
 }
 
 void stopTheCount() {
   stoppedVote = true;
+  logEvent("Voting was stopped");
   Serial.println("Voting stopped!");
 }
 
 void continueVoting() {
   stoppedVote = false;
+  logEvent("Voting was resumed");
   Serial.println("Voting resumed!");
 }
 
 void resetVotes() {
-  if (stoppedVote)
+  if (stoppedVote == true)
     return;
+  logEvent("Votes were reset");
   numAlpha = 0;
   numBravo = 0;
   numCharlie = 0;
   numDelta = 0;
+}
+
+String getDateAsString() {
+  DateTime now = rtc.now();
+
+  // Converts the date into a human-readable format.
+  char humanReadableDate[20];
+  sprintf(humanReadableDate, "%02d/%02d/%02d", now.day(), now.month(), now.year());
+
+  return humanReadableDate;
+}
+
+String getTimeAsString() {
+  DateTime now = rtc.now();
+
+  // Converts the time into a human-readable format.
+  char humanReadableTime[20];
+  sprintf(humanReadableTime, "%02d:%02d:%02d", now.hour(), now.minute(), now.second());
+
+  return humanReadableTime;
 }
