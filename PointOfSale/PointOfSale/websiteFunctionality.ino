@@ -18,6 +18,10 @@ void routesConfiguration() {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /longBlackLarge");
+
+    // order long black
+    
+    
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 

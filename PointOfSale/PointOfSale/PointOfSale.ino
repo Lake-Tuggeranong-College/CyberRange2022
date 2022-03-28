@@ -162,3 +162,13 @@ void drawText(String text, uint16_t color, int textSize, int x, int y) {
   display.setTextWrap(true);
   display.print(text);
 }
+
+void orderCoffee (String coffeeType, int coffeeSize) {
+  logEvent("Order received: " + coffeeType + ", size: " + coffeeSize);
+
+  drawText("Last Order:", EPD_BLACK, 2, 0, 0);
+  String textToScreen = coffeeSize + "" + coffeeType;
+  drawText(textToScreen, EPD_BLACK, 2, 0, 0);
+
+  display.display();
+}
