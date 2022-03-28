@@ -95,7 +95,6 @@ void setup() {
   Serial.print("Connected to the Internet");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
-
   routesConfiguration();
 
   server.begin();
@@ -215,6 +214,7 @@ void increaseDelta() {
 void updateVote() {
   if (stoppedVote == true)
     return;
+  String deviceIP = String(WiFi.localIP());
   String alpha = "0";
   String bravo = "0";
   String charlie = "0";
@@ -228,6 +228,7 @@ void updateVote() {
   drawtext(charlie, ST77XX_WHITE, 35, 30);
   drawtext(bravo, ST77XX_WHITE, 5, 60);
   drawtext(alpha, ST77XX_WHITE, 5, 30);
+  drawtext(deviceIP, ST77XX_WHITE, 50, 80);
   sleep(20);
 }
 
@@ -254,21 +255,21 @@ void resetVotes() {
 }
 
 String getDateAsString() {
-    DateTime now = rtc.now();
+  DateTime now = rtc.now();
 
-    // Converts the date into a human-readable format.
-    char humanReadableDate[20];
-    sprintf(humanReadableDate, "%02d/%02d/%02d", now.day(), now.month(), now.year());
+  // Converts the date into a human-readable format.
+  char humanReadableDate[20];
+  sprintf(humanReadableDate, "%02d/%02d/%02d", now.day(), now.month(), now.year());
 
-    return humanReadableDate;
-  }
-  
- String getTimeAsString() {
-    DateTime now = rtc.now();
+  return humanReadableDate;
+}
 
-    // Converts the time into a human-readable format.
-    char humanReadableTime[20];
-    sprintf(humanReadableTime, "%02d:%02d:%02d", now.hour(), now.minute(), now.second());
+String getTimeAsString() {
+  DateTime now = rtc.now();
 
-    return humanReadableTime;
-  }
+  // Converts the time into a human-readable format.
+  char humanReadableTime[20];
+  sprintf(humanReadableTime, "%02d:%02d:%02d", now.hour(), now.minute(), now.second());
+
+  return humanReadableTime;
+}
