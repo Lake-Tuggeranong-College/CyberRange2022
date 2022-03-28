@@ -27,19 +27,31 @@ void routesConfiguration() {
 
   // Example of route with authentication, and use of processor
   // Also demonstrates how to have arduino functionality included (turn LED on)
-  server.on("/LEDOn", HTTP_GET, [](AsyncWebServerRequest * request) {
+  server.on("/TrackLeft", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    digitalWrite(LED_BUILTIN, HIGH);
+   logEvent("Trackleft");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
+ server.on("/TrackRight", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+   logEvent("TrackrRght");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("output");
+      if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("output");
     request->send(SPIFFS, "/logEvents.csv", "text/html", true);
   });
 }
+
+
 
 String processor(const String& var) {
   /*
