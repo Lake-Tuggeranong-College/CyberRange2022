@@ -34,12 +34,16 @@ void routesConfiguration() {
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
+// when someone presses siren on the speaker will start making the beeping noise.
+
 server.on("/Sirenoff", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("Sirenoff");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
+
+  // when someone presses siren off the speaker will stop making the beeping noise.
   
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
@@ -52,7 +56,7 @@ server.on("/Sirenoff", HTTP_GET, [](AsyncWebServerRequest * request) {
 String getDateTime() {
    DateTime rightNow = rtc.now();
   char csvReadableDate[25];
-  sprintf(csvReadableDate, "%02d:02d:%02d,%02d,%02d,%02d,",  rightNow.hour(), rightNow.minute(), rightNow.second(),rightNow.day(),rightNow.month(),rightNow.year());
+  sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d,",  rightNow.hour(), rightNow.minute(), rightNow.second(),rightNow.day(),rightNow.month(),rightNow.year());
   return csvReadableDate;
 }
 

@@ -93,7 +93,7 @@ void setup() {
   }
 
   // The following line can be uncommented if the time needs to be reset.
-  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+ // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   rtc.start();
 
   //EINK
