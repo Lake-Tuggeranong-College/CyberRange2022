@@ -14,7 +14,7 @@
   Written by Limor Fried/Ladyada for Adafruit Industries.
   MIT license, all text above must be included in any redistribution
  ****************************************************/
-
+// taking  over new author 
 #include "sensitiveInformation.h"
 
 #define FORMAT_SPIFFS_IF_FAILED true
@@ -79,9 +79,8 @@ void setup() {
 
 
 
-
   routesConfiguration(); // Reads routes from routesManagement
-
+  
   server.begin();
 
 
@@ -101,17 +100,21 @@ void setup() {
   display.clearBuffer();
 
   logEvent("System Initialisation...");
-  updateEPD();
 }
 
 void loop() {
-  emergencyservices();
   delay(LOOPDELAY);
 }
 
-void emergencyservices() {
-  //emergency services will randomly mnake static noises
+void trackSwitch (bool mainTrack){
+  if (mainTrack) {
+    // servo goes to the left // use value 0 
+  }
+  else {
+    // servo goes to the right // use value 180 
+  }
 }
+
 
 void logEvent(String dataToLog) {
   /*
