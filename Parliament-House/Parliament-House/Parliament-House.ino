@@ -216,7 +216,7 @@ void increaseDelta() {
   numDelta++;
 }
 
-/*
+/*      HTML Links
         <a href="/VoteAlpha">Vote Alpha</a>
         <a href="/VoteBravo">Vote Bravo</a>
         <a href="/VoteCharlie">Vote Charlie</a>
@@ -225,6 +225,8 @@ void increaseDelta() {
         <a href="/ContinueVoting">Continue Voting</a>
         <a href="/Reset">Reset Votes</a>
 */
+
+//Function to apply the changed voting numbers to the screen using the previous drawtext function
 void updateVote() {
   if (stoppedVote == true)
     return;
@@ -244,18 +246,21 @@ void updateVote() {
   sleep(20);
 }
 
+//function to stop the votes, it's checked for in updateVote()
 void stopTheCount() {
   stoppedVote = true;
   logEvent("Voting was stopped");
   Serial.println("Voting stopped!");
 }
 
+//function to continue the voting, opposite to the previous function.
 void continueVoting() {
   stoppedVote = false;
   logEvent("Voting was resumed");
   Serial.println("Voting resumed!");
 }
 
+//function to set all the voting totals back to zero.
 void resetVotes() {
   if (stoppedVote == true)
     return;
@@ -266,6 +271,8 @@ void resetVotes() {
   numDelta = 0;
 }
 
+
+//A pair of functions used with processor in websiteFunctionality to output a date to the website.
 String getDateAsString() {
   DateTime now = rtc.now();
 
