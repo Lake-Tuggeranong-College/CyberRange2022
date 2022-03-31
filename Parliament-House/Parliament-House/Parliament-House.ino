@@ -52,7 +52,6 @@ int numDelta = 0;
 bool stoppedVote = false;
 
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
-char* textstring = "work this time";
 // 2.13" Monochrome displays with 250x122 pixels and SSD1675 chipset
 //ThinkInk_213_Mono_B72 display(EPD_DC, EPD_RESET, EPD_CS, SRAM_CS, EPD_BUSY);
 
@@ -165,7 +164,7 @@ void drawtext(String text, uint16_t colour, int xmod, int ymod) {
 int CheckJoystick()
 {
   //I duno what pin should be used here
-  float joystickState = analogRead(A12);
+  float joystickState = analogRead(22);
 
   if (joystickState < 50) return Left;
   if (joystickState < 150) return Down;
