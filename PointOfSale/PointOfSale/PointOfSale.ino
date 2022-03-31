@@ -1,3 +1,9 @@
+#include <ESP32Servo.h>
+#include <analogWrite.h>
+//#include <tone.h>
+#include <ESP32Tone.h>
+#include <ESP32PWM.h>
+
 /*
    Code explanation goes here....
 
@@ -16,6 +22,7 @@
  ****************************************************/
 
 #include "sensitiveInformation.h"
+
 
 #define FORMAT_SPIFFS_IF_FAILED true
 
@@ -42,6 +49,7 @@ ThinkInk_213_Mono_B72 display(EPD_DC, EPD_RESET, EPD_CS, SRAM_CS, EPD_BUSY);
 // EINK End
 
 
+
 // RTC Start - Remove if unnecessary
 #include "RTClib.h"
 
@@ -51,6 +59,10 @@ char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursd
 // RTC End
 
 const int LOOPDELAY = 25;
+boolean windmillOn = false;
+int servoPin = 14;
+
+Servo myservo;  // create servo object to control a servo
 
 void setup() {
   Serial.begin(9600);
@@ -101,19 +113,45 @@ void setup() {
 
   logEvent("System Initialisation...");
   updateEPD();
+
+  // Servo
+
+  ESP32PWM::allocateTimer(0);
+  ESP32PWM::allocateTimer(1);
+  ESP32PWM::allocateTimer(2);
+  ESP32PWM::allocateTimer(3);
+  myservo.setPeriodHertz(50);    // standard 50 hz servo
+  myservo.attach(servoPin, 1000, 2000); // attaches the servo on pin 18 to the servo object
 }
 
 void loop() {
 
-  windmill();
+  //  windmill();
   delay(LOOPDELAY);
 }
 
-void windmill() {
-  // windmill turns until hacked.
+void windmillFunctionality() {
+  if (windmillOn) {
+    logEvent("Windmill on");
+    // turn windmill on using servo
+    myservo.write(0);
+//    digitalWrite(14, HIGH);
+//    digitalWrite(32, LOW);
+//    delay(100);
+//    digitalWrite(14, LOW);
+//    digitalWrite(32, HIGH);
+//    delay(100);
+  } else {
+    logEvent("Windmill off");
+    myservo.write(90);
+    // Stop windmill
+  }
+
+
 
 
 }
+
 
 void logEvent(String dataToLog) {
   /*

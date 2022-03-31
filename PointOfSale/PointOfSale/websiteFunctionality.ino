@@ -21,7 +21,7 @@ void routesConfiguration() {
 
     // order long black
     orderCoffee("Long Black", 3);
-    
+
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
@@ -33,7 +33,7 @@ void routesConfiguration() {
   });
 
   server.on("/longBlackSmall", HTTP_GET, [](AsyncWebServerRequest * request) {
-   if (!request->authenticate(http_username, http_password))
+    if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /longBlackSmall");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
@@ -59,6 +59,29 @@ void routesConfiguration() {
     logEvent("route: /mochaSmall");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
+
+
+  server.on("/windmillOn", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    windmillOn = true;
+    windmillFunctionality();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/windmillOff", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    windmillOn = false;
+    windmillFunctionality();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+
+
+
+
+
 
   // Example of linking to an external file
   server.on("/arduino.css", HTTP_GET, [](AsyncWebServerRequest * request) {
@@ -96,7 +119,7 @@ void routesConfiguration() {
 String getDateTime() {
   DateTime rightNow = rtc.now();
   char csvReadableDate[25];
-  sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d",  rightNow.hour(), rightNow.minute(),rightNow.second(), rightNow.day(), rightNow.month(), rightNow.year());
+  sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d",  rightNow.hour(), rightNow.minute(), rightNow.second(), rightNow.day(), rightNow.month(), rightNow.year());
   return csvReadableDate;
 }
 
