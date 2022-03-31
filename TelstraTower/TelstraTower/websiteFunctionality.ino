@@ -31,6 +31,8 @@ void routesConfiguration() {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent ("LED on");
+    'LEDOn' = True 
+    lightsflashing();
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
   
@@ -40,6 +42,7 @@ void routesConfiguration() {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("LED off");
+    'LEDOn' = false 
 
    //Tu
 
