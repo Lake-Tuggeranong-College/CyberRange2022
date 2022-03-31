@@ -60,6 +60,7 @@ char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursd
 
 const int LOOPDELAY = 25;
 boolean windmillOn = false;
+boolean LEDOn = false;
 int servoPin = 14;
 
 Servo myservo;  // create servo object to control a servo
@@ -93,6 +94,7 @@ void setup() {
 
   routesConfiguration(); // Reads routes from routesManagement
 
+  pinMode(LED_BUILTIN, OUTPUT);
   server.begin();
 
 
@@ -127,7 +129,9 @@ void setup() {
 void loop() {
 
   //  windmill();
+  LEDFunctionality();
   delay(LOOPDELAY);
+
 }
 
 void windmillFunctionality() {
@@ -135,12 +139,12 @@ void windmillFunctionality() {
     logEvent("Windmill on");
     // turn windmill on using servo
     myservo.write(0);
-//    digitalWrite(14, HIGH);
-//    digitalWrite(32, LOW);
-//    delay(100);
-//    digitalWrite(14, LOW);
-//    digitalWrite(32, HIGH);
-//    delay(100);
+    //    digitalWrite(14, HIGH);
+    //    digitalWrite(32, LOW);
+    //    delay(100);
+    //    digitalWrite(14, LOW);
+    //    digitalWrite(32, HIGH);
+    //    delay(100);
   } else {
     logEvent("Windmill off");
     myservo.write(90);
@@ -149,6 +153,20 @@ void windmillFunctionality() {
 
 
 
+
+}
+
+
+void LEDFunctionality() {
+  if (LEDOn) {
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(100);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(100);
+  } else {
+    // Stop windmill
+    digitalWrite(LED_BUILTIN, LOW);
+  }
 
 }
 

@@ -103,7 +103,14 @@ void routesConfiguration() {
   server.on("/LEDOn", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    digitalWrite(LED_BUILTIN, HIGH);
+    LEDOn = true;
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/LEDOff", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    LEDOn = false;
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
