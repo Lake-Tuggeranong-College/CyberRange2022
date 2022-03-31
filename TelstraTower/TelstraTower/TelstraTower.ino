@@ -110,12 +110,13 @@ void setup() {
 //Telstra Tower LED flashes constanly
 
 void loop() {
+  lightsflashing();
   delay(LOOPDELAY);
 }
 
 void LEDfunctionality() {
-  if (LEDOn) {
-    lofEvent("LED on");
+  if ('LEDOn') {
+    logEvent("LED on");
     //turn LED on using servo
   }
 }
@@ -170,12 +171,15 @@ void drawText(String text, uint16_t color, int textSize, int x, int y) {
 
 void lightsflashing() {
   logEvent("Lights flashing turned on");
-  while (true) {
+  if (telstratowerOn) {
     digitalWrite(32, HIGH);   // turn the LED on (HIGH is the voltage level)
     digitalWrite(14, LOW);   // turn the LED on (HIGH is the voltage level)
     delay(100);                       // wait for a second
     digitalWrite(32, LOW);    // turn the LED off by making the voltage LOW
     digitalWrite(14, HIGH);    // turn the LED off by making the voltage LOW
     delay(100);
+ } else {
+    digitalWrite(14, LOW);   // turn the LED on (HIGH is the voltage level)
+     digitalWrite(32, LOW);    // turn the LED off by making the voltage LOW
   }
 }
