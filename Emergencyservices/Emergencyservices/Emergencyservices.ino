@@ -41,6 +41,8 @@ ThinkInk_213_Mono_B72 display(EPD_DC, EPD_RESET, EPD_CS, SRAM_CS, EPD_BUSY);
 
 // EINK End
 
+boolean emergincyservices = false 
+
 
 // RTC Start - Remove if unnecessary
 #include "RTClib.h"
@@ -111,6 +113,8 @@ void loop() {
 
 void emergencyservices() {
   //emergency services will randomly mnake static noises
+
+  //turning buzzer services on 
 }
 
 void logEvent(String dataToLog) {
