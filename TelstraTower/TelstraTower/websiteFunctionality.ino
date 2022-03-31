@@ -31,19 +31,21 @@ void routesConfiguration() {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent ("LED on");
+    telstratowerOn = true;
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
-  
-// Example of route with authentication, and use of processor
+
+  // Example of route with authentication, and use of processor
   // Also demonstrates how to have arduino functionality included (turn LED on)
   server.on("/LEDOff", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("LED off");
+    telstratowerOn = false;
 
-   //Tu
+    //Turn off LED
 
-    
+
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
   // Example of route which sets file to download - 'true' in send() command.
@@ -55,7 +57,7 @@ void routesConfiguration() {
 String getDateTime() {
   DateTime rightNow = rtc.now();
   char csvReadableDate[25];
-  sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d", rightNow.hour(),rightNow.minute(),rightNow.second(),rightNow.day(),rightNow.month(), rightNow.year());
+  sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d", rightNow.hour(), rightNow.minute(), rightNow.second(), rightNow.day(), rightNow.month(), rightNow.year());
   return csvReadableDate;
 }
 String processor(const String& var) {
@@ -67,11 +69,11 @@ String processor(const String& var) {
       if (var=="VARIABLEVALUE") { return "5";}
   */
 
-if (var == "DATETIME") {
-  String datetime = getDateTime();
-  return datetime;
- 
-}
+  if (var == "DATETIME") {
+    String datetime = getDateTime();
+    return datetime;
+
+  }
   // Default "catch" which will return nothing in case the HTML has no variable to replace.
   return String();
 }
