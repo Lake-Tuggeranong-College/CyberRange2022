@@ -14,6 +14,12 @@ void routesConfiguration() {
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
+    server.on("/img.jpg", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /img.jpg");
+    request->send(SPIFFS, "/img.jpg", "image/jpeg");
+  });
+
+
   server.on("/longBlackLarge", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
