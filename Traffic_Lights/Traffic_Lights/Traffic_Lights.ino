@@ -139,6 +139,23 @@ void lightSwitching(){
   
 }
 
+void hackedLights(){
+  // how lights switch when hacked
+   digitalWrite(LIGHT_1_RED, HIGH);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
+   delay(100);
+   digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_YELLOW, HIGH);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
+   delay(150);
+   digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
+   digitalWrite(LIGHT_1_GREEN, HIGH);   // turn the red LED on (HIGH is the voltage level)
+   delay(100);
+  
+}
+
 void logEvent(String dataToLog) {
   /*
      Log entries to a file stored in SPIFFS partition on the ESP32.
