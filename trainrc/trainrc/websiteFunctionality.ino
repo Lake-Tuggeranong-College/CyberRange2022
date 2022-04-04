@@ -13,32 +13,32 @@ void routesConfiguration() {
 
   server.on("/Trainspeed1", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainspeed1");
-    request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
+    request->send(SPIFFS, "/dashboard.html", "text/html" , true, processor);
   });
 
   server.on("/TrainSpeed2", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainspeed2");
-    request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
+    request->send(SPIFFS, "/dashboard.html", "text/html" , true, processor);
   });
 
   server.on("/TrainSpeed3", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /Trainspeed3");
-    request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
+    logEvent("route: /Trainspeed3");
+    request->send(SPIFFS, "/dashboard.html", "text/html" , true, processor);
   });
 
   server.on("/Trainreverse1", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /Trainreverse1");
-    request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
+    logEvent("route: /Trainreverse1");
+    request->send(SPIFFS, "/dashboard.html", "text/html" , true, processor);
   });
 
   server.on("/Trainreverse2", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /Trainreverse2");
-    request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
+    logEvent("route: /Trainreverse2");
+    request->send(SPIFFS, "/dashboard.html", "text/html" , true, processor);
   });
 
   server.on("/Trainreverse3", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("route: /Trainreverse3");
-    request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
+    logEvent("route: /Trainreverse3");
+    request->send(SPIFFS, "/dashboard.html", "text/html" , true, processor);
   });
 
   // Example of linking to an external file
