@@ -31,6 +31,7 @@ void routesConfiguration() {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
    logEvent("Trackleft");
+   myservo.write(0);
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
@@ -38,6 +39,7 @@ void routesConfiguration() {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
    logEvent("TrackrRght");
+   myservo.write(180);
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
@@ -48,8 +50,9 @@ void routesConfiguration() {
       return request->requestAuthentication();
     logEvent("output");
     request->send(SPIFFS, "/logEvents.csv", "text/html", true);
-  });
+  }); 
 }
+
 
 
 

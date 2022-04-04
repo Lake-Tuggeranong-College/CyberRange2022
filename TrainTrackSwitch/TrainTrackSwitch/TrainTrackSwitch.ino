@@ -14,8 +14,12 @@
   Written by Limor Fried/Ladyada for Adafruit Industries.
   MIT license, all text above must be included in any redistribution
  ****************************************************/
-// taking  over new author 
+// taking  over new author
 #include "sensitiveInformation.h"
+
+#include <ESP32Servo.h>
+Servo myservo;  // create servo object to control a servo
+int servoPin = 12;
 
 #define FORMAT_SPIFFS_IF_FAILED true
 
@@ -59,6 +63,14 @@ void setup() {
   }
   delay(1000);
 
+  ESP32PWM::allocateTimer(0);
+  ESP32PWM::allocateTimer(1);
+  ESP32PWM::allocateTimer(2);
+  ESP32PWM::allocateTimer(3);
+  myservo.setPeriodHertz(50);    // standard 50 hz servo
+  myservo.attach(servoPin, 1000, 2000); // attaches the servo on pin 18 to the servo object
+
+
   if (!SPIFFS.begin(FORMAT_SPIFFS_IF_FAILED)) {
     // Follow instructions in README and install
     // https://github.com/me-no-dev/arduino-esp32fs-plugin
@@ -80,7 +92,7 @@ void setup() {
 
 
   routesConfiguration(); // Reads routes from routesManagement
-  
+
   server.begin();
 
 
@@ -106,12 +118,12 @@ void loop() {
   delay(LOOPDELAY);
 }
 
-void trackSwitch (bool mainTrack){
+void trackSwitch (bool mainTrack) {
   if (mainTrack) {
-    // servo goes to the left // use value 0 
+    // servo goes to the left // use value 0
   }
   else {
-    // servo goes to the right // use value 180 
+    // servo goes to the right // use value 180
   }
 }
 
