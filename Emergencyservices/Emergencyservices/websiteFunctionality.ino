@@ -31,6 +31,7 @@ void routesConfiguration() {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
    logEvent("Sirenon");
+   emergencyservicesActive=true;
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
@@ -40,6 +41,7 @@ server.on("/Sirenoff", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("Sirenoff");
+    emergencyservicesActive=false;
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
