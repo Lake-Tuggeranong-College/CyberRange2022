@@ -57,6 +57,8 @@ char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursd
 
 const int LOOPDELAY = 25;
 
+boolean trafficLightsOn = true;
+
 void setup() {
   Serial.begin(9600);
   while (!Serial) {
@@ -82,7 +84,7 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-// initializes the traffic lights as the outputs
+  // initializes the traffic lights as the outputs
   pinMode(LIGHT_1_RED, OUTPUT);
   pinMode(LIGHT_1_YELLOW, OUTPUT);
   pinMode(LIGHT_1_GREEN, OUTPUT);
@@ -94,7 +96,7 @@ void setup() {
   delay(5000);
 
   routesConfiguration(); // Reads routes from routesManagement
-  
+
   server.begin();
 
 
@@ -107,8 +109,8 @@ void setup() {
 
   // The following line can be uncommented if the time needs to be reset.
   // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-  
-   rtc.start();
+
+  rtc.start();
 
   //EINK
   display.begin(THINKINK_MONO);
@@ -119,41 +121,40 @@ void setup() {
 }
 
 void loop() {
+  lightSwitching();
   delay(LOOPDELAY);
 }
 
-void lightSwitching(){
-  // Lights switch until hacked
-   digitalWrite(LIGHT_1_RED, HIGH);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
-   delay(1000);
-   digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_GREEN, HIGH);   // turn the red LED on (HIGH is the voltage level)
-   delay(1000);
-   digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_YELLOW, HIGH);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
-   delay(300);
-  
-}
-
-void hackedLights(){
-  // how lights switch when hacked
-   digitalWrite(LIGHT_1_RED, HIGH);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
-   delay(100);
-   digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_YELLOW, HIGH);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
-   delay(150);
-   digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
-   digitalWrite(LIGHT_1_GREEN, HIGH);   // turn the red LED on (HIGH is the voltage level)
-   delay(100);
-  
+void lightSwitching() {
+  if (trafficLightsOn) {
+    // Lights switch until hacked
+    digitalWrite(LIGHT_1_RED, HIGH);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
+    delay(1000);
+    digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_GREEN, HIGH);   // turn the red LED on (HIGH is the voltage level)
+    delay(1000);
+    digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_YELLOW, HIGH);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
+    delay(300);
+  } else {
+    // how lights function when hacked
+    digitalWrite(LIGHT_1_RED, HIGH);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
+    delay(100);
+    digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_YELLOW, HIGH);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
+    delay(150);
+    digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
+    digitalWrite(LIGHT_1_GREEN, HIGH);   // turn the red LED on (HIGH is the voltage level)
+    delay(100);
+  }
 }
 
 void logEvent(String dataToLog) {
