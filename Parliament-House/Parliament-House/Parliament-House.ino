@@ -66,8 +66,6 @@ char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursd
 
 // RTC End
 
-const int LOOPDELAY = 25;
-
 void setup() {
   Serial.begin(9600);
   while (!Serial) {
