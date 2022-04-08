@@ -14,10 +14,20 @@ void routesConfiguration() {
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
+  server.on("/img.jpg", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /img.jpg");
+    request->send(SPIFFS, "/img.jpg", "image/jpeg");
+  });
+
+
   server.on("/longBlackLarge", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /longBlackLarge");
+
+    // order long black
+    orderCoffee("Long Black", 3);
+
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
@@ -29,7 +39,7 @@ void routesConfiguration() {
   });
 
   server.on("/longBlackSmall", HTTP_GET, [](AsyncWebServerRequest * request) {
-   if (!request->authenticate(http_username, http_password))
+    if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /longBlackSmall");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
@@ -56,6 +66,29 @@ void routesConfiguration() {
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
+
+  server.on("/windmillOn", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    windmillOn = true;
+    windmillFunctionality();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/windmillOff", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    windmillOn = false;
+    windmillFunctionality();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+
+
+
+
+
+
   // Example of linking to an external file
   server.on("/arduino.css", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send(SPIFFS, "/arduino.css", "text/css");
@@ -76,7 +109,14 @@ void routesConfiguration() {
   server.on("/LEDOn", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    digitalWrite(LED_BUILTIN, HIGH);
+    LEDOn = true;
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/LEDOff", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    LEDOn = false;
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
@@ -92,7 +132,7 @@ void routesConfiguration() {
 String getDateTime() {
   DateTime rightNow = rtc.now();
   char csvReadableDate[25];
-  sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d",  rightNow.hour(), rightNow.minute(),rightNow.second(), rightNow.day(), rightNow.month(), rightNow.year());
+  sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d",  rightNow.hour(), rightNow.minute(), rightNow.second(), rightNow.day(), rightNow.month(), rightNow.year());
   return csvReadableDate;
 }
 

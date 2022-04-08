@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="arduino.css">
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
+
 <body>
-<nav>
-    <ul>
-        <li class="active"><a href="index.html">Home</a></li>
-        <li><a href="/dashboard.html">Dashboard</a></li>
-    </ul>
-</nav>
-<h1>Welcome to the Huzzah32</h1>
-<p>Use the Navigation to work your way around the site</p>
-<p>Update this page as an introduction to the component/site/arduino.</p>
-<p>Include a picture as necessary.</p>
+    <nav>
+        <ul>
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+        </ul>
+    </nav>
+    <h1>Welcome to the Point of Sale and Windmill Controller!</h1>
+    <p>Please log into the Dashboard using the navigation above. </p>
+    <p>Authorised users only!</p>
+    <p>Include a picture as necessary.</p>
 
+    <p>To add an image to this page, see the HTML code below. </p>
+    <p>You will need to upload the image to the SPIFFS partition for it to work.</p>
+    <img src="img.jpg">
+    <pre>
+    <code>
+        &lt;img src="img.jpg"&gt;
+    </code>
+</pre>
+
+    <p>You will also need to add an additional route to serve the image.</p>
+
+    <pre>
+    <code>
+        server.on("/img.jpg", HTTP_GET, [](AsyncWebServerRequest * request) {
+            logEvent("route: /img.jpg");
+            request->send(SPIFFS, "/img.jpg", "image/jpeg");
+          });
+        </code>
+</pre>
 </body>
+
 </HTML>
-
-
-

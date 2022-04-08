@@ -38,6 +38,9 @@ void routesConfiguration() {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /trafficLightsOn");
+    // Turn on the traffic lights
+    trafficLightsOn = true;
+    
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
@@ -45,6 +48,9 @@ void routesConfiguration() {
       if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("route: /trafficLightsOff");
+    // Hack the traffic lights
+    trafficLightsOn = false;
+    
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
