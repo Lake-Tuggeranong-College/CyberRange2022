@@ -110,7 +110,7 @@ void loop() {
   emergencyservices();
   delay(LOOPDELAY);
 }
-
+// Buzzer code 
 void emergencyservices() {
   //emergency services will randomly mnake static noises
   if (emergencyservicesActive) {
