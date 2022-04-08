@@ -1,16 +1,49 @@
 void routesConfiguration() {
 
+  /*
+          <a href="/VoteAlpha">Vote Alpha</a>
+          <a href="/VoteBravo">Vote Bravo</a>
+          <a href="/VoteCharlie">Vote Charlie</a>
+          <a href="/VoteDelta">Vote Delta</a>
+          <a href="/StopTheCount">Cease Voting</a>
+          <a href="/ContinueVoting">Continue Voting</a>
+          <a href="/Reset">Reset Votes</a>
+  */
   // Example of a 'standard' route
   server.on("/index.html", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
   // Duplicated serving of index.html route, so the IP can be entered directly to browser.
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
+  server.on("/VoteAlpha", HTTP_GET, [](AsyncWebServerRequest * request) {
+    numAlpha++;
     request->send(SPIFFS, "/index.html", "text/html");
   });
+  server.on("/VoteBravo", HTTP_GET, [](AsyncWebServerRequest * request) {
+    numBravo++;
+    request->send(SPIFFS, "/index.html", "text/html");
+  });
+  server.on("/VoteCharlie", HTTP_GET, [](AsyncWebServerRequest * request) {
+    numCharlie++;
+    request->send(SPIFFS, "/index.html", "text/html");
+  });
+  server.on("/VoteDelta", HTTP_GET, [](AsyncWebServerRequest * request) {
+    numDelta++;
+    request->send(SPIFFS, "/index.html", "text/html");
+  });
+  server.on("/Reset", HTTP_GET, [](AsyncWebServerRequest * request) {
+    resetVotes();
+    request->send(SPIFFS, "/index.html", "text/html");
+  });
+  server.on("/StopTheCount", HTTP_GET, [](AsyncWebServerRequest * request) {
+    stopTheCount();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
 
-
+  server.on("/ContinueVoting", HTTP_GET, [](AsyncWebServerRequest * request) {
+    continueVoting();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
   // Example of linking to an external file
   server.on("/arduino.css", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send(SPIFFS, "/arduino.css", "text/css");

@@ -26,14 +26,13 @@ char* textstring = "work this time";
 
 void setup() {
   tft.initR(INITR_BLACKTAB);
-  // put your setup code here, to run once:
-  tft.fillScreen(ST77XX_BLACK);
   tft.setRotation(1);
   Serial.begin(9600);
 }
 
 void loop() {
   checkVote();
+  updateVote();
 };
 
 void drawtext(String text, uint16_t colour, int xmod, int ymod) {
@@ -47,44 +46,51 @@ void drawtext(String text, uint16_t colour, int xmod, int ymod) {
 int CheckJoystick()
 {
   //I duno what pin should be used here
-  int joystickState = analogRead(1);
+  float joystickState = analogRead(A12);
 
   if (joystickState < 50) return Left;
   if (joystickState < 150) return Down;
   if (joystickState < 250) return Press;
   if (joystickState < 500) return Right;
   if (joystickState < 650) return Up;
+  Serial.println(joystickState);
   return Neutral;
 }
 
 void checkVote() {
   int joyStick = CheckJoystick();
-
-
-  String alpha = "A";
-  String bravo = "B";
-  String charlie = "C";
-  String delta = "D";
   switch (joyStick) {
+    case Neutral:
+      return;
+      break;
     case Up:
       numAlpha++;
-      alpha = String(numAlpha);
-      drawtext(alpha, ST77XX_WHITE, 0, 30);
       break;
     case Right:
       numBravo++;
-      bravo = String(numBravo);
-      drawtext(bravo, ST77XX_WHITE, 0, 60);
       break;
     case Down:
       numCharlie++;
-      charlie = String(numCharlie);
-      drawtext(charlie, ST77XX_WHITE, 30, 30);
       break;
     case Left:
       numDelta++;
-      delta = String(numDelta);
-      drawtext(delta, ST77XX_WHITE, 30, 60);
       break;
   }
+}
+
+void updateVote() {
+  String alpha = "0";
+  String bravo = "0";
+  String charlie = "0";
+  String delta = "0";
+  alpha = String(numAlpha);
+  bravo = String(numBravo);
+  charlie = String(numCharlie);
+  delta = String(numDelta);
+  tft.fillScreen(ST77XX_BLACK);
+  drawtext(delta, ST77XX_WHITE, 35, 60);
+  drawtext(charlie, ST77XX_WHITE, 35, 30);
+  drawtext(bravo, ST77XX_WHITE, 5, 60);
+  drawtext(alpha, ST77XX_WHITE, 5, 30);
+  sleep(20);
 }
