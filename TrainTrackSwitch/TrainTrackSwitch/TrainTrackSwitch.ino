@@ -117,7 +117,7 @@ void setup() {
 void loop() {
   delay(LOOPDELAY);
 }
-
+// Traintrackswitch changes the track to the left or to the right.
 void trackSwitch (bool mainTrack) {
   if (mainTrack) {
     // servo goes to the left // use value 0
@@ -127,7 +127,7 @@ void trackSwitch (bool mainTrack) {
   }
 }
 
-
+// logevents 
 void logEvent(String dataToLog) {
   /*
      Log entries to a file stored in SPIFFS partition on the ESP32.

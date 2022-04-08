@@ -26,6 +26,7 @@ void routesConfiguration() {
   });
 
   // Example of route with authentication, and use of processor
+ // output traintrack to the left on the website
   // Also demonstrates how to have arduino functionality included (turn LED on)
   server.on("/TrackLeft", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
@@ -35,6 +36,7 @@ void routesConfiguration() {
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
+// output the train trackright 
  server.on("/TrackRight", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
