@@ -54,6 +54,11 @@ void routesConfiguration() {
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
+    server.on("/img.jpg", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /img.jpg");
+    request->send(SPIFFS, "/img.jpg", "image/jpeg");
+  });
+
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
