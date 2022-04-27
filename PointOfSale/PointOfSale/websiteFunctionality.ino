@@ -1,14 +1,92 @@
 void routesConfiguration() {
 
   // Example of a 'standard' route
+  // No Authentication
   server.on("/index.html", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /");
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
   // Duplicated serving of index.html route, so the IP can be entered directly to browser.
+  // No Authentication
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /");
     request->send(SPIFFS, "/index.html", "text/html");
   });
+
+  server.on("/img.jpg", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /img.jpg");
+    request->send(SPIFFS, "/img.jpg", "image/jpeg");
+  });
+
+
+  server.on("/longBlackLarge", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /longBlackLarge");
+
+    // order long black
+    orderCoffee("Long Black", 3);
+
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/longBlackMedium", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /longBlackMedium");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/longBlackSmall", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /longBlackSmall");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/mochaLarge", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /mochaLarge");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/mochaMedium", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /mochaMedium");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/mochaSmall", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("route: /mochaSmall");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+
+  server.on("/windmillOn", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    windmillOn = true;
+    windmillFunctionality();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/windmillOff", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    windmillOn = false;
+    windmillFunctionality();
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+
+
+
+
 
 
   // Example of linking to an external file
@@ -22,6 +100,7 @@ void routesConfiguration() {
   server.on("/dashboard.html", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
+    logEvent("Dashboard");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
@@ -30,15 +109,31 @@ void routesConfiguration() {
   server.on("/LEDOn", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    digitalWrite(LED_BUILTIN, HIGH);
+    LEDOn = true;
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
+  });
+
+  server.on("/LEDOff", HTTP_GET, [](AsyncWebServerRequest * request) {
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    LEDOn = false;
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
-    Serial.println("output");
+    if (!request->authenticate(http_username, http_password))
+      return request->requestAuthentication();
+    logEvent("Log Event Download");
     request->send(SPIFFS, "/logEvents.csv", "text/html", true);
   });
+}
+
+String getDateTime() {
+  DateTime rightNow = rtc.now();
+  char csvReadableDate[25];
+  sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d",  rightNow.hour(), rightNow.minute(), rightNow.second(), rightNow.day(), rightNow.month(), rightNow.year());
+  return csvReadableDate;
 }
 
 String processor(const String& var) {
@@ -50,6 +145,10 @@ String processor(const String& var) {
       if (var=="VARIABLEVALUE") { return "5";}
   */
 
+  if (var == "DATETIME") {
+    String datetime = getDateTime();
+    return datetime;
+  }
 
   // Default "catch" which will return nothing in case the HTML has no variable to replace.
   return String();

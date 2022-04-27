@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Emergency services</title>
     <link rel="stylesheet" href="arduino.css">
 </head>
 
@@ -15,22 +15,33 @@
     </ul>
 </nav>
 
-<h1>Status Dashboard</h1>
+<h1>Emergency services</h1>
 
 <div class="grid-container">
-    <div class="banner">Title</div>
-    <div><p>Date and Time </p>
-        <p>%DATETIME% *</p></div>
-    <div></div>
+    <div class="banner"> This is the control centre for the Emergency services department  </div>
+    <div>
+        <form action="/Sirenon ">
+            <input type="submit" value="Turn Sirenon On" />
+            </form>
+            <form action="/Sirenoff">
+                <input type="submit" value="Turn Sirenoff Off" />
+                </form>
+
+
+    </div>
+    <div>
+
+
+
+    </div>
     <div>LogEvents<p><a href="/logOutput">Download</a></div>
     <div>
-        <p><a href="/LEDOn">Turn LED On</a></p>
-        <p><a href="/LEDOff">Turn LED Off</a></p>
+        <p>Date and Time </p>
+        <p>%DATETIME% </p>
     </div>
 
 </div>
 
-<sup class="tinyText">* Example of HTML/Arduino Variable</sup>
 
 
 </body>
