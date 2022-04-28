@@ -17,6 +17,11 @@
     font-size: 10px;
 }
 
+.whiteText {
+    font-size: 13px;
+    color: white;
+}
+
 .banner {
     grid-column-start: 1;
     grid-column-end: 3;
