@@ -17,9 +17,9 @@
     font-size: 10px;
 }
 
-.whiteText {
+.backgroundText {
     font-size: 13px;
-    color: white;
+    mix-blend-mode: color; /* This makes the text highlight blend in as well, so you have to click and drag the text away to actually read it, adds another layer of "security" I guess. */
 }
 
 .banner {
