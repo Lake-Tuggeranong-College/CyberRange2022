@@ -45,7 +45,7 @@ ThinkInk_213_Mono_B72 display(EPD_DC, EPD_RESET, EPD_CS, SRAM_CS, EPD_BUSY);
 
 // EINK End
 
-
+boolean telstratowerOn = false;
 // RTC Start - Remove if unnecessary
 #include "RTClib.h"
 
@@ -81,10 +81,11 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-
+  pinMode(14, OUTPUT);
+  pinMode(32, OUTPUT);
 
   routesConfiguration(); // Reads routes from routesManagement
-  
+
   server.begin();
 
 
@@ -96,7 +97,7 @@ void setup() {
   }
 
   // The following line can be uncommented if the time needs to be reset.
-  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   rtc.start();
 
   //EINK
@@ -104,11 +105,20 @@ void setup() {
   display.clearBuffer();
 
   logEvent("System Initialisation...");
+  updateEPD();
 }
-//Telstra Tower LED flashes constanly 
+//Telstra Tower LED flashes constanly
 
 void loop() {
+  lightsflashing();
   delay(LOOPDELAY);
+}
+
+void LEDfunctionality() {
+  if ('LEDOn') {
+    logEvent("LED on");
+    //turn LED on using servo
+  }
 }
 
 void logEvent(String dataToLog) {
@@ -157,4 +167,19 @@ void drawText(String text, uint16_t color, int textSize, int x, int y) {
   display.setTextSize(textSize);
   display.setTextWrap(true);
   display.print(text);
+}
+
+void lightsflashing() {
+  logEvent("Lights flashing turned on");
+  if (telstratowerOn) {
+    digitalWrite(32, HIGH);   // turn the LED on (HIGH is the voltage level)
+    digitalWrite(14, LOW);   // turn the LED on (HIGH is the voltage level)
+    delay(100);                       // wait for a second
+    digitalWrite(32, LOW);    // turn the LED off by making the voltage LOW
+    digitalWrite(14, HIGH);    // turn the LED off by making the voltage LOW
+    delay(100);
+ } else {
+    digitalWrite(14, LOW);   // turn the LED on (HIGH is the voltage level)
+     digitalWrite(32, LOW);    // turn the LED off by making the voltage LOW
+  }
 }

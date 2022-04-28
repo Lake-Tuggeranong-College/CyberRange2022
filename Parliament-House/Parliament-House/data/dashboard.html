@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Parliament House</title>
     <link rel="stylesheet" href="arduino.css">
 </head>
 
@@ -15,22 +15,29 @@
     </ul>
 </nav>
 
-<h1>Status Dashboard</h1>
+<h1>Parliament House</h1>
 
 <div class="grid-container">
-    <div class="banner">Title</div>
-    <div><p>Date and Time </p>
-        <p>%DATETIME% *</p></div>
-    <div></div>
+    <div class="banner">This is the Parliament House control website. It allows votes to be increased, decreased, reset, or closed. To be used by corrupt politicians looking to stay in power,
+        or foreign governments looking to destabilise our nation.
+    </div>
+    <div>
+        <a href="/VoteAlpha">Vote Alpha</a>
+        <a href="/VoteBravo">Vote Bravo</a>
+        <a href="/VoteCharlie">Vote Charlie</a>
+        <a href="/VoteDelta">Vote Delta</a>
+        <a href="/StopTheCount">Cease Voting</a>
+        <a href="/ContinueVoting">Continue Voting</a>
+        <a href="/Reset">Reset Votes</a>
+    </div>
+    <div>Voting graph display will go here.</div>
     <div>LogEvents<p><a href="/logOutput">Download</a></div>
     <div>
-        <p><a href="/LEDOn">Turn LED On</a></p>
-        <p><a href="/LEDOff">Turn LED Off</a></p>
+        <p>Date and Time </p>
+        <p>%DATETIME%</p>
     </div>
 
 </div>
-
-<sup class="tinyText">* Example of HTML/Arduino Variable</sup>
 
 
 </body>
