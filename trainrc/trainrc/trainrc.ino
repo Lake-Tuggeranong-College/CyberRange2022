@@ -117,7 +117,7 @@ void logEvent(String dataToLog) {
   // Get the updated/current time
   DateTime rightNow = rtc.now();
   char csvReadableDate[25];
-  sprintf(csvReadableDate, "%02d,%02d,%02d,%02d,%02d,%02d,",  rightNow.year(), rightNow.month(), rightNow.day(), rightNow.hour(), rightNow.minute(), rightNow.second());
+  sprintf(csvReadableDate, "%02d,%02d,%02d,%02d,%02d,%02d,", rightNow.hour(), rightNow.minute(), rightNow.second(), rightNow.day(), rightNow.month(), rightNow.year());
 
   String logTemp = csvReadableDate + dataToLog + "\n"; // Add the data to log onto the end of the date/time
 
@@ -150,6 +150,11 @@ void updateEPD() {
 
 }
 
+String getDateTime() {
+ DateTime rightNow =rtc.now();
+ char csvReadableDate[25]; 
+
+}
 void drawText(String text, uint16_t color, int textSize, int x, int y) {
   display.setCursor(x, y);
   display.setTextColor(color);
