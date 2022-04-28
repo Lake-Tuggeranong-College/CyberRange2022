@@ -17,6 +17,11 @@
     font-size: 10px;
 }
 
+.backgroundText {
+    font-size: 13px;
+    mix-blend-mode: color; /* This makes the text highlight blend in as well, so you have to click and drag the text away to actually read it, adds another layer of "security" I guess. */
+}
+
 .banner {
     grid-column-start: 1;
     grid-column-end: 3;
