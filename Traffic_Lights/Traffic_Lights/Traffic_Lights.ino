@@ -1,20 +1,3 @@
-/*
-   Code explanation goes here....
-
-   This is the master copy of the code to start building your Arduino based
-   Cyber Range component.
-*/
-
-
-/***************************************************
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit and open-source hardware by purchasing
-  products from Adafruit!
-
-  Written by Limor Fried/Ladyada for Adafruit Industries.
-  MIT license, all text above must be included in any redistribution
- ****************************************************/
-
 #include "sensitiveInformation.h"
 
 #define FORMAT_SPIFFS_IF_FAILED true
