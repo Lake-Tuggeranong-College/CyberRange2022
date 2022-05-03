@@ -35,6 +35,7 @@ def user_login():
 @game_management_blueprint.route('/logout')
 def logout():
     logout_user()
+    #Updated
     return redirect(url_for('game_management_blueprint.game_main_page'))
 
 
