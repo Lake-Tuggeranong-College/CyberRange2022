@@ -37,13 +37,6 @@ AsyncWebServer server(80);
 #define TFT_RST        15
 #define TFT_DC         32
 
-#define Neutral 0
-#define Press 1
-#define Up 2
-#define Down 3
-#define Right 4
-#define Left 5
-
 int numAlpha = 0;
 int numBravo = 0;
 int numCharlie = 0;
