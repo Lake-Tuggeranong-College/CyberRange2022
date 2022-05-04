@@ -60,5 +60,13 @@ class ClaimForm(FlaskForm):
     passcode = StringField('Passcode', validators=[DataRequired()])
     submit = SubmitField('Claim')
 
+
 class ResetSubsystemsForm(FlaskForm):
     submit = SubmitField('Reset')
+
+
+class MissileLauncherLoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()], render_kw = {"placeholder": "Username"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw = {"placeholder": "Password"})
+    remember_me = BooleanField('Remember Me')
+    submit = SubmitField('Sign In')

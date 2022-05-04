@@ -1,6 +1,6 @@
 # This manages the whole Flask project, creating the different blueprints required
 # The first is for the Game management sub-system
-# The second is for the Missile Launching sub-system website.
+# The second is for the missile_launcher Launching sub-system website.
 # They're split up, to make it easier to maintain.
 
 
