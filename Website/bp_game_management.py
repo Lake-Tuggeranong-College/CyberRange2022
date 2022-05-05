@@ -77,7 +77,7 @@ def registerCTFSubsystem():
         db.session.add(newSubSystem)
         db.session.commit()
         flash('Congratulations, you have registered a new character!')
-        return redirect(url_for('user_login'))
+    #    return redirect(url_for('user_login'))
     return render_template('registersubsystem.html', title='Register Character', form=form, user=current_user)
 
 
