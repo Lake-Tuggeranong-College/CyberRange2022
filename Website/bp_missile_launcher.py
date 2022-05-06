@@ -30,7 +30,7 @@ def missile_launcher_main_page():
 
 @missile_launcher_blueprint.route('/missile_launcher/fire')
 def fire():
-    return render_template('missile_launcher/fire.html')
+    return render_template('missile_launcher/fire.html', user=current_user)
 
 
 @missile_launcher_blueprint.route(
