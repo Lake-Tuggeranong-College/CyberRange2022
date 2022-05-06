@@ -19,14 +19,14 @@ def game_main_page():
 
 
 @game_management_blueprint.route('/login', methods=['GET', 'POST'])
-def user_login():
+def game_user_login():
     if current_user.is_authenticated:
-        return redirect(url_for('main_page'))
+        return redirect(url_for('game_management_blueprint.game_main_page'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            return redirect(url_for('game_management_blueprint.user_login'))
+            return redirect(url_for('game_management_blueprint.game_user_login'))
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('game_management_blueprint.game_main_page'))
     return render_template('login.html', title='Sign In', form=form, user=current_user)
@@ -41,7 +41,7 @@ def logout():
 
 @game_management_blueprint.route('/user', )
 @login_required
-def user_details():
+def game_user_details():
     return render_template("user.html", title="User Details", user=current_user)
 
 
@@ -49,7 +49,7 @@ def user_details():
 @game_management_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('main_page'))
+        return redirect(url_for('game_management_blueprint.game_main_page'))
     form = RegistrationForm()
     if form.validate_on_submit():
         print("test")
@@ -61,7 +61,7 @@ def register():
 
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('user_login'))
+        return redirect(url_for('game_management_blueprint.game_user_login'))
     return render_template('register.html', title='Register', form=form, user=current_user)
 
 
@@ -77,7 +77,7 @@ def registerCTFSubsystem():
         db.session.add(newSubSystem)
         db.session.commit()
         flash('Congratulations, you have registered a new character!')
-    #    return redirect(url_for('user_login'))
+        return redirect(url_for('game_management_blueprint.game_user_login'))
     return render_template('registersubsystem.html', title='Register Character', form=form, user=current_user)
 
 
@@ -101,7 +101,7 @@ def claimsubsystem():
             flash("Subsystem Claimed")
         else:
             flash("Nothing selected. Please select one or more Subsystems to claim.")
-        return redirect(url_for('main_page'))
+        return redirect(url_for('game_management_blueprint.game_main_page'))
 
     subsystems = text('select * from ctf_sub_systems')
     result = db.engine.execute(subsystems)
@@ -119,7 +119,7 @@ def edit_User(userid):
         db.session.commit()
         print("User Updated : {}".format(user))
         flash("User Reset")
-        return redirect(url_for('user_details'))
+        return redirect(url_for('game_management_blueprint.game_user_details'))
 
     form.username.data = user.username
     form.email.data = user.email
@@ -247,7 +247,7 @@ def reset_user_password(userid):
         db.session.commit()
         print("done")
         flash('Password has been reset for user {}'.format(user.username))
-        return redirect(url_for('user_details'))
+        return redirect(url_for('game_management_blueprint.game_user_details'))
 
     return render_template('reset-password.html', title='Reset Password', form=form, user=user)
 
