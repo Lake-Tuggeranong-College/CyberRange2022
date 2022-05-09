@@ -11,6 +11,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 game_management_blueprint = Blueprint('game_management_blueprint', __name__)
 
+
 @game_management_blueprint.route('/index')
 @game_management_blueprint.route('/')
 def game_main_page():
@@ -35,7 +36,7 @@ def game_user_login():
 @game_management_blueprint.route('/logout')
 def logout():
     logout_user()
-    #Updated
+    # Updated
     return redirect(url_for('game_management_blueprint.game_main_page'))
 
 
@@ -43,7 +44,6 @@ def logout():
 @login_required
 def game_user_details():
     return render_template("user.html", title="User Details", user=current_user)
-
 
 
 @game_management_blueprint.route('/register', methods=['GET', 'POST'])
@@ -63,7 +63,6 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('game_management_blueprint.game_user_login'))
     return render_template('register.html', title='Register', form=form, user=current_user)
-
 
 
 @game_management_blueprint.route('/registercharacter', methods=['GET', 'POST'])
@@ -161,7 +160,6 @@ def display_users():
     print(html_output)
 
     return render_template('list-users.html', Title='List of Users', data=html_output, user=current_user)
-
 
 
 @game_management_blueprint.route('/report/stocklevels')
@@ -316,15 +314,5 @@ def dashboard():
 
     for row in result:
         subsystem_list.append(row)
-    html_output = Markup(
-        "<div class=\"container-fluid table table-hover text-centered font-color\"><div class = \"row\>")
 
-    for systems in subsystem_list:
-        html_output = Markup("{}<div class=\"col-sm-1\">{}</div>".format(html_output, systems.title))
-    html_output = Markup(
-        "{}</div>".format(html_output))
-
-    print(html_output)
-    print(subsystem_list)
-
-    return render_template('dashboard.html', Title='Subsystem Dashboard', data=html_output, user=current_user, subsystems=subsystem_list)
+    return render_template('dashboard.html', Title='Subsystem Dashboard', user=current_user, subsystems=subsystem_list)
