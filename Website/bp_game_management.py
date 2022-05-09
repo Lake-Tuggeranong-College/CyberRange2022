@@ -305,7 +305,7 @@ def reset_subsystems():
 
         db.session.commit()
 
-    return render_template('reset.html', pagetitle='Reset Characters', form=form, user=current_user)
+    return render_template('reset.html', pagetitle='Reset Departments', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/report/dashboard')
