@@ -76,9 +76,9 @@ def registerCTFSubsystem():
         newSubSystem.set_passcode(form.code.data)
         db.session.add(newSubSystem)
         db.session.commit()
-        flash('Congratulations, you have registered a new character!')
+        flash('Congratulations, you have registered a new department!')
     #    return redirect(url_for('user_login'))
-    return render_template('registersubsystem.html', title='Register Character', form=form, user=current_user)
+    return render_template('registersubsystem.html', title='Register Department', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/secret', methods=['GET', 'POST'])
@@ -106,7 +106,7 @@ def claimsubsystem():
     subsystems = text('select * from ctf_sub_systems')
     result = db.engine.execute(subsystems)
 
-    return render_template('secret.html', pagetitle='Claim a Character', products=result, user=current_user, form=form)
+    return render_template('secret.html', pagetitle='Claim a Department', products=result, user=current_user, form=form)
 
 
 @game_management_blueprint.route('/edit_user/<userid>', methods=['GET', 'POST'])
@@ -272,10 +272,10 @@ def claim():
                 update_system = CTFSubSystems.query.filter_by(title=system.title).first()
                 print(update_system.title)
                 if update_system.status:
-                    flash("You have already claimed this character")
+                    flash("You have already claimed this department")
                 else:
                     update_system.claim()
-                    flash("{} - Character claimed".format(update_system.title))
+                    flash("{} - Department claimed".format(update_system.title))
                     user = User.query.filter_by(username=current_user.username).first()
                     score = user.current_score + update_system.score
                     print("score is: {}".format(score))
@@ -284,7 +284,7 @@ def claim():
 
         db.session.commit()
 
-    return render_template('claimsubsystem.html', pagetitle='Claim a Character', form=form, user=current_user)
+    return render_template('claimsubsystem.html', pagetitle='Claim a Department', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/reset', methods=['GET', 'POST'])
