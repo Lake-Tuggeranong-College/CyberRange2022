@@ -252,7 +252,7 @@ def reset_user_password(userid):
     return render_template('reset-password.html', title='Reset Password', form=form, user=user)
 
 
-@game_management_blueprint.route('/claimdepartment', methods=['GET', 'POST'])
+@game_management_blueprint.route('/claimcharacter', methods=['GET', 'POST'])
 def claim():
     form = ClaimForm()
     if form.validate_on_submit():
