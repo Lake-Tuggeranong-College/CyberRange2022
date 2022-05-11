@@ -1,0 +1,10 @@
+.grid-container {
+    display: grid;
+    grid-template-columns:  30% 30% 30%; /* 2 column grid, auto size for width window*/
+    grid-gap: 1em;
+    padding: 1em;
+}
+
+.grid-container > div {
+    background-color: rgba(0,0,0, 0.2);
+}

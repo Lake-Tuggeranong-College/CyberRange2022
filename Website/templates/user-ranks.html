@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 
-{% block meta %} <meta http-equiv="refresh" content="30">  {% endblock %}
+{% block meta %}
+    <meta http-equiv="refresh" content="30">  {% endblock %}
 
 {% block title %}{{ Title }}{% endblock %}
 
 {% block header %}
-  <h1 style="padding-left: 600px; font-size: 60px">{{ Title }}</h1>
+    <h1 style="padding-left: 600px; font-size: 60px">{{ Title }}</h1>
 {% endblock %}
 
 
 {% block content %}
 
-  {{ data }}
+    {% for user in user_data %}
+        <span>
+            <div class="p-3 mb-2 bg-primary text-white">
 
+                <div style ="display: inline; text-align: left; padding-right: 3em" class="display-4">{{ user[0] }} </div>
+                <div style ="display: inline; text-align: right; padding-left: 3em" class=" display-4">{{ user[1] }}</div>
+
+            </div>
+        </span>
+    {% endfor %}
 {% endblock %}

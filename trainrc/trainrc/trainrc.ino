@@ -102,7 +102,7 @@ void setup() {
   //EINK
   display.begin(THINKINK_MONO);
   display.clearBuffer();
-
+  updateEPD ();
   logEvent("System Initialisation...");
 }
 
@@ -151,8 +151,8 @@ void updateEPD() {
 }
 
 String getDateTime() {
- DateTime rightNow =rtc.now();
- char csvReadableDate[25]; 
+  DateTime rightNow = rtc.now();
+  char csvReadableDate[25];
 
 }
 void drawText(String text, uint16_t color, int textSize, int x, int y) {
