@@ -131,35 +131,39 @@ def display_users():
     sql = text('select username, id from user')
     result = db.engine.execute(sql)
     users = []
-    html_output = Markup(
-        "<div class=\"container-fluid table table-hover text-centered font-color\"><div class = \"row\"><div class=\"col-sm-3 "
-        "font-weight-bold\">ID</div><div class=\"col-sm-3 font-weight-bold\">User Name</div><div class=\"col-sm-3 "
-        "font-weight-bold\">Reset Password</div><div class=\"col-sm-3 font-weight-bold\">Edit User "
-        "Details</div></div>")
+
     for row in result:
         users.append(row)
-    print(users)
-    user_counter = 1
-    for index, user in enumerate(users):
 
-        if index % 2 == 0:
-            html_output = Markup(
-                "{}<div class = \"row cell1 font-color\"><div class=\"col-sm-3\">{}</div> <div class=\"col-sm-3\">{}</div><div "
-                "class=\"col-sm-3\"><a href=\"/reset_password/{}\">Reset Password</a></div> <div "
-                "class=\"col-sm-3\"><a href=\"/edit_user/{}\">Edit User Details</a></div></div>".format(
-                    html_output, user_counter, user[0], user[1], user[1]))
-        else:
-            html_output = Markup(
-                "{}<div class = \"row cell2 font-color\"><div class=\"col-sm-3\">{}</div> <div class=\"col-sm-3\">{}</div><div "
-                "class=\"col-sm-3\"><a href=\"/reset_password/{}\">Reset Password</a></div><div class=\"col-sm-3\"><a "
-                "href=\"/edit_user/{}\">Edit User Details</a></div></div>".format(
-                    html_output, user_counter, user[0], user[1], user[1]))
-        user_counter = user_counter + 1
 
-    html_output = Markup("{}</tbody></table>".format(html_output))
-    print(html_output)
+    # html_output = Markup(
+    #     "<div class=\"container-fluid table table-hover text-centered font-color\"><div class = \"row\"><div class=\"col-sm-3 "
+    #     "font-weight-bold\">ID</div><div class=\"col-sm-3 font-weight-bold\">User Name</div><div class=\"col-sm-3 "
+    #     "font-weight-bold\">Reset Password</div><div class=\"col-sm-3 font-weight-bold\">Edit User "
+    #     "Details</div></div>")
+    #
+    # print(users)
+    # user_counter = 1
+    # for index, user in enumerate(users):
+    #
+    #     if index % 2 == 0:
+    #         html_output = Markup(
+    #             "{}<div class = \"row cell1 font-color\"><div class=\"col-sm-3\">{}</div> <div class=\"col-sm-3\">{}</div><div "
+    #             "class=\"col-sm-3\"><a href=\"/reset_password/{}\">Reset Password</a></div> <div "
+    #             "class=\"col-sm-3\"><a href=\"/edit_user/{}\">Edit User Details</a></div></div>".format(
+    #                 html_output, user_counter, user[0], user[1], user[1]))
+    #     else:
+    #         html_output = Markup(
+    #             "{}<div class = \"row cell2 font-color\"><div class=\"col-sm-3\">{}</div> <div class=\"col-sm-3\">{}</div><div "
+    #             "class=\"col-sm-3\"><a href=\"/reset_password/{}\">Reset Password</a></div><div class=\"col-sm-3\"><a "
+    #             "href=\"/edit_user/{}\">Edit User Details</a></div></div>".format(
+    #                 html_output, user_counter, user[0], user[1], user[1]))
+    #     user_counter = user_counter + 1
+    #
+    # html_output = Markup("{}</tbody></table>".format(html_output))
+    # print(html_output)
 
-    return render_template('list-users.html', Title='List of Users', data=html_output, user=current_user)
+    return render_template('list-users.html', Title='List of Users', data=users, user=current_user)
 
 
 @game_management_blueprint.route('/report/allUserDetails')
