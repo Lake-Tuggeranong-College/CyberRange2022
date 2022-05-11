@@ -178,14 +178,14 @@ void checkVote() {
     case 2:
       increaseBravo();
       break;
-    case 5:
-      increaseCharlie();
+    case 3:
+      return;
       break;
     case 4:
       increaseDelta();
       break;
-    case 3:
-      return;
+    case 5:
+      increaseCharlie();
       break;
   }
 }
