@@ -165,7 +165,6 @@ void drawText(String text, uint16_t color, int textSize, int x, int y) {
 }
 
 //A pair of functions used with processor in websiteFunctionality to output a date to the website.
-//Jack was here
 String getDateAsString() {
   DateTime now = rtc.now();
 
