@@ -82,14 +82,15 @@
                 {% if user.is_admin() %}
                     <li class="nav-item"><a class="nav-link" href="/reset">Reset Characters</a></li>
                     <li class="nav-item"><a class="nav-link" href="/registercharacter">Register New Character</a></li>
-                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown"
-                                                     id="Preview" href="#" role="button" aria-haspopup="true"
-                                                     aria-expanded="false"> Admin Reports </a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="Preview" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false"> Admin Reports </a>
                         <div class="dropdown-menu" aria-labelledby="Preview"><a class="dropdown-item"
                                                                                 href="/report/listallusers">List All
-                            Users</a> <a class="dropdown-item" href="/report/stocklevels">All User Details</a> <a
-                                class="dropdown-item" href="/report/u_ranked">User Ranks</a> <a
-                                class="dropdown-item" href="/report/dashboard">Subsystem Dashboard</a></div>
+                            Users</a>
+                            {#                            <a class="dropdown-item" href="/report/allUserDetails">All User Details</a>#}
+                            <a class="dropdown-item" href="/report/u_ranked">User Ranks</a>
+                            <a class="dropdown-item" href="/report/dashboard">Subsystem Dashboard</a></div>
                     </li>
                 {% endif %}
             {% endif %}
@@ -107,7 +108,7 @@
     {% endif %}
 {% endwith %}
 <!-- Dynamic content -->
-<section class="content" style="padding-left: 10em; padding-bottom: 2em;padding-right: 10em" >
+<section class="content" style="padding-left: 10em; padding-bottom: 2em;padding-right: 10em">
     <header>
         {% block header %}{% endblock %}
     </header>
