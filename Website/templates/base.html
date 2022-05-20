@@ -62,7 +62,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark"
      style="background-image: linear-gradient(to right, #272727, #154259); padding-left: 150px"><a class="navbar-brand"
                                                                                                    href="/"><img
-        src="/static/Where's_Wally.png" width="103" height="103" alt="Blackout Logo"></a>
+        src="/static/Attack_of_the_Kiwis.png" width="103" height="103" alt="Blackout Logo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
             class="navbar-toggler-icon"></span></button>
@@ -77,18 +77,20 @@
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
                 <li class="nav-item"><a class="nav-link" href="/user">User Details</a></li>
-                <li class="nav-item"><a class="nav-link" href="/claimcharacter">Claim a Character</a></li>
+                <li class="nav-item"><a class="nav-link" href="/claimcharacter">Claim a Department</a></li>
+                <li class="nav-item"><a class="nav-link" href="/missile_launcher/">Missile Launcher</a></li>
                 {% if user.is_admin() %}
-                    <li class="nav-item"><a class="nav-link" href="/reset">Reset Characters</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/registercharacter">Register New Character</a></li>
-                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown"
-                                                     id="Preview" href="#" role="button" aria-haspopup="true"
-                                                     aria-expanded="false"> Admin Reports </a>
+                    <li class="nav-item"><a class="nav-link" href="/reset">Reset Departments</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/registercharacter">Register New Department</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="Preview" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">Admin Reports </a>
                         <div class="dropdown-menu" aria-labelledby="Preview"><a class="dropdown-item"
                                                                                 href="/report/listallusers">List All
-                            Users</a> <a class="dropdown-item" href="/report/stocklevels">All User Details</a> <a
-                                class="dropdown-item" href="/report/u_ranked">User Ranks</a> <a
-                                class="dropdown-item" href="/report/dashboard">Subsystem Dashboard</a></div>
+                            Users</a>
+                            {#                            <a class="dropdown-item" href="/report/allUserDetails">All User Details</a>#}
+                            <a class="dropdown-item" href="/report/u_ranked">User Ranks</a>
+                            <a class="dropdown-item" href="/report/dashboard">Subsystem Dashboard</a></div>
                     </li>
                 {% endif %}
             {% endif %}
@@ -106,14 +108,14 @@
     {% endif %}
 {% endwith %}
 <!-- Dynamic content -->
-<section class="content" style="padding-left: 150px; padding-bottom: 40px">
+<section class="content" style="padding-left: 10em; padding-bottom: 2em;padding-right: 10em">
     <header>
         {% block header %}{% endblock %}
     </header>
     {% block content %}{% endblock %}
 </section>
 <footer style="padding-top: 20px; background-color: #353b44; border-top: 6px solid #224a61;">
-    <h2 style="padding-bottom: 15px; text-align: center; font-size: 18px; color: white"> © LTC Web Design 2020 </h2>
+    <h2 style="padding-bottom: 15px; text-align: center; font-size: 18px; color: white"> © LTC Web Design 2020 & Robotics 2022 </h2>
     <a href="/humans.txt"><img src="/static/humans.png" alt="HumansTXT Logo"></a>
 </footer>
 </body>

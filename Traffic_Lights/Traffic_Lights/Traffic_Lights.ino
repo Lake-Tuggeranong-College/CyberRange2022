@@ -1,20 +1,3 @@
-/*
-   Code explanation goes here....
-
-   This is the master copy of the code to start building your Arduino based
-   Cyber Range component.
-*/
-
-
-/***************************************************
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit and open-source hardware by purchasing
-  products from Adafruit!
-
-  Written by Limor Fried/Ladyada for Adafruit Industries.
-  MIT license, all text above must be included in any redistribution
- ****************************************************/
-
 #include "sensitiveInformation.h"
 
 #define FORMAT_SPIFFS_IF_FAILED true
@@ -149,7 +132,7 @@ void lightSwitching() {
     digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
     digitalWrite(LIGHT_1_YELLOW, HIGH);   // turn the red LED on (HIGH is the voltage level)
     digitalWrite(LIGHT_1_GREEN, LOW);   // turn the red LED on (HIGH is the voltage level)
-    delay(150);
+    delay(100);
     digitalWrite(LIGHT_1_RED, LOW);   // turn the red LED on (HIGH is the voltage level)
     digitalWrite(LIGHT_1_YELLOW, LOW);   // turn the red LED on (HIGH is the voltage level)
     digitalWrite(LIGHT_1_GREEN, HIGH);   // turn the red LED on (HIGH is the voltage level)
