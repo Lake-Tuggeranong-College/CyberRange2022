@@ -2,12 +2,12 @@
     display: grid;
     grid-template-columns: auto auto;
     grid-gap: 10px;
-    background-color: #1900ff;
+    background-color: #002fff;
     padding: 10px;
 }
 
 .grid-container > div {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(255, 255, 255, 0.8);
     text-align: center;
     padding: 20px 0;
     font-size: 20px;
@@ -23,12 +23,12 @@
 }
 
 body {
-    background-color: rgb(68, 197, 197);
+    background-color: rgb(255, 255, 255);
     /*color: blue;*/
 }
 
 h1 {
-    background-color: rgb(0, 45, 128);
+    background-color: rgb(0, 0, 0);
     color: white;
     text-align: center;
 }
@@ -61,5 +61,5 @@ li a:hover {
 }
 
 .active {
-    background-color: #0407aa;
+    background-color: #000000;
 }
