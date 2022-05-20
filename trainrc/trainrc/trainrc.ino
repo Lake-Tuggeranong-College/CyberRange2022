@@ -150,11 +150,11 @@ void updateEPD() {
 
 }
 
-String getDateTime() {
-  DateTime rightNow = rtc.now();
-  char csvReadableDate[25];
-
-}
+//String getDateTime() {
+//  DateTime rightNow = rtc.now();
+//  char csvReadableDate[25];
+//
+//}
 void drawText(String text, uint16_t color, int textSize, int x, int y) {
   display.setCursor(x, y);
   display.setTextColor(color);
