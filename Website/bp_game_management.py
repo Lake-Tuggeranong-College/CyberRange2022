@@ -30,13 +30,12 @@ def game_user_login():
             return redirect(url_for('game_management_blueprint.game_user_login'))
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('game_management_blueprint.game_main_page'))
-    return render_template('login.html', title='Sign In', form=form, user=current_user)
+    return render_template('userLogin.html', title='Sign In', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/logout')
 def logout():
     logout_user()
-    # Updated
     return redirect(url_for('game_management_blueprint.game_main_page'))
 
 
@@ -46,8 +45,8 @@ def game_user_details():
     return render_template("user.html", title="User Details", user=current_user)
 
 
-@game_management_blueprint.route('/register', methods=['GET', 'POST'])
-def register():
+@game_management_blueprint.route('/registerUser', methods=['GET', 'POST'])
+def register_user():
     if current_user.is_authenticated:
         return redirect(url_for('game_management_blueprint.game_main_page'))
     form = RegistrationForm()
@@ -62,12 +61,12 @@ def register():
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('game_management_blueprint.game_user_login'))
-    return render_template('register.html', title='Register', form=form, user=current_user)
+    return render_template('userRegister.html', title='Register', form=form, user=current_user)
 
 
-@game_management_blueprint.route('/registercharacter', methods=['GET', 'POST'])
+@game_management_blueprint.route('/registerModule', methods=['GET', 'POST'])
 @login_required
-def registerCTFSubsystem():
+def register_module():
     form = CTFSubsystemForm()
     if form.validate_on_submit():
         newSubSystem = CTFSubSystems(title=form.title.data, description=form.description.data, score=form.score.data,
@@ -75,42 +74,15 @@ def registerCTFSubsystem():
         newSubSystem.set_passcode(form.code.data)
         db.session.add(newSubSystem)
         db.session.commit()
-        flash('Congratulations, you have registered a new character!')
+        flash('Congratulations, you have registered a new Module!')
         return redirect(url_for('game_management_blueprint.game_user_login'))
-    return render_template('registersubsystem.html', title='Register Character', form=form, user=current_user)
+    return render_template('registerModule.html', title='Register Module', form=form, user=current_user)
 
-
-@game_management_blueprint.route('/secret', methods=['GET', 'POST'])
-@login_required
-def claimsubsystem():
-    form = ClaimSubsystemForm()
-    if form.validate_on_submit():
-        print("submit")
-        selected_subsystem = request.form.getlist("CTFSubSystems")
-        print(selected_subsystem)
-
-        for claimedsubsystems in selected_subsystem:
-            claim_new_subsystem = Order(current_user.id, claimedsubsystems)
-            db.session.add(claim_new_subsystem)
-            flash("Ordered Product: {}".format(claim_new_subsystem.subsystemid))
-
-        print("commit")
-        db.session.commit()
-        if len(selected_subsystem) > 0:
-            flash("Subsystem Claimed")
-        else:
-            flash("Nothing selected. Please select one or more Subsystems to claim.")
-        return redirect(url_for('game_management_blueprint.game_main_page'))
-
-    subsystems = text('select * from ctf_sub_systems')
-    result = db.engine.execute(subsystems)
-
-    return render_template('secret.html', pagetitle='Claim a Character', products=result, user=current_user, form=form)
 
 
 @game_management_blueprint.route('/edit_user/<userid>', methods=['GET', 'POST'])
 @login_required
-def edit_User(userid):
+def edit_user(userid):
     form = EditUserForm()
     user = User.query.filter_by(id=userid).first()
     if form.validate_on_submit():
@@ -123,7 +95,7 @@ def edit_User(userid):
     form.username.data = user.username
     form.email.data = user.email
     form.name.data = user.name
-    return render_template('edit-user.html', title='Reset Password', form=form, user=user)
+    return render_template('userEdit.html', title='Reset Password', form=form, user=user)
 
 
 @game_management_blueprint.route('/report/listallusers')
@@ -135,7 +107,7 @@ def display_users():
     for row in result:
         users.append(row)
 
-    return render_template('list-users.html', Title='List of Users', data=users, user=current_user)
+    return render_template('userList.html', Title='List of Users', data=users, user=current_user)
 
 
 @game_management_blueprint.route('/report/allUserDetails')
@@ -149,7 +121,7 @@ def all_user_details():
     print(users)
 
 
-    return render_template('user-details.html', Title='Users Details', data=users, user=current_user)
+    return render_template('userDetails.html', Title='Users Details', data=users, user=current_user)
 
 
 @game_management_blueprint.route('/report/u_ranked')
@@ -163,7 +135,7 @@ def ranked_users():
         users.append(row)
     users.sort(key=lambda x:x[1], reverse=True)
 
-    return render_template("user-ranks.html", Title="Scoreboard", user_data =users, user=current_user)
+    return render_template("userRanks.html", Title="Scoreboard", user_data =users, user=current_user)
 
 
 @game_management_blueprint.route('/reset_password/<userid>', methods=['GET', 'POST'])
@@ -180,10 +152,10 @@ def reset_user_password(userid):
         flash('Password has been reset for user {}'.format(user.username))
         return redirect(url_for('game_management_blueprint.game_user_details'))
 
-    return render_template('reset-password.html', title='Reset Password', form=form, user=user)
+    return render_template('resetPassword.html', title='Reset Password', form=form, user=user)
 
 
-@game_management_blueprint.route('/claimcharacter', methods=['GET', 'POST'])
+@game_management_blueprint.route('/claimModule', methods=['GET', 'POST'])
 def claim():
     form = ClaimForm()
     if form.validate_on_submit():
@@ -203,10 +175,10 @@ def claim():
                 update_system = CTFSubSystems.query.filter_by(title=system.title).first()
                 print(update_system.title)
                 if update_system.status:
-                    flash("You have already claimed this character")
+                    flash("You have already claimed this Module")
                 else:
                     update_system.claim()
-                    flash("{} - Character claimed".format(update_system.title))
+                    flash("{} - Module claimed".format(update_system.title))
                     user = User.query.filter_by(username=current_user.username).first()
                     score = user.current_score + update_system.score
                     print("score is: {}".format(score))
@@ -215,11 +187,11 @@ def claim():
 
         db.session.commit()
 
-    return render_template('claimsubsystem.html', pagetitle='Claim a Character', form=form, user=current_user)
+    return render_template('claimModule.html', pagetitle='Claim a Module', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/reset', methods=['GET', 'POST'])
-def reset_subsystems():
+def reset_game():
     form = ResetSubsystemsForm()
     if form.validate_on_submit():
         sql = text('select * from ctf_sub_systems')
@@ -236,7 +208,7 @@ def reset_subsystems():
 
         db.session.commit()
 
-    return render_template('reset.html', pagetitle='Reset Characters', form=form, user=current_user)
+    return render_template('reset.html', pagetitle='Reset Game', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/report/dashboard')
