@@ -52,7 +52,7 @@ void routesConfiguration() {
   server.on("/dashboard.html", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-    request->send(SPIFFS, "/dashboard.html", "text/html");
+    request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
   // Example of route with authentication, and use of processor
@@ -73,7 +73,7 @@ void routesConfiguration() {
 
   });
 }
-String Getdatetime() {
+String getDateTime() {
   DateTime rightNow = rtc.now();
   char csvReadableDate[25];
   sprintf(csvReadableDate, "%02d:%02d:%02d %02d/%02d/%02d%",  rightNow.hour(), rightNow.minute(), rightNow.second(), rightNow.day(), rightNow.month(), rightNow.year());

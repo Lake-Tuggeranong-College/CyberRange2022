@@ -97,7 +97,7 @@ void setup() {
   }
 
   // The following line can be uncommented if the time needs to be reset.
-  //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   rtc.start();
 
   //EINK
@@ -170,8 +170,9 @@ void drawText(String text, uint16_t color, int textSize, int x, int y) {
 }
 
 void lightsflashing() {
-  logEvent("Lights flashing turned on");
+ 
   if (telstratowerOn) {
+     logEvent("Lights flashing turned on");
     digitalWrite(32, HIGH);   // turn the LED on (HIGH is the voltage level)
     digitalWrite(14, LOW);   // turn the LED on (HIGH is the voltage level)
     delay(100);                       // wait for a second
