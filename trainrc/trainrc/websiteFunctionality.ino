@@ -13,31 +13,46 @@ void routesConfiguration() {
 
   server.on("/TrainSpeed1", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainspeed1");
+    step(RED, PWM_FWD1, 0); // The step function is run and speed is set to 7
+
     request->send(SPIFFS, "/dashboard.html", "text/html" , false , processor);
   });
 
   server.on("/TrainSpeed2", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainspeed2");
+    step(RED, PWM_FWD2, 0); // The step function is run and speed is set to 7
+
     request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
   });
 
   server.on("/TrainSpeed3", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainspeed3");
+    step(RED, PWM_FWD3, 0); // The step function is run and speed is set to 7
+
     request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
   });
 
   server.on("/TrainReverse1", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainreverse1");
+    step(RED, PWM_REV1, 0); // The step function is run and speed is set to 1
     request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
   });
 
   server.on("/TrainReverse2", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainreverse2");
+    step(RED, PWM_REV2, 0); // The step function is run and speed is set to 1
     request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
   });
 
   server.on("/TrainReverse3", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainreverse3");
+    step(RED, PWM_REV3, 0); // The step function is run and speed is set to 1
+    request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
+  });
+
+  server.on("/Stop", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /Trainreverse3");
+    step(RED, PWM_BRK, 0);
     request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
   });
 
@@ -47,9 +62,9 @@ void routesConfiguration() {
   });
 
   //traindude.jpeg
- server.on("/traindude.jpeg", HTTP_GET, [](AsyncWebServerRequest * request) {
-    logEvent("route: /img.jpg");
-    request->send(SPIFFS, "/img.jpg", "image/jpeg");
+  server.on("/traindude.jpeg", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /traindude.jpeg");
+    request->send(SPIFFS, "/traindude.jpeg", "image/jpeg");
   });
 
   // Example of a route with additional authentication (popup in browser)
@@ -86,7 +101,7 @@ String getDateTime() {
 }
 
 String processor(const String& var) {
-  
+
   if (var == "DATETIME") {
     String datetime = getDateTime();
     return datetime;
