@@ -11,7 +11,7 @@ void routesConfiguration() {
     request->send(SPIFFS, "/index.html", "text/html" , false, processor);
   });
 
-  server.on("/Trainspeed1", HTTP_GET, [](AsyncWebServerRequest * request) {
+  server.on("/TrainSpeed1", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainspeed1");
     request->send(SPIFFS, "/dashboard.html", "text/html" , false , processor);
   });
@@ -26,17 +26,17 @@ void routesConfiguration() {
     request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
   });
 
-  server.on("/Trainreverse1", HTTP_GET, [](AsyncWebServerRequest * request) {
+  server.on("/TrainReverse1", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainreverse1");
     request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
   });
 
-  server.on("/Trainreverse2", HTTP_GET, [](AsyncWebServerRequest * request) {
+  server.on("/TrainReverse2", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainreverse2");
     request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
   });
 
-  server.on("/Trainreverse3", HTTP_GET, [](AsyncWebServerRequest * request) {
+  server.on("/TrainReverse3", HTTP_GET, [](AsyncWebServerRequest * request) {
     logEvent("route: /Trainreverse3");
     request->send(SPIFFS, "/dashboard.html", "text/html" , false, processor);
   });
@@ -46,6 +46,11 @@ void routesConfiguration() {
     request->send(SPIFFS, "/arduino.css", "text/css" , false, processor);
   });
 
+  //traindude.jpeg
+ server.on("/traindude.jpeg", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("route: /img.jpg");
+    request->send(SPIFFS, "/img.jpg", "image/jpeg");
+  });
 
   // Example of a route with additional authentication (popup in browser)
   // And uses the processor function.
