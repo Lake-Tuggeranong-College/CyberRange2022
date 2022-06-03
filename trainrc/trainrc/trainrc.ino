@@ -4,6 +4,29 @@
    This is the master copy of the code to start building your Arduino based
    Cyber Range component.
 */
+#include <PowerFunctions.h>   //Power Functions Library
+
+//IR Channels
+#define CH1 0x0
+#define CH2 0x1
+#define CH3 0x2
+#define CH4 0x3
+
+//IR Transmission
+#define IR_TRANS_IN   21  //IR Trans PIN
+#define IR_DEBUG_OFF  0  //IR Debug Mode Off
+#define IR_DEBUG_ON   1  //IR Debug Mode On
+
+//Call PowerFunctions parameters
+PowerFunctions pf(IR_TRANS_IN, CH1, IR_DEBUG_ON);
+
+// Current time
+unsigned long currentTime = millis();
+// Previous time
+unsigned long previousTime = 0;
+// Define timeout time in milliseconds (example: 2000ms = 2s)
+const long timeoutTime = 2000;
+
 
 
 /***************************************************
@@ -41,6 +64,8 @@ ThinkInk_213_Mono_B72 display(EPD_DC, EPD_RESET, EPD_CS, SRAM_CS, EPD_BUSY);
 
 // EINK End
 
+// IR TRansmitter
+#define IRTransmitterPin 21
 
 // RTC Start - Remove if unnecessary
 #include "RTClib.h"
@@ -77,12 +102,6 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
-    if (!request->authenticate(http_username, http_password))
-      return request->requestAuthentication();
-    request->send(SPIFFS, "/index.html", "text/html");
-  });
-
   routesConfiguration(); // Reads routes from routesManagement
 
   server.begin();
@@ -104,6 +123,8 @@ void setup() {
   display.clearBuffer();
   updateEPD ();
   logEvent("System Initialisation...");
+
+  pinMode(IRTransmitterPin, OUTPUT);
 }
 
 void loop() {
@@ -161,4 +182,18 @@ void drawText(String text, uint16_t color, int textSize, int x, int y) {
   display.setTextSize(textSize);
   display.setTextWrap(true);
   display.print(text);
+}
+
+// Single and dual motor control is defined
+void step(uint8_t output, uint8_t pwm, uint16_t time) {
+  pf.combo_pwm(output, pwm);
+  pf.single_pwm(output, pwm);
+}
+// Single increment for speed is defined
+void increment(uint8_t output) {
+  pf.single_increment(output);
+}
+// Single decrement for speed is defined
+void decrement(uint8_t output) {
+  pf.single_decrement(output);
 }
