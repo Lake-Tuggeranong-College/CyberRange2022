@@ -112,6 +112,8 @@ void setup() {
   display.clearBuffer();
 
   logEvent("System Initialisation...");
+
+  updateEPD();
 }
 
 void loop() {
@@ -127,7 +129,7 @@ void trackSwitch (bool mainTrack) {
   }
 }
 
-// logevents 
+// logevents
 void logEvent(String dataToLog) {
   /*
      Log entries to a file stored in SPIFFS partition on the ESP32.

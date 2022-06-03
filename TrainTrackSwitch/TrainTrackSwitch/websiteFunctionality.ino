@@ -9,13 +9,11 @@ void routesConfiguration() {
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send(SPIFFS, "/index.html", "text/html");
   });
-
-
+  
   // Example of linking to an external file
   server.on("/arduino.css", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send(SPIFFS, "/arduino.css", "text/css");
   });
-
 
   // Example of a route with additional authentication (popup in browser)
   // And uses the processor function.
@@ -40,7 +38,7 @@ void routesConfiguration() {
  server.on("/TrackRight", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-   logEvent("TrackrRght");
+   logEvent("TrackRight");
    myservo.write(180);
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
@@ -54,8 +52,6 @@ void routesConfiguration() {
     request->send(SPIFFS, "/logEvents.csv", "text/html", true);
   }); 
 }
-
-
 
 
 String processor(const String& var) {
