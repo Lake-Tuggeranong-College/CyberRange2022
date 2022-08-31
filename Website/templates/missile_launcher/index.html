@@ -1,0 +1,37 @@
+{#<!doctype html>#}
+{#<html>#}
+{#<head>#}
+{#    <link rel="stylesheet" href="/static/css/bootstrap.min.css" crossorigin="anonymous">#}
+{#    <script src="/static/js/jquery-3.3.1.slim.min.js"></script>#}
+{#    <script src="/static/js/popper.min.js"></script>#}
+{#    <script src="/static/js/bootstrap.min.js"></script>#}
+{##}
+{#    <meta charset="UTF-8">#}
+{#    <title>Missile Launch</title>#}
+{#    <script src="/static/js/authentication.js"></script>#}
+{##}
+{#</head>#}
+{##}
+{#<body>#}
+
+{% extends 'base.html' %}
+
+{% block header %}
+<script src="/static/js/authentication.js"></script>
+{% endblock %}
+
+{% block content %}
+<form action="javascript:void(0);">
+  <div class="form-group">
+    <label for="missileUsername">Username</label>
+    <input type="text" class="form-control" id="missileUsername" placeholder="Enter Username">
+  </div>
+  <div class="form-group">
+    <label for="missilePassword">Password</label>
+    <input type="password" class="form-control" id="missilePassword" placeholder="Password">
+  </div>
+  <button type="submit" onclick="check_pin_code()" class="btn btn-primary">Submit</button>
+</form>
+
+<p id="fire_button"></p>
+{% endblock %}

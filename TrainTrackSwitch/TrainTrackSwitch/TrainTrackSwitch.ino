@@ -177,3 +177,24 @@ void drawText(String text, uint16_t color, int textSize, int x, int y) {
   display.setTextWrap(true);
   display.print(text);
 }
+
+//A pair of functions used with processor in websiteFunctionality to output a date to the website.
+String getDateAsString() {
+  DateTime now = rtc.now();
+
+  // Converts the date into a human-readable format.
+  char humanReadableDate[20];
+  sprintf(humanReadableDate, "%02d/%02d/%02d", now.day(), now.month(), now.year());
+
+  return humanReadableDate;
+}
+
+String getTimeAsString() {
+  DateTime now = rtc.now();
+
+  // Converts the time into a human-readable format.
+  char humanReadableTime[20];
+  sprintf(humanReadableTime, "%02d:%02d:%02d", now.hour(), now.minute(), now.second());
+
+  return humanReadableTime;
+}

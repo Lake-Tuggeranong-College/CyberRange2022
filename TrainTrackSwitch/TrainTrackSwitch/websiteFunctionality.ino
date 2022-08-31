@@ -34,19 +34,17 @@ void routesConfiguration() {
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
-// output the train trackright 
- server.on("/TrackRight", HTTP_GET, [](AsyncWebServerRequest * request) {
+  server.on("/TrackRight", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
-   logEvent("TrackRight");
-   myservo.write(180);
+    logEvent("TrackrRght");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 
-  
+
   // Example of route which sets file to download - 'true' in send() command.
   server.on("/logOutput", HTTP_GET, [](AsyncWebServerRequest * request) {
-      if (!request->authenticate(http_username, http_password))
+    if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
     logEvent("output");
     request->send(SPIFFS, "/logEvents.csv", "text/html", true);
@@ -63,7 +61,12 @@ String processor(const String& var) {
       if (var=="VARIABLEVALUE") { return "5";}
   */
 
+  //Displays date and time
+  if (var == "DATETIME") {
+    String datetime = getTimeAsString() + " " + getDateAsString();
+    return datetime;
 
-  // Default "catch" which will return nothing in case the HTML has no variable to replace.
-  return String();
+    // Default "catch" which will return nothing in case the HTML has no variable to replace.
+    return String();
+  }
 }

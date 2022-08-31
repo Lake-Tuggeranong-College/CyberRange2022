@@ -3,9 +3,9 @@
 
 <!-- This creates the heading of the page and makes it the same as the title -->
 {% block header %}
-{#    <h2 style="text-align: left; padding-left: 280px; padding-bottom: 90px;"><img src="../static/blackout-banner.jpg"#}
-{#                                                                                  height="250" width="1050"#}
-{#                                                                                  alt="Blackout Banner"></h2>#}
+    {#    <h2 style="text-align: left; padding-left: 280px; padding-bottom: 90px;"><img src="../static/blackout-banner.jpg"#}
+    {#                                                                                  height="250" width="1050"#}
+    {#                                                                                  alt="Blackout Banner"></h2>#}
 {% endblock %}
 
 
@@ -18,9 +18,21 @@
             {% else %}
                 <p> Logged in as: {{ user.username }}</p>
             {% endif %}
-            <p>Welcome to Operation Blackout subsystem claiming website.</p>
+            <p>Welcome to the Attack of The Kiwis claiming website.</p>
+            <p>List of Departments</p>
+            <div class="grid-container">
+                <div class="alert alert-primary"><a href="192.168.1.101">Traffic Lights</a></div>
+                <div class="alert alert-primary"><a href="????">Parliament House - ????</a></div>
+                <div class="alert alert-primary"><a href="http://192.168.1.102/">Train RC </a></div>
+                <div class="alert alert-primary"><a href="http://192.168.1.103/">Train Switch</a></div>
+                <div class="alert alert-primary"><a href="http://192.168.1.100/">Telstra Tower</a></div>
+                <div class="alert alert-primary"><a href="http://192.168.1.104/">Emergency Services</a></div>
+
+
+            </div>
+
             {% if current_user.is_anonymous %}
-                <p>Please <a href="/register">register</a> or <a href="/login">login</a> to view the rest of the
+                <p>Please <a href="/registerUser">register</a> or <a href="/login">login</a> to view the rest of the
                     website.</p>
             {% else %}
                 <p>If you have a passcode to claim a subsystem, go to the <a href="/claimsubsystem">claim a

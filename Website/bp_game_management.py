@@ -11,6 +11,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 game_management_blueprint = Blueprint('game_management_blueprint', __name__)
 
+
 @game_management_blueprint.route('/index')
 @game_management_blueprint.route('/')
 def game_main_page():
@@ -19,36 +20,35 @@ def game_main_page():
 
 
 @game_management_blueprint.route('/login', methods=['GET', 'POST'])
-def user_login():
+def game_user_login():
     if current_user.is_authenticated:
-        return redirect(url_for('main_page'))
+        return redirect(url_for('game_management_blueprint.game_main_page'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            return redirect(url_for('game_management_blueprint.user_login'))
+            return redirect(url_for('game_management_blueprint.game_user_login'))
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('game_management_blueprint.game_main_page'))
-    return render_template('login.html', title='Sign In', form=form, user=current_user)
+    return render_template('userLogin.html', title='Sign In', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('main_page'))
+    return redirect(url_for('game_management_blueprint.game_main_page'))
 
 
 @game_management_blueprint.route('/user', )
 @login_required
-def user_details():
+def game_user_details():
     return render_template("user.html", title="User Details", user=current_user)
 
 
-
-@game_management_blueprint.route('/register', methods=['GET', 'POST'])
-def register():
+@game_management_blueprint.route('/registerUser', methods=['GET', 'POST'])
+def register_user():
     if current_user.is_authenticated:
-        return redirect(url_for('main_page'))
+        return redirect(url_for('game_management_blueprint.game_main_page'))
     form = RegistrationForm()
     if form.validate_on_submit():
         print("test")
@@ -60,14 +60,13 @@ def register():
 
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('user_login'))
-    return render_template('register.html', title='Register', form=form, user=current_user)
+        return redirect(url_for('game_management_blueprint.game_user_login'))
+    return render_template('userRegister.html', title='Register', form=form, user=current_user)
 
 
-
-@game_management_blueprint.route('/registercharacter', methods=['GET', 'POST'])
+@game_management_blueprint.route('/registerModule', methods=['GET', 'POST'])
 @login_required
-def registerCTFSubsystem():
+def register_module():
     form = CTFSubsystemForm()
     if form.validate_on_submit():
         newSubSystem = CTFSubSystems(title=form.title.data, description=form.description.data, score=form.score.data,
@@ -75,42 +74,15 @@ def registerCTFSubsystem():
         newSubSystem.set_passcode(form.code.data)
         db.session.add(newSubSystem)
         db.session.commit()
-        flash('Congratulations, you have registered a new character!')
-        return redirect(url_for('user_login'))
-    return render_template('registersubsystem.html', title='Register Character', form=form, user=current_user)
+        flash('Congratulations, you have registered a new Module!')
+        return redirect(url_for('game_management_blueprint.game_user_login'))
+    return render_template('registerModule.html', title='Register Module', form=form, user=current_user)
 
-
-@game_management_blueprint.route('/secret', methods=['GET', 'POST'])
-@login_required
-def claimsubsystem():
-    form = ClaimSubsystemForm()
-    if form.validate_on_submit():
-        print("submit")
-        selected_subsystem = request.form.getlist("CTFSubSystems")
-        print(selected_subsystem)
-
-        for claimedsubsystems in selected_subsystem:
-            claim_new_subsystem = Order(current_user.id, claimedsubsystems)
-            db.session.add(claim_new_subsystem)
-            flash("Ordered Product: {}".format(claim_new_subsystem.subsystemid))
-
-        print("commit")
-        db.session.commit()
-        if len(selected_subsystem) > 0:
-            flash("Subsystem Claimed")
-        else:
-            flash("Nothing selected. Please select one or more Subsystems to claim.")
-        return redirect(url_for('main_page'))
-
-    subsystems = text('select * from ctf_sub_systems')
-    result = db.engine.execute(subsystems)
-
-    return render_template('secret.html', pagetitle='Claim a Character', products=result, user=current_user, form=form)
 
 
 @game_management_blueprint.route('/edit_user/<userid>', methods=['GET', 'POST'])
 @login_required
-def edit_User(userid):
+def edit_user(userid):
     form = EditUserForm()
     user = User.query.filter_by(id=userid).first()
     if form.validate_on_submit():
@@ -118,12 +90,12 @@ def edit_User(userid):
         db.session.commit()
         print("User Updated : {}".format(user))
         flash("User Reset")
-        return redirect(url_for('user_details'))
+        return redirect(url_for('game_management_blueprint.game_user_details'))
 
     form.username.data = user.username
     form.email.data = user.email
     form.name.data = user.name
-    return render_template('edit-user.html', title='Reset Password', form=form, user=user)
+    return render_template('userEdit.html', title='Reset Password', form=form, user=user)
 
 
 @game_management_blueprint.route('/report/listallusers')
@@ -131,69 +103,25 @@ def display_users():
     sql = text('select username, id from user')
     result = db.engine.execute(sql)
     users = []
-    html_output = Markup(
-        "<div class=\"container-fluid table table-hover text-centered font-color\"><div class = \"row\"><div class=\"col-sm-3 "
-        "font-weight-bold\">ID</div><div class=\"col-sm-3 font-weight-bold\">User Name</div><div class=\"col-sm-3 "
-        "font-weight-bold\">Reset Password</div><div class=\"col-sm-3 font-weight-bold\">Edit User "
-        "Details</div></div>")
+
     for row in result:
         users.append(row)
-    print(users)
-    user_counter = 1
-    for index, user in enumerate(users):
 
-        if index % 2 == 0:
-            html_output = Markup(
-                "{}<div class = \"row cell1 font-color\"><div class=\"col-sm-3\">{}</div> <div class=\"col-sm-3\">{}</div><div "
-                "class=\"col-sm-3\"><a href=\"/reset_password/{}\">Reset Password</a></div> <div "
-                "class=\"col-sm-3\"><a href=\"/edit_user/{}\">Edit User Details</a></div></div>".format(
-                    html_output, user_counter, user[0], user[1], user[1]))
-        else:
-            html_output = Markup(
-                "{}<div class = \"row cell2 font-color\"><div class=\"col-sm-3\">{}</div> <div class=\"col-sm-3\">{}</div><div "
-                "class=\"col-sm-3\"><a href=\"/reset_password/{}\">Reset Password</a></div><div class=\"col-sm-3\"><a "
-                "href=\"/edit_user/{}\">Edit User Details</a></div></div>".format(
-                    html_output, user_counter, user[0], user[1], user[1]))
-        user_counter = user_counter + 1
-
-    html_output = Markup("{}</tbody></table>".format(html_output))
-    print(html_output)
-
-    return render_template('list-users.html', Title='List of Users', data=html_output, user=current_user)
+    return render_template('userList.html', Title='List of Users', data=users, user=current_user)
 
 
-
-@game_management_blueprint.route('/report/stocklevels')
+@game_management_blueprint.route('/report/allUserDetails')
 def all_user_details():
     sql = text('select name, username, email, id from user')
     result = db.engine.execute(sql)
     users = []
-    html_output = Markup(
-        "<div class=\"container-fluid table table-hover text-centered font-color\"><div class = \"row\"><div class=\"col-sm-3 "
-        "font-weight-bold\">ID</div><div class=\"col-sm-3 font-weight-bold\">Name</div><div class=\"col-sm-3 "
-        "font-weight-bold\">Username</div><div class=\"col-sm-3 font-weight-bold\">Email</div></div>")
+
     for row in result:
         users.append(row)
     print(users)
-    user_counter = 1
-    for index, user in enumerate(users):
 
-        if index % 2 == 0:
-            html_output = Markup(
-                "{}<div class = \"row cell1 font-color\"><div class=\"col-sm-3\">{}</div> <div class=\"col-sm-3\">{}</div>"
-                "<div class=\"col-sm-3\">{}</div> <div class=\"col-sm-3\">{}</div></div>".format(
-                    html_output, user_counter, user[0], user[1], user[2]))
-        else:
-            html_output = Markup(
-                "{}<div class = \"row cell2 font-color\"><div class=\"col-sm-3\">{}</div> <div class=\"col-sm-3\">{}</div>"
-                "<div class=\"col-sm-3\">{}</div> <div class=\"col-sm-3\">{}</div></div>".format(
-                    html_output, user_counter, user[0], user[1], user[2]))
-        user_counter = user_counter + 1
 
-    html_output = Markup("{}</tbody></table>".format(html_output))
-    print(html_output)
-
-    return render_template('user-details.html', Title='Users Details', data=html_output, user=current_user)
+    return render_template('userDetails.html', Title='Users Details', data=users, user=current_user)
 
 
 @game_management_blueprint.route('/report/u_ranked')
@@ -202,36 +130,12 @@ def ranked_users():
     ranked = text('select username, current_score from user where active_player')
     result = db.engine.execute(ranked)
     users = []
-    html_output = Markup(
-        "<div class=\"container-fluid table table-hover text-centered user-size\"><div class = \"row\">"
-        "<div class=\"col-sm-3 \"font-weight-bold\"></div><div "
-        "class=\"col-sm-3 font-weight-bold\">Username</div><div class=\"col-sm-3 "
-        "font-weight-bold\">Score</div><div class=\"col-sm-3 "
-        "font-weight-bold\"></div></div> "
-    )
 
     for row in result:
         users.append(row)
-    print(users)
-    # user_counter = 1
-    for index, user in enumerate(users):
+    users.sort(key=lambda x:x[1], reverse=True)
 
-        if index % 2 == 0:
-            html_output = Markup("{}<div class = \"row cell1 user-size\"> "
-                                 "<div class=\"col-sm-3\"></div><div class=\"col-sm-3\">{}</div><div "
-                                 "class=\"col-sm-3\">{}</div><div class=\"col-sm-3\"></div> "
-                                 "</div>".format(html_output, user[0], user[1]))
-        else:
-            html_output = Markup("{}<div class = \"row cell2 user-size\"> "
-                                 "<div class=\"col-sm-3\"></div><div class=\"col-sm-3\">{}</div><div "
-                                 "class=\"col-sm-3\">{}</div></div><div class=\"col-sm-3\"> "
-                                 "</div>".format(html_output, user[0], user[1]))
-        # user_counter = user_counter + 1
-
-    html_output = Markup("{}</div></section></tbody><table>".format(html_output))
-    print(html_output)
-
-    return render_template("user-ranks.html", Title="Scoreboard", data=html_output, user=current_user)
+    return render_template("userRanks.html", Title="Scoreboard", user_data =users, user=current_user)
 
 
 @game_management_blueprint.route('/reset_password/<userid>', methods=['GET', 'POST'])
@@ -246,12 +150,12 @@ def reset_user_password(userid):
         db.session.commit()
         print("done")
         flash('Password has been reset for user {}'.format(user.username))
-        return redirect(url_for('user_details'))
+        return redirect(url_for('game_management_blueprint.game_user_details'))
 
-    return render_template('reset-password.html', title='Reset Password', form=form, user=user)
+    return render_template('resetPassword.html', title='Reset Password', form=form, user=user)
 
 
-@game_management_blueprint.route('/claimcharacter', methods=['GET', 'POST'])
+@game_management_blueprint.route('/claimModule', methods=['GET', 'POST'])
 def claim():
     form = ClaimForm()
     if form.validate_on_submit():
@@ -271,10 +175,10 @@ def claim():
                 update_system = CTFSubSystems.query.filter_by(title=system.title).first()
                 print(update_system.title)
                 if update_system.status:
-                    flash("You have already claimed this character")
+                    flash("You have already claimed this Module")
                 else:
                     update_system.claim()
-                    flash("{} - Character claimed".format(update_system.title))
+                    flash("{} - Module claimed".format(update_system.title))
                     user = User.query.filter_by(username=current_user.username).first()
                     score = user.current_score + update_system.score
                     print("score is: {}".format(score))
@@ -283,11 +187,11 @@ def claim():
 
         db.session.commit()
 
-    return render_template('claimsubsystem.html', pagetitle='Claim a Character', form=form, user=current_user)
+    return render_template('claimModule.html', pagetitle='Claim a Module', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/reset', methods=['GET', 'POST'])
-def reset_subsystems():
+def reset_game():
     form = ResetSubsystemsForm()
     if form.validate_on_submit():
         sql = text('select * from ctf_sub_systems')
@@ -304,7 +208,7 @@ def reset_subsystems():
 
         db.session.commit()
 
-    return render_template('reset.html', pagetitle='Reset Characters', form=form, user=current_user)
+    return render_template('reset.html', pagetitle='Reset Game', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/report/dashboard')
@@ -315,15 +219,5 @@ def dashboard():
 
     for row in result:
         subsystem_list.append(row)
-    html_output = Markup(
-        "<div class=\"container-fluid table table-hover text-centered font-color\"><div class = \"row\>")
 
-    for systems in subsystem_list:
-        html_output = Markup("{}<div class=\"col-sm-1\">{}</div>".format(html_output, systems.title))
-    html_output = Markup(
-        "{}</div>".format(html_output))
-
-    print(html_output)
-    print(subsystem_list)
-
-    return render_template('dashboard.html', Title='Subsystem Dashboard', data=html_output, user=current_user, subsystems=subsystem_list)
+    return render_template('dashboard.html', Title='Subsystem Dashboard', user=current_user, subsystems=subsystem_list)

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ Title }}{% endblock %}
+
+{% block header %}
+  <h1>{{ Title }}</h1>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div style='font-size: xx-large' class="col-lg-3 text-white">Username</div>
+{#            <div style='font-size: xx-large' class="col-lg-3 text-white">ID</div>#}
+            <div style='font-size: xx-large' class="col-lg-3 text-white">Reset Password</div>
+            <div style='font-size: xx-large' class="col-lg-3 text-white">Edit User Details</div>
+        </div>
+        {% for user in data %}
+            <div class="row">
+                <div class="col-lg-3 text-white">{{ user[0] }}</div>
+{#                <div class="col-lg-3 text-white">{{ user[1] }}</div>#}
+                <div class="col-lg-3 text-white"><a href="/reset_password/{{ user[1] }}">Reset Password</a></div>
+                <div class="col-lg-3 text-white"><a href="/edit_user/{{ user[1] }}">Edit User Details</a></div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

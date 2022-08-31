@@ -1,19 +1,23 @@
 /*TEAM*/
 
-    Dylan Bock - base website & programmer;
+    Jackson Dickie - Website, traffic lights and missile launcher programmer;
 
-    Omar Kennedy - task organiser & idea guy;
+    Jack Goodwin - Parliament House programmer;
 
-    Ryan Nguyen - undisputed grandmaster of programming;
+    Shabaz Khan - Telstra Tower and missile launcher programmer;
 
-    Samuel Sheridan - website tester;
+    Krishna Sharma - Train track switch programmer;
 
-    Ryan Cather - star trek die hard fan;
+    Brooklyn Stafrace - Train RC programmer;
+
+    Abhishek Wickramanayake - Emergency Services programmer;
+
+    Ryan Cather - star wars die hard fan and an absolute mad lad;
 
 
 /*SITE*/
 
-    Last update: 08/11/2019;
+    Last update: 11/5/2022;
     DOCTYPE: HTML5;
     Components: Python 3.7;
     IDE: Pycharm Professional;

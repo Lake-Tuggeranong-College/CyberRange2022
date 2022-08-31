@@ -8,11 +8,11 @@
 </head>
 
 <body>
-<nav>
+    
     <ul>
         <li><a href="index.html">Home</a></li>
         <li class="active"><a href="/dashboard.html">Dashboard</a></li>
-    </ul>
+    </ul> 
 </nav>
 
 <h1>Train Remote Control</h1>
@@ -20,12 +20,13 @@
 <div class="grid-container">
     <div class="banner">This is the Department Of Automated Transport, this page works as a control pannel to fix any problems with our automated trains  </div>
     <div><p>Date and Time </p>
-        <p>%DATETIME% *</p></div>
+        <p>%DATETIME%</p></div>
+
+
+
     <div></div>
     <div>LogEvents<p><a href="/logOutput">Download</a></div>
     <div>
-        <p><a href="/trainspeed1">Train speed 1</a></p>
-        <p><a href="/LEDOff">Train speed 2</a></p>
 
 
 
@@ -33,13 +34,24 @@
 
 
 
-    </div>
+        <p><a href="/TrainSpeed1">Forward Speed1</a></p>
+        
+        <p><a href="/TrainSpeed2">Forward Speed2</a></p>
+        
+<p><a href="/TrainSpeed3">Forward Speed3</a></p>
 
-</div>
+<p><a href="/TrainReverse1">Reverse Speed1 </a></p>
+    
+<p><a href="/TrainReverse2">Reverse Speed2</a></p>
 
-<sup class="tinyText">* Example of HTML/Arduino Variable</sup>
+</p><a href="/TrainReverse3">Reverse Speed3</a></p>
 
 
-</body>
+</p><a href="/Stop">Stop</a></p>
+
+
+
+
+
 
 </html>
