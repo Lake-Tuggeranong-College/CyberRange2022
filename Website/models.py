@@ -66,18 +66,3 @@ class CTFSubSystems(db.Model):
     def reset(self):
         self.status = True
         print("reset")
-
-
-class Order(db.Model):
-    claimID = db.Column(db.Integer, primary_key=True)
-    subsystemID = db.Column(db.Integer, db.ForeignKey('product.productID'))
-    userID = db.Column(db.Integer, db.ForeignKey('user.id'))
-    claimdate = db.Column(db.DateTime, index=False, unique=False)
-
-    def __init__(self, userid, subsystemid, claim_date=datetime.today()):
-        self.userID = userid
-        self.subsystemID = subsystemid
-        self.claimdate = claim_date
-
-    def __repr__(self):
-        return '<Claim {}: User {} Claimed Subsystems {}, date: {}>'.format(self.claimID, self.userID, self.subsystemID, self.orderdate)
