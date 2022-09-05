@@ -4,7 +4,7 @@ from flask_login import current_user, login_user
 from flask_login import LoginManager, logout_user, login_required
 from forms import LoginForm, RegistrationForm, CTFSubsystemForm, ClaimSubsystemForm, EditUserForm, ResetPasswordForm, \
     ClaimForm, ResetSubsystemsForm
-from models import User, CTFSubSystems, Order
+from models import User, CTFSubSystems
 from sqlalchemy import text
 from app import db
 from werkzeug.security import check_password_hash, generate_password_hash
