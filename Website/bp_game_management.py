@@ -221,3 +221,8 @@ def dashboard():
         subsystem_list.append(row)
 
     return render_template('dashboard.html', Title='Subsystem Dashboard', user=current_user, subsystems=subsystem_list)
+
+@game_management_blueprint.route('/module/<moduleid>',methods=["GET","POST"])
+def module_information (moduleid):
+
+    return render_template('moduleInformation.html', Title='moduleInformation', user=current_user)
