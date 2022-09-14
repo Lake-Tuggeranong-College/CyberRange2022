@@ -237,5 +237,5 @@ def module_information (moduleid):
 @game_management_blueprint.route('/module',methods=["GET","POST"])
 @login_required
 def module_list():
-    ctf_modules = CTFSubSystems.query.all()
+    ctf_modules = CTFSubSystems.query.filter_by(active=1).all()
     return render_template('moduleList.html', Title='List of Modules', user=current_user, modules=ctf_modules)
