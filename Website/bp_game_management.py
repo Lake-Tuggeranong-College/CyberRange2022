@@ -232,7 +232,7 @@ def module_information (moduleid):
     # 3. Include form to submit and check code.
     module_info= CTFSubSystems.query.filter_by(subsystemid=moduleid).first()
 
-    return render_template('moduleInformation.html', Title='moduleInformation', user=current_user)
+    return render_template('moduleInformation.html', Title='moduleInformation', user=current_user,module=module_info)
 
 @game_management_blueprint.route('/module',methods=["GET","POST"])
 @login_required
