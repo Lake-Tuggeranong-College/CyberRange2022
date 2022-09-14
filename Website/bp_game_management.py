@@ -4,7 +4,7 @@ from flask_login import current_user, login_user
 from flask_login import LoginManager, logout_user, login_required
 from forms import LoginForm, RegistrationForm, CTFSubsystemForm, ClaimSubsystemForm, EditUserForm, ResetPasswordForm, \
     ClaimForm, ResetSubsystemsForm
-from models import User, CTFSubSystems, Order
+from models import User, CTFSubSystems
 from sqlalchemy import text
 from app import db
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -221,3 +221,19 @@ def dashboard():
         subsystem_list.append(row)
 
     return render_template('dashboard.html', Title='Subsystem Dashboard', user=current_user, subsystems=subsystem_list)
+
+@game_management_blueprint.route('/module/<moduleid>',methods=["GET","POST"])
+@login_required
+def module_information (moduleid):
+
+    # Steps needed.
+    # 1. Load Specific record (moduleid) from table
+    # 2. Display relevant information
+    # 3. Include form to submit and check code.
+    return render_template('moduleInformation.html', Title='moduleInformation', user=current_user)
+
+@game_management_blueprint.route('/module',methods=["GET","POST"])
+@login_required
+def module_list():
+    ctf_modules = CTFSubSystems.query.all()
+    return render_template('moduleList.html', Title='List of Modules', user=current_user, modules=ctf_modules)

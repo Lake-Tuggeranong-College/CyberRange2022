@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+<!-- This creates the heading of the page and makes it the same as the title -->
+{% block header %}
+    {{ Title }}
+{% endblock %}
+
+
+<!-- This replaces the content block in base.html -->
+{% block content %}
+
+
+    {% for module in modules %}
+
+        <div class="container-fluid alert alert-primary">
+{#        One row per module#}
+            <div class="row">
+                <div class="col-md-4">{{ module.title }}</div>
+                <div class="col-md-4">{{ module.description }}</div>
+                <a href="/module/{{ module.subsystemid }}">{{ module.title }}</a>
+
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+{% endblock %}
