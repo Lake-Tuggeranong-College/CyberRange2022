@@ -3,12 +3,19 @@
 
 <!-- This creates the heading of the page and makes it the same as the title -->
 {% block header %}
-    {{ module.title }}
-    {{ module.challenge_text  }}
-    {{ module.ip_address }}
-    {#    <h2 style="text-align: left; padding-left: 280px; padding-bottom: 90px;"><img src="../static/blackout-banner.jpg"#}
-    {#                                                                                  height="250" width="1050"#}
-    {#                                                                                  alt="Blackout Banner"></h2>#}
+    <p>{{ module.title }}</p>
+    <p>{{ module.challenge_text }}</p>
+    <p> {{ module.ip_address }}</p>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <b>Insert {{ form.passcode.label }}:</b><br>
+        {{ form.passcode(size=32) }}<br>
+        {% for error in form.passcode.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        <p style="padding-top: 15px">{{ form.submit() }}</p>
+    </form>
 {% endblock %}
 
 
