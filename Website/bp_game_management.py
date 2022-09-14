@@ -230,6 +230,8 @@ def module_information (moduleid):
     # 1. Load Specific record (moduleid) from table
     # 2. Display relevant information
     # 3. Include form to submit and check code.
+    module_info= CTFSubSystems.query.filter_by(subsystemid=moduleid).first()
+
     return render_template('moduleInformation.html', Title='moduleInformation', user=current_user)
 
 @game_management_blueprint.route('/module',methods=["GET","POST"])
