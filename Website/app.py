@@ -9,8 +9,6 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from flask_admin import Admin
-
 
 
 # Configure app variables.
@@ -29,7 +27,6 @@ login.login_view = 'login'
 
 from bp_missile_launcher import missile_launcher_blueprint
 from bp_game_management import game_management_blueprint
-from bp_admin import admin_blueprint
 
 app.register_blueprint(missile_launcher_blueprint)
 app.register_blueprint(game_management_blueprint)
