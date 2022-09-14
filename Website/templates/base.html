@@ -13,19 +13,7 @@
     <script src="/static/js/jquery-3.3.1.slim.min.js"></script>
     <script src="/static/js/popper.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
-    <!--
 
-    <script src="/static/js/jquery-3.3.1.slim.min.js"
-                integrity="sha256-w/K14c9es++XoHzIMaMmA0G6Ea9ndjvAXvPp5V26jB8="
-                crossorigin="anonymous"></script>
-        <script src="/static/js/popper.min.js"
-                integrity="sha256-vbLp3u9orh8SYzY/enuuWKkTzBss7i480sRrzRgev3U="
-                crossorigin="anonymous"></script>
-
-    /bootstrap.min.js
-     integrity="sha256-O82ALp93hJ58HpPIcnn7uwTUWUnSvnmwNWbOrN4psVg="
-                crossorigin="anonymous"
-    -->
     <script>
         function timedRefresh() {
             setTimeout('location.reload()', 5000);
@@ -39,6 +27,11 @@
         }
 
         p {
+            font-size: 18px;
+            color: white;
+        }
+
+        header {
             font-size: 18px;
             color: white;
         }
@@ -75,10 +68,10 @@
                 <li class="nav-item"><a class="nav-link" href="/login Module">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="/registerUser">Registration</a></li>
             {% else %}
-                <li class="nav-item"><a class="nav-link" href="/logout Module">Logout</a></li>
-                <li class="nav-item"><a class="nav-link" href="/user Module">User Details</a></li>
-                <li class="nav-item"><a class="nav-link" href="/claimModule">Claim a Department</a></li>
-                <li class="nav-item"><a class="nav-link" href="/missile_launcher/">Missile Module</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="/user">User Details</a></li>
+                <li class="nav-item"><a class="nav-link" href="/module">Modules</a></li>
+                <li class="nav-item"><a class="nav-link" href="/missile_launcher/">Missile Launcher</a></li>
                 {% if user.is_admin() %}
                     <li class="nav-item"><a class="nav-link" href="/reset">Reset Module</a></li>
                     <li class="nav-item"><a class="nav-link" href="/registerModule">Register New Module</a></li>
@@ -109,7 +102,7 @@
 {% endwith %}
 <!-- Dynamic content -->
 <section class="content" style="padding-left: 10em; padding-bottom: 2em;padding-right: 10em">
-    <header>
+    <header >
         {% block header %}{% endblock %}
     </header>
     {% block content %}{% endblock %}

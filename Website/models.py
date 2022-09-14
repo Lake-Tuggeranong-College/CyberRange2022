@@ -52,7 +52,9 @@ class CTFSubSystems(db.Model):
     score = db.Column(db.Integer, index=True, unique=False)
     status = db.Column(db.Boolean, index=True, unique=False)
     Code = db.Column(db.String(11), index=True, unique=True)
-
+    ip_address = db.Column(db.String())
+    challenge_text = db.Column(db.String())
+    active=db.Column(db.Boolean)
     def set_passcode(self, code):
         self.Code = generate_password_hash(code)
 
@@ -66,18 +68,3 @@ class CTFSubSystems(db.Model):
     def reset(self):
         self.status = True
         print("reset")
-
-
-class Order(db.Model):
-    claimID = db.Column(db.Integer, primary_key=True)
-    subsystemID = db.Column(db.Integer, db.ForeignKey('product.productID'))
-    userID = db.Column(db.Integer, db.ForeignKey('user.id'))
-    claimdate = db.Column(db.DateTime, index=False, unique=False)
-
-    def __init__(self, userid, subsystemid, claim_date=datetime.today()):
-        self.userID = userid
-        self.subsystemID = subsystemid
-        self.claimdate = claim_date
-
-    def __repr__(self):
-        return '<Claim {}: User {} Claimed Subsystems {}, date: {}>'.format(self.claimID, self.userID, self.subsystemID, self.orderdate)
