@@ -1,3 +1,7 @@
+#include <AsyncUDP.h>
+
+#include <AsyncTCP.h>
+
 #include "sensitiveInformation.h"
 
 #define FORMAT_SPIFFS_IF_FAILED true
