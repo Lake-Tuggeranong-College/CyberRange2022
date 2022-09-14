@@ -72,25 +72,25 @@
             </li>
             {% if user.is_anonymous %}
 
-                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login Module">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="/registerUser">Registration</a></li>
             {% else %}
-                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-                <li class="nav-item"><a class="nav-link" href="/user">User Details</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout Module">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="/user Module">User Details</a></li>
                 <li class="nav-item"><a class="nav-link" href="/claimModule">Claim a Department</a></li>
-                <li class="nav-item"><a class="nav-link" href="/missile_launcher/">Missile Launcher</a></li>
+                <li class="nav-item"><a class="nav-link" href="/missile_launcher/">Missile Module</a></li>
                 {% if user.is_admin() %}
-                    <li class="nav-item"><a class="nav-link" href="/reset">Reset Departments</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/registerModule">Register New Department</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/reset">Reset Module</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/registerModule">Register New Module</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="Preview" href="#" role="button"
-                           aria-haspopup="true" aria-expanded="false">Admin Reports </a>
+                           aria-haspopup="true" aria-expanded="false">Admin Module </a>
                         <div class="dropdown-menu" aria-labelledby="Preview"><a class="dropdown-item"
                                                                                 href="/report/listallusers">List All
                             Users</a>
                             {#                            <a class="dropdown-item" href="/report/allUserDetails">All User Details</a>#}
-                            <a class="dropdown-item" href="/report/u_ranked">User Ranks</a>
-                            <a class="dropdown-item" href="/report/dashboard">Subsystem Dashboard</a></div>
+                            <a class="dropdown-item" href="/report/u_ranked">User Module</a>
+                            <a class="dropdown-item" href="/report/dashboard">Subsystem Module</a></div>
                     </li>
                 {% endif %}
             {% endif %}
