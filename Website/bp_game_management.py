@@ -70,7 +70,7 @@ def register_module():
     form = CTFSubsystemForm()
     if form.validate_on_submit():
         newSubSystem = CTFSubSystems(title=form.title.data, description=form.description.data, score=form.score.data,
-                                     Owner="None")
+                                     Owner="None", active=1)
         newSubSystem.set_passcode(form.code.data)
         db.session.add(newSubSystem)
         db.session.commit()
@@ -230,10 +230,22 @@ def module_information (moduleid):
     # 1. Load Specific record (moduleid) from table
     # 2. Display relevant information
     # 3. Include form to submit and check code.
-    return render_template('moduleInformation.html', Title='moduleInformation', user=current_user)
+    module_info = CTFSubSystems.query.filter_by(subsystemid=moduleid).first()
+    form = ClaimForm()
+    if form.validate_on_submit():
+        if check_password_hash(module_info.Code, form.passcode.data):
+            current_user.current_score = current_user.current_score + module_info.score
+            msg = "Success! You entered the correct code!. You gained" + str(module_info.score) + " points. You now have "+str(current_user.current_score) +" points"
+            # flash("Success! You entered the correct code!.")
+            flash(msg)
+            db.session.commit()
+        else:
+            flash("Incorrect Code. Try again.")
+
+    return render_template('moduleInformation.html', Title='moduleInformation', user=current_user,module=module_info, form=form)
 
 @game_management_blueprint.route('/module',methods=["GET","POST"])
 @login_required
 def module_list():
-    ctf_modules = CTFSubSystems.query.all()
+    ctf_modules = CTFSubSystems.query.filter_by(active=1).all() # Only show 'active' modules.
     return render_template('moduleList.html', Title='List of Modules', user=current_user, modules=ctf_modules)
