@@ -1,5 +1,3 @@
-#include <AsyncUDP.h>
-
 #include <AsyncTCP.h>
 
 #include "sensitiveInformation.h"
@@ -7,7 +5,7 @@
 #define FORMAT_SPIFFS_IF_FAILED true
 
 // Traffic lights colour definitions
-#define LIGHT_1_RED 13
+#define LIGHT_1_RED 13,33
 #define LIGHT_1_YELLOW 12
 #define LIGHT_1_GREEN 27
 
