@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     {% block meta %} {% endblock %}
 
@@ -21,7 +22,7 @@
     <style>
         h1 {
             padding-bottom: 40px;
-            color: #2ee8bb;
+            color: white;
         }
 
         p {
@@ -49,7 +50,7 @@
     </style>
 </head>
 
-<body style="background-color: #01345B">
+<body style="background-color: #282b30">
 {#<nav class="navbar navbar-expand-lg navbar-dark"#}
 {#     style="background-image: linear-gradient(to right, #272727, #154259); padding-left: 150px"><a class="navbar-brand"#}
 {#                                                                                                   href="/"><img#}
@@ -98,12 +99,12 @@
             </ul>
         </div>
 </nav>
-<h1 style="border-top: #3083b7 6px solid"></h1>
+<h1 style="border-top: #224a61 6px solid"></h1>
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         <ul class=flashes>
             {% for message in messages %}
-                <li><span style="color: #00ff0b;">{{ message }}</span></li>
+                <li><span style="color: red;">{{ message }}</span></li>
             {% endfor %}
         </ul>
     {% endif %}
@@ -115,8 +116,8 @@
     </header>
     {% block content %}{% endblock %}
 </section>
-<footer style="padding-top: 20px; background-color: #353b44; border-top: 6px solid #A0AECD;">
-    <h2 style="padding-bottom: 15px; text-align: center; font-size: 18px; color: #98dafd"> © LTC Web Design 2020 &
+<footer style="padding-top: 20px; background-color: #353b44; border-top: 6px solid #224a61;">
+    <h2 style="padding-bottom: 15px; text-align: center; font-size: 18px; color: white"> © LTC Web Design 2020 &
         Robotics 2022 </h2>
     <a href="/humans.txt"><img src="/static/humans.png" alt="HumansTXT Logo"></a>
 </footer>
