@@ -222,7 +222,7 @@ def reset_game():
 
         db.session.commit()
 
-    return render_template('reset.html', pagetitle='Reset Game', form=form, user=current_user)
+    return render_template('resetUserScores.html', pagetitle='Reset Game', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/report/dashboard')
