@@ -1,13 +1,12 @@
 # All the code/routes for the game management will be stored here.
-from flask import Flask, url_for, render_template, redirect, flash, request, Markup, Blueprint
-from flask_login import current_user, login_user
-from flask_login import LoginManager, logout_user, login_required
-from forms import LoginForm, RegistrationForm, CTFSubsystemForm, ClaimSubsystemForm, EditUserForm, ResetPasswordForm, \
+from flask import url_for, render_template, redirect, flash, Blueprint
+from flask_login import current_user, login_user, logout_user, login_required
+from forms import LoginForm, RegistrationForm, CTFSubsystemForm, EditUserForm, ResetPasswordForm, \
     ClaimForm, ResetSubsystemsForm, ResetModuleCodeForm
 from models import User, CTFSubSystems
 from sqlalchemy import text
 from app import db
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
 
 game_management_blueprint = Blueprint('game_management_blueprint', __name__)
 
