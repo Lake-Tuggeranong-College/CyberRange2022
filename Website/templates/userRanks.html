@@ -13,13 +13,14 @@
 {% block content %}
 
     {% for user in user_data %}
-        <span>
-            <div class="p-3 mb-2 bg-primary text-white">
-
-                <div style ="display: inline; text-align: left; padding-right: 3em" class="display-4">{{ user[0] }} </div>
-                <div style ="display: inline; text-align: right; padding-left: 3em" class=" display-4">{{ user[1] }}</div>
-
-            </div>
+        <span><div class="container text-center">
+  <div class="row row-cols-2">
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+  </div>
+</div>
         </span>
     {% endfor %}
 {% endblock %}
