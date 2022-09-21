@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+<!-- This creates the heading of the page and makes it the same as the title -->
+{% block header %}
+
+{% endblock %}
+
+
+<!-- This replaces the content block in base.html -->
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="display-2">{{ module.title }}</h1>
+
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>{{ module.challenge_text }}</p>
+
+            </div>
+            <div class="col">
+                <p> <a href="http://{{ module.ip_address }}">{{ module.ip_address }}</a></p>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>hints</p>
+            </div>
+
+            <div class="col">
+                <form action="" method="post" novalidate>
+                    {{ form.hidden_tag() }}
+                    <p>Insert {{ form.passcode.label }}:</p>
+                    {{ form.passcode(size=32) }}<br>
+                    {% for error in form.passcode.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                    <p style="padding-top: 15px">{{ form.submit() }}</p>
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+{% endblock %}
