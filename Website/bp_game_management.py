@@ -51,13 +51,9 @@ def register_user():
         return redirect(url_for('game_management_blueprint.game_main_page'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        print("test")
-        user = User(name=form.name.data, username=form.username.data, email=form.email.data, current_score=0,
-                    is_administrator=False)
-        print(user)
+        user = User(name=form.name.data, username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
-
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('game_management_blueprint.game_user_login'))

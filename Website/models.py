@@ -13,7 +13,7 @@ class User(UserMixin, db.Model):
     current_score = db.Column(db.Integer)
     active_player = db.Column(db.Boolean)
 
-    def create_user(self, name, username, email):
+    def __init__(self, name, username, email):
         self.username = username
         self.name = name
         self.email = email
