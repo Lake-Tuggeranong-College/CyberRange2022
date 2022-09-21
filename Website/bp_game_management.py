@@ -126,6 +126,7 @@ def all_user_details():
 @game_management_blueprint.route('/report/u_ranked')
 @login_required
 def ranked_users():
+    '''
     ranked = text('select username, current_score from user where active_player')
     result = db.engine.execute(ranked)
     users = []
@@ -133,8 +134,13 @@ def ranked_users():
     for row in result:
         users.append(row)
     users.sort(key=lambda x: x[1], reverse=True)
+    '''
+    # user = User.query.filter_by(id=userid).first()
 
-    return render_template("userRanks.html", Title="Scoreboard", user_data=users, user=current_user)
+    ranked_current_users = User.query.filter_by(active_player=1).order_by(User.current_score.desc()).all()
+    print(ranked_current_users)
+
+    return render_template("userRanks.html", title="Scoreboard", user_data=ranked_current_users, user=current_user)
 
 
 @game_management_blueprint.route('/reset_password/<userid>', methods=['GET', 'POST'])
