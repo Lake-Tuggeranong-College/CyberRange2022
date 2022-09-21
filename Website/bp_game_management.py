@@ -99,18 +99,6 @@ def display_users():
     return render_template('userList.html', Title='List of Users', data=users, user=current_user)
 
 
-@game_management_blueprint.route('/report/allUserDetails')
-def all_user_details():
-    sql = text('select name, username, email, id from user')
-    result = db.engine.execute(sql)
-    users = []
-
-    for row in result:
-        users.append(row)
-    print(users)
-
-    return render_template('userDetails.html', Title='Users Details', data=users, user=current_user)
-
 
 @game_management_blueprint.route('/report/u_ranked')
 @login_required
