@@ -80,18 +80,19 @@
                     <li class="nav-item"><a class="nav-link" href="/module">Modules</a></li>
                     <li class="nav-item"><a class="nav-link" href="/missile_launcher/">Missile Launcher</a></li>
                     {% if user.is_admin() %}
-                        <li class="nav-item"><a class="nav-link" href="/reset">Reset Module</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/registerModule">Register New Module</a></li>
+
                         <li class="nav-item dropdown">
-                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Admin Reports
-          </a>
-                            <div class="dropdown-menu" aria-labelledby="Preview"><a class="dropdown-item"
-                                                                                    href="/report/listallusers">List All
-                                Users</a>
-                                {#                            <a class="dropdown-item" href="/report/allUserDetails">All User Details</a>#}
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                Administrator Functions
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="Preview">
+                                <a class="dropdown-item" href="/report/listallusers">List All Users</a>
                                 <a class="dropdown-item" href="/report/u_ranked">User Module</a>
-                                <a class="dropdown-item" href="/report/dashboard">Subsystem Module</a></div>
+                                <a class="dropdown-item" href="/report/dashboard">Subsystem Module</a>
+                                <a class="dropdown-item" href="/reset">Reset Module</a>
+                                <a class="dropdown-item" href="/registerModule">Register New Module</a>
+                            </div>
                         </li>
                     {% endif %}
                 {% endif %}
