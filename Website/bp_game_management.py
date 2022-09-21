@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, redirect, flash, request, Mar
 from flask_login import current_user, login_user
 from flask_login import LoginManager, logout_user, login_required
 from forms import LoginForm, RegistrationForm, CTFSubsystemForm, ClaimSubsystemForm, EditUserForm, ResetPasswordForm, \
-    ClaimForm, ResetSubsystemsForm
+    ClaimForm, ResetSubsystemsForm, ResetModuleCodeForm
 from models import User, CTFSubSystems
 from sqlalchemy import text
 from app import db
@@ -153,6 +153,21 @@ def reset_user_password(userid):
         return redirect(url_for('game_management_blueprint.game_user_details'))
 
     return render_template('resetPassword.html', title='Reset Password', form=form, user=user)
+
+@game_management_blueprint.route('/reset_passcode/<moduleid>', methods=['GET', 'POST'])
+@login_required
+def reset_module_passcode(moduleid):
+    form = ResetModuleCodeForm()
+    module = CTFSubSystems.query.filter_by(subsystemid=moduleid).first()
+    if form.validate_on_submit():
+
+        module.set_password(form.new_passcode.data)
+        db.session.commit()
+        print("done")
+        flash('Password has been reset for module {}'.format(module.title))
+        return redirect(url_for('game_management_blueprint.game_user_details'))
+
+    return render_template('resetPassword.html', title='Reset Passcode', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/claimModule', methods=['GET', 'POST'])

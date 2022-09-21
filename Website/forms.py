@@ -55,6 +55,9 @@ class ResetPasswordForm(FlaskForm):
     new_password = StringField('New Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+class ResetModuleCodeForm(FlaskForm):
+    new_passcode= StringField('New Passcode', validators=[DataRequired()])
+    submit = SubmitField('Submit')
 
 class ClaimForm(FlaskForm):
     passcode = StringField('Passcode', validators=[DataRequired()])
