@@ -99,13 +99,7 @@ def edit_user(userid):
 
 @game_management_blueprint.route('/report/listallusers')
 def display_users():
-    sql = text('select username, id from user')
-    result = db.engine.execute(sql)
-    users = []
-
-    for row in result:
-        users.append(row)
-
+    users = User.query.all()
     return render_template('userList.html', Title='List of Users', data=users, user=current_user)
 
 
