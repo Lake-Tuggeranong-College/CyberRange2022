@@ -2,8 +2,6 @@ from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import login
-from datetime import datetime
-
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -14,6 +12,14 @@ class User(UserMixin, db.Model):
     is_administrator = db.Column(db.Boolean)
     current_score = db.Column(db.Integer)
     active_player = db.Column(db.Boolean)
+
+    def __init__(self, name, username, email):
+        self.username = username
+        self.name = name
+        self.email = email
+        self.active_player = 1
+        self.current_score = 0
+        self.is_administrator = 0
 
     def __repr__(self):
         return '<User {}>'.format(self.username)

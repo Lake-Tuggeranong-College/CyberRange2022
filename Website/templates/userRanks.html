@@ -3,23 +3,21 @@
 {% block meta %}
     <meta http-equiv="refresh" content="30">  {% endblock %}
 
-{% block title %}{{ Title }}{% endblock %}
+{#{% block title %}{{ Title }}{% endblock %}#}
 
 {% block header %}
-    <h1 style="padding-left: 600px; font-size: 60px">{{ Title }}</h1>
+    <h1>{% block title %} {{ title }}   {% endblock %}</h1>
 {% endblock %}
 
 
 {% block content %}
 
     {% for user in user_data %}
-        <span>
-            <div class="p-3 mb-2 bg-primary text-white">
-
-                <div style ="display: inline; text-align: left; padding-right: 3em" class="display-4">{{ user[0] }} </div>
-                <div style ="display: inline; text-align: right; padding-left: 3em" class=" display-4">{{ user[1] }}</div>
-
+        <div class="container-fluid bg-primary text-white text-center p-3">
+            <div class="row">
+                <div class="col-md-6 display-4">{{ user.name }} </div>
+                <div class="col-md-6 display-4">{{ user.current_score }}</div>
             </div>
-        </span>
+        </div>
     {% endfor %}
 {% endblock %}
