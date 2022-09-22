@@ -197,6 +197,8 @@ def reset_game():
         for user in users :
             user.reset_score()
         db.session.commit()
+        flash("all user accounts have been set to zero ")
+        return redirect(url_for('game_management_blueprint.game_main_page'))
 
     return render_template('resetUserScores.html', pagetitle='Reset Game', form=form, user=current_user)
 
