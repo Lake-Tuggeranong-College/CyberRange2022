@@ -180,6 +180,7 @@ def claim():
 def reset_game():
     form = ResetSubsystemsForm()
     if form.validate_on_submit():
+        '''
         sql = text('select * from ctf_sub_systems')
         result = db.engine.execute(sql)
 
@@ -191,8 +192,13 @@ def reset_game():
                 reset_subsystem.Owner = 'None'
                 reset_subsystem.status = False
                 flash("You have reset - {}".format(reset_subsystem.title))
-
+        '''
+        users=User.query.all()
+        for user in users :
+            user.reset_score()
         db.session.commit()
+        flash("all user accounts have been set to zero ")
+        return redirect(url_for('game_management_blueprint.game_main_page'))
 
     return render_template('resetUserScores.html', pagetitle='Reset Game', form=form, user=current_user)
 

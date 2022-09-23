@@ -21,6 +21,8 @@ class User(UserMixin, db.Model):
         self.current_score = 0
         self.is_administrator = 0
 
+    def reset_score(self):
+        self.current_score=0
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
