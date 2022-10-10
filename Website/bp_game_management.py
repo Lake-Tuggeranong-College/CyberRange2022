@@ -227,8 +227,8 @@ def module_information(moduleid):
     if form.validate_on_submit():
         if check_password_hash(module_info.Code, form.passcode.data):
             current_user.current_score = current_user.current_score + module_info.score
-            msg = "Success! You entered the correct code!. You gained" + str(
-                module_info.score) + " points. You now have " + str(current_user.current_score) + " points"
+            msg = "Success! You entered the correct code! You gained " + str(
+                module_info.score) + " points. You now have " + str(current_user.current_score) + " points."
             # flash("Success! You entered the correct code!.")
             flash(msg)
             db.session.commit()
