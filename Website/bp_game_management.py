@@ -1,13 +1,12 @@
 # All the code/routes for the game management will be stored here.
-from flask import Flask, url_for, render_template, redirect, flash, request, Markup, Blueprint
-from flask_login import current_user, login_user
-from flask_login import LoginManager, logout_user, login_required
-from forms import LoginForm, RegistrationForm, CTFSubsystemForm, ClaimSubsystemForm, EditUserForm, ResetPasswordForm, \
-    ClaimForm, ResetSubsystemsForm
+from flask import url_for, render_template, redirect, flash, Blueprint
+from flask_login import current_user, login_user, logout_user, login_required
+from forms import LoginForm, RegistrationForm, CTFSubsystemForm, EditUserForm, ResetPasswordForm, \
+    ClaimForm, ResetSubsystemsForm, ResetModuleCodeForm
 from models import User, CTFSubSystems
 from sqlalchemy import text
 from app import db
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
 
 game_management_blueprint = Blueprint('game_management_blueprint', __name__)
 
@@ -27,6 +26,7 @@ def game_user_login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
+            flash("Username or password is incorrect. Please check and try again.")
             return redirect(url_for('game_management_blueprint.game_user_login'))
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('game_management_blueprint.game_main_page'))
@@ -51,13 +51,9 @@ def register_user():
         return redirect(url_for('game_management_blueprint.game_main_page'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        print("test")
-        user = User(name=form.name.data, username=form.username.data, email=form.email.data, current_score=0,
-                    is_administrator=False)
-        print(user)
+        user = User(name=form.name.data, username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
-
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('game_management_blueprint.game_user_login'))
@@ -77,7 +73,6 @@ def register_module():
         flash('Congratulations, you have registered a new Module!')
         return redirect(url_for('game_management_blueprint.game_user_login'))
     return render_template('registerModule.html', title='Register Module', form=form, user=current_user)
-
 
 
 @game_management_blueprint.route('/edit_user/<userid>', methods=['GET', 'POST'])
@@ -100,42 +95,18 @@ def edit_user(userid):
 
 @game_management_blueprint.route('/report/listallusers')
 def display_users():
-    sql = text('select username, id from user')
-    result = db.engine.execute(sql)
-    users = []
-
-    for row in result:
-        users.append(row)
-
+    users = User.query.all()
     return render_template('userList.html', Title='List of Users', data=users, user=current_user)
 
-
-@game_management_blueprint.route('/report/allUserDetails')
-def all_user_details():
-    sql = text('select name, username, email, id from user')
-    result = db.engine.execute(sql)
-    users = []
-
-    for row in result:
-        users.append(row)
-    print(users)
-
-
-    return render_template('userDetails.html', Title='Users Details', data=users, user=current_user)
 
 
 @game_management_blueprint.route('/report/u_ranked')
 @login_required
 def ranked_users():
-    ranked = text('select username, current_score from user where active_player')
-    result = db.engine.execute(ranked)
-    users = []
+    ranked_current_users = User.query.filter_by(active_player=1).order_by(User.current_score.desc()).all()
+    print(ranked_current_users)
 
-    for row in result:
-        users.append(row)
-    users.sort(key=lambda x:x[1], reverse=True)
-
-    return render_template("userRanks.html", Title="Scoreboard", user_data =users, user=current_user)
+    return render_template("userRanks.html", title="Scoreboard", user_data=ranked_current_users, user=current_user)
 
 
 @game_management_blueprint.route('/reset_password/<userid>', methods=['GET', 'POST'])
@@ -153,6 +124,21 @@ def reset_user_password(userid):
         return redirect(url_for('game_management_blueprint.game_user_details'))
 
     return render_template('resetPassword.html', title='Reset Password', form=form, user=user)
+
+
+@game_management_blueprint.route('/reset_passcode/<moduleid>', methods=['GET', 'POST'])
+@login_required
+def reset_module_passcode(moduleid):
+    form = ResetModuleCodeForm()
+    module = CTFSubSystems.query.filter_by(subsystemid=moduleid).first()
+    if form.validate_on_submit():
+        module.set_passcode(form.new_passcode.data)
+        db.session.commit()
+        print("done")
+        flash('Password has been reset for module {}'.format(module.title))
+        return redirect(url_for('game_management_blueprint.game_main_page'))
+
+    return render_template('resetPasscode.html', title='Reset Passcode', form=form, user=current_user, module=module)
 
 
 @game_management_blueprint.route('/claimModule', methods=['GET', 'POST'])
@@ -194,6 +180,7 @@ def claim():
 def reset_game():
     form = ResetSubsystemsForm()
     if form.validate_on_submit():
+        '''
         sql = text('select * from ctf_sub_systems')
         result = db.engine.execute(sql)
 
@@ -205,10 +192,15 @@ def reset_game():
                 reset_subsystem.Owner = 'None'
                 reset_subsystem.status = False
                 flash("You have reset - {}".format(reset_subsystem.title))
-
+        '''
+        users=User.query.all()
+        for user in users :
+            user.reset_score()
         db.session.commit()
+        flash("all user accounts have been set to zero ")
+        return redirect(url_for('game_management_blueprint.game_main_page'))
 
-    return render_template('reset.html', pagetitle='Reset Game', form=form, user=current_user)
+    return render_template('resetUserScores.html', pagetitle='Reset Game', form=form, user=current_user)
 
 
 @game_management_blueprint.route('/report/dashboard')
@@ -222,10 +214,10 @@ def dashboard():
 
     return render_template('dashboard.html', Title='Subsystem Dashboard', user=current_user, subsystems=subsystem_list)
 
-@game_management_blueprint.route('/module/<moduleid>',methods=["GET","POST"])
-@login_required
-def module_information (moduleid):
 
+@game_management_blueprint.route('/module/<moduleid>', methods=["GET", "POST"])
+@login_required
+def module_information(moduleid):
     # Steps needed.
     # 1. Load Specific record (moduleid) from table
     # 2. Display relevant information
@@ -235,17 +227,20 @@ def module_information (moduleid):
     if form.validate_on_submit():
         if check_password_hash(module_info.Code, form.passcode.data):
             current_user.current_score = current_user.current_score + module_info.score
-            msg = "Success! You entered the correct code!. You gained" + str(module_info.score) + " points. You now have "+str(current_user.current_score) +" points"
+            msg = "Success! You entered the correct code!. You gained" + str(
+                module_info.score) + " points. You now have " + str(current_user.current_score) + " points"
             # flash("Success! You entered the correct code!.")
             flash(msg)
             db.session.commit()
         else:
             flash("Incorrect Code. Try again.")
 
-    return render_template('moduleInformation.html', Title='moduleInformation', user=current_user,module=module_info, form=form)
+    return render_template('moduleInformation.html', Title='moduleInformation', user=current_user, module=module_info,
+                           form=form)
 
-@game_management_blueprint.route('/module',methods=["GET","POST"])
+
+@game_management_blueprint.route('/module', methods=["GET", "POST"])
 @login_required
 def module_list():
-    ctf_modules = CTFSubSystems.query.filter_by(active=1).all() # Only show 'active' modules.
-    return render_template('moduleList.html', Title='List of Modules', user=current_user, modules=ctf_modules)
+    ctf_modules = CTFSubSystems.query.filter_by(active=1).all()  # Only show 'active' modules.
+    return render_template('moduleList.html', Title='Available Modules', user=current_user, modules=ctf_modules)

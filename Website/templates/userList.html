@@ -18,10 +18,10 @@
         </div>
         {% for user in data %}
             <div class="row">
-                <div class="col-lg-3 text-white">{{ user[0] }}</div>
+                <div class="col-lg-3 text-white">{{ user.username }}</div>
 {#                <div class="col-lg-3 text-white">{{ user[1] }}</div>#}
-                <div class="col-lg-3 text-white"><a href="/reset_password/{{ user[1] }}">Reset Password</a></div>
-                <div class="col-lg-3 text-white"><a href="/edit_user/{{ user[1] }}">Edit User Details</a></div>
+                <div class="col-lg-3 text-white"><a href="/reset_password/{{ user.id }}">Reset Password</a></div>
+                <div class="col-lg-3 text-white"><a href="/edit_user/{{ user.id }}">Edit User Details</a></div>
             </div>
         {% endfor %}
     </div>
