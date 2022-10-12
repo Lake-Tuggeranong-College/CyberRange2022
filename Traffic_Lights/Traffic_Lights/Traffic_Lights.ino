@@ -174,7 +174,7 @@ void updateEPD() {
   */
 
   // Display IP Address
-  drawText(WiFi.localIP().toString(), EPD_BLACK, 1, 130, 80);
+  drawText(WiFi.localIP().toString(), EPD_BLACK, 1, 0, 0);
 
 
   logEvent("Updating the EPD");
