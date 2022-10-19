@@ -3,7 +3,11 @@
 
 <!-- This creates the heading of the page and makes it the same as the title -->
 {% block header %}
-
+    <script>
+        function showHints() {
+            document.getElementById("output").innerHTML = "{{ module.hints }}";
+        }
+    </script>
 {% endblock %}
 
 
@@ -21,13 +25,18 @@
 
             </div>
             <div class="col">
-                <p> <a href="http://{{ module.ip_address }}">{{ module.ip_address }}</a></p>
+                <p><a href="http://{{ module.ip_address }}" target="_blank">{{ module.ip_address }}</a></p>
             </div>
 
         </div>
         <div class="row">
             <div class="col">
-                <p>hints</p>
+                <form onsubmit="return false">
+                    <button onclick="showHints()">Hints!</button>
+                </form>
+
+                <p id="output"></p>
+
             </div>
 
             <div class="col">
