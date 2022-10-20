@@ -5,7 +5,7 @@
 #define FORMAT_SPIFFS_IF_FAILED true
 
 // Traffic lights colour definitions
-#define LIGHT_1_RED 13,33
+#define LIGHT_1_RED 13
 #define LIGHT_1_YELLOW 12
 #define LIGHT_1_GREEN 27
 
@@ -33,7 +33,7 @@ ThinkInk_213_Mono_B72 display(EPD_DC, EPD_RESET, EPD_CS, SRAM_CS, EPD_BUSY);
 
 
 // RTC Start - Remove if unnecessary
-// #include "RTClib.h"
+#include "RTClib.h"
 
 RTC_PCF8523 rtc;
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
@@ -174,7 +174,7 @@ void updateEPD() {
   */
 
   // Display IP Address
-  drawText(WiFi.localIP().toString(), EPD_BLACK, 1, 130, 80);
+  drawText(WiFi.localIP().toString(), EPD_BLACK, 1, 0, 0);
 
 
   logEvent("Updating the EPD");
