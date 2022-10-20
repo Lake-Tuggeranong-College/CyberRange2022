@@ -63,6 +63,8 @@ class CTFSubSystems(db.Model):
     ip_address = db.Column(db.String())
     challenge_text = db.Column(db.String())
     active=db.Column(db.Boolean)
+    hints = db.Column(db.String(1024))
+
 
     def set_passcode(self, code):
         self.Code = generate_password_hash(code)
