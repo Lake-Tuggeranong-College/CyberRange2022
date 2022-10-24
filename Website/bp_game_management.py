@@ -3,7 +3,7 @@ from flask import url_for, render_template, redirect, flash, Blueprint
 from flask_login import current_user, login_user, logout_user, login_required
 from forms import LoginForm, RegistrationForm, CTFSubsystemForm, EditUserForm, ResetPasswordForm, \
     ClaimForm, ResetSubsystemsForm, ResetModuleCodeForm
-from models import User, CTFSubSystems
+from models import User, CTFSubSystems, solved_modules
 from sqlalchemy import text
 from app import db
 from werkzeug.security import check_password_hash
