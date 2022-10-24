@@ -79,3 +79,8 @@ class CTFSubSystems(db.Model):
     def reset(self):
         self.status = True
         print("reset")
+
+class solved_modules:
+    id = db.Column(db.Integer, primary_key=True)
+    userid = db.Column(db.Integer)
+    moduleid = db.Column(db.Integer)
