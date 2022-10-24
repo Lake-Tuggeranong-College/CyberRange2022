@@ -100,13 +100,13 @@ def display_users():
 
 
 
-@game_management_blueprint.route('/report/u_ranked')
+@game_management_blueprint.route('/report/scoreboard')
 @login_required
 def ranked_users():
     ranked_current_users = User.query.filter_by(active_player=1).order_by(User.current_score.desc()).all()
     print(ranked_current_users)
 
-    return render_template("userRanks.html", title="Scoreboard", user_data=ranked_current_users, user=current_user)
+    return render_template("scoreboard.html", title="Scoreboard", user_data=ranked_current_users, user=current_user)
 
 
 @game_management_blueprint.route('/reset_password/<userid>', methods=['GET', 'POST'])
