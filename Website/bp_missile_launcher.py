@@ -7,7 +7,6 @@ import os
 
 missile_launcher_blueprint = Blueprint('missile_launcher_blueprint', __name__)
 
-
 @missile_launcher_blueprint.route('/missile_launcher/index')
 @missile_launcher_blueprint.route('/missile_launcher/')
 @missile_launcher_blueprint.route('/missile_launcher')
