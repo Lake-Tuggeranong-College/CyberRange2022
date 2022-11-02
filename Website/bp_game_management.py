@@ -3,7 +3,7 @@ from flask import url_for, render_template, redirect, flash, Blueprint
 from flask_login import current_user, login_user, logout_user, login_required
 from forms import LoginForm, RegistrationForm, CTFSubsystemForm, EditUserForm, ResetPasswordForm, \
     ClaimForm, ResetSubsystemsForm, ResetModuleCodeForm
-from models import User, CTFSubSystems
+from models import User, CTFSubSystems, solved_modules
 from sqlalchemy import text
 from app import db
 from werkzeug.security import check_password_hash
@@ -100,13 +100,13 @@ def display_users():
 
 
 
-@game_management_blueprint.route('/report/u_ranked')
+@game_management_blueprint.route('/report/scoreboard')
 @login_required
 def ranked_users():
     ranked_current_users = User.query.filter_by(active_player=1).order_by(User.current_score.desc()).all()
     print(ranked_current_users)
 
-    return render_template("userRanks.html", title="Scoreboard", user_data=ranked_current_users, user=current_user)
+    return render_template("scoreboard.html", title="Scoreboard", user_data=ranked_current_users, user=current_user)
 
 
 @game_management_blueprint.route('/reset_password/<userid>', methods=['GET', 'POST'])
