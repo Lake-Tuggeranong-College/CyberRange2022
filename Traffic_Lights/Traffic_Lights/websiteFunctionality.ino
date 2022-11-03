@@ -7,6 +7,7 @@ void routesConfiguration() {
 
   // Duplicated serving of index.html route, so the IP can be entered directly to browser.
   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
+    logEvent("Route access : /");
     request->send(SPIFFS, "/index.html", "text/html");
   });
 
@@ -22,6 +23,7 @@ void routesConfiguration() {
   server.on("/dashboard.html", HTTP_GET, [](AsyncWebServerRequest * request) {
     if (!request->authenticate(http_username, http_password))
       return request->requestAuthentication();
+     logEvent("Route access : /dashboard.html");
     request->send(SPIFFS, "/dashboard.html", "text/html", false, processor);
   });
 

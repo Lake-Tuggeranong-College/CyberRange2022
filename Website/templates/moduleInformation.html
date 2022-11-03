@@ -5,7 +5,7 @@
 {% block header %}
     <script>
         function showHints() {
-            document.getElementById("output").innerHTML = "{{ module.hints }}";
+            document.getElementById("hintOutput").innerHTML = "{{ module.hints }}";
         }
     </script>
 {% endblock %}
@@ -35,7 +35,7 @@
                     <button onclick="showHints()">Hints!</button>
                 </form>
 
-                <p id="output"></p>
+                <p id="hintOutput"></p>
 
             </div>
 

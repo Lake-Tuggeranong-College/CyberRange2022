@@ -2,10 +2,10 @@
 
 from flask import Blueprint, render_template
 from flask_login import current_user, login_required
+# import usb.core
 import os
 
 missile_launcher_blueprint = Blueprint('missile_launcher_blueprint', __name__)
-
 
 @missile_launcher_blueprint.route('/missile_launcher/index')
 @missile_launcher_blueprint.route('/missile_launcher/')
