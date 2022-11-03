@@ -228,13 +228,19 @@ def module_information(moduleid):
         if check_password_hash(module_info.Code, form.passcode.data):
 
             # TODO: Check if user already claimed points...
-
-            current_user.current_score = current_user.current_score + module_info.score
-            msg = "Success! You entered the correct code! You gained " + str(
-                module_info.score) + " points. You now have " + str(current_user.current_score) + " points."
+            solved=solved_modules.query.filter_by(moduleid=moduleid,userid=current_user.id).first()
+            if solved is None:
+                print("user has not solved this question already")
+                new_entry=solved_modules(moduleid=moduleid,userid=current_user.id)
+                db.session.add(new_entry)
+                current_user.current_score = current_user.current_score + module_info.score
+                msg = "Success! You entered the correct code! You gained " + str(module_info.score) + " points. You now have " + str(current_user.current_score) + " points."
+                db.session.commit()
+            else:
+                msg="already solved"
             # flash("Success! You entered the correct code!.")
             flash(msg)
-            db.session.commit()
+
         else:
             flash("Incorrect Code. Try again.")
 
