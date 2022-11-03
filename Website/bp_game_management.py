@@ -194,6 +194,7 @@ def reset_game():
                 flash("You have reset - {}".format(reset_subsystem.title))
         '''
         users=User.query.all()
+        clear_table=solved_modules.query.delete()
         for user in users :
             user.reset_score()
         db.session.commit()
@@ -226,12 +227,21 @@ def module_information(moduleid):
     form = ClaimForm()
     if form.validate_on_submit():
         if check_password_hash(module_info.Code, form.passcode.data):
-            current_user.current_score = current_user.current_score + module_info.score
-            msg = "Success! You entered the correct code! You gained " + str(
-                module_info.score) + " points. You now have " + str(current_user.current_score) + " points."
+
+            # TODO: Check if user already claimed points...
+            solved=solved_modules.query.filter_by(moduleid=moduleid,userid=current_user.id).first()
+            if solved is None:
+                print("user has not solved this question already")
+                new_entry=solved_modules(moduleid=moduleid,userid=current_user.id)
+                db.session.add(new_entry)
+                current_user.current_score = current_user.current_score + module_info.score
+                msg = "Success! You entered the correct code! You gained " + str(module_info.score) + " points. You now have " + str(current_user.current_score) + " points."
+                db.session.commit()
+            else:
+                msg="already solved"
             # flash("Success! You entered the correct code!.")
             flash(msg)
-            db.session.commit()
+
         else:
             flash("Incorrect Code. Try again.")
 
