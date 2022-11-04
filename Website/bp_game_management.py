@@ -194,6 +194,7 @@ def reset_game():
                 flash("You have reset - {}".format(reset_subsystem.title))
         '''
         users=User.query.all()
+        clear_table=solved_modules.query.delete()
         for user in users :
             user.reset_score()
         db.session.commit()
